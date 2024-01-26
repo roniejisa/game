@@ -87,7 +87,7 @@
 
     function calculatorRate(histories){
         totalWin = histories.filter(history => history.result === 'WIN');
-        rate.innerHTML = Math.floor(totalWin.length/histories.length * 100)+'%';
+        rate.innerHTML = ((histories.length == 0 || totalWin.length == 0) ? 0 : Math.floor(totalWin.length/histories.length * 100))+'%';
     }
 
     window.addEventListener('DOMContentLoaded', function () {

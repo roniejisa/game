@@ -198,6 +198,11 @@ body {
     color: white;
     text-shadow: 3px 5px 1px black;
 }
+h1{
+    color: white;
+    font-size: 108px;
+    text-shadow: 10px 10px black;
+}
 @media (max-width:575px) {
     .list-item {
         gap: 10px;
@@ -205,6 +210,10 @@ body {
 
     .dice {
         scale: .8;
+    }
+
+    .container{
+        gap: 40px;
     }
 }
 
