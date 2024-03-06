@@ -1,3 +1,7 @@
+@font-face {
+    font-family: 'Honk';
+    src: url(../fonts/Honk/static/Honk-Regular.ttf);
+}
 * {
     padding: 0;
     margin: 0;
@@ -13,7 +17,7 @@ body {
     justify-content: center;
     align-items: center;
     background: linear-gradient(to top,#660030, #960146);
-    font-family: 'SF Mono','Open Sans', 'Helvetica Neue','Roboto', sans-serif !important;
+    font-family: 'Honk','SF Mono','Open Sans', 'Helvetica Neue','Roboto', sans-serif !important;
 }
 
 /* Dice style */
