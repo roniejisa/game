@@ -209,12 +209,12 @@ function removeAutoPlay() {
 
 function addAutoPlay(isRight = false) {
     if (!isAutoPlay) {
-        autoPlay(2000, isRight)
+        autoPlay(5000, isRight)
         isAutoPlay = true;
     }
 }
 
 window.addEventListener('DOMContentLoaded', function () {
     init();
-    autoPlay(2000);
+    autoPlay(5000);
 })
