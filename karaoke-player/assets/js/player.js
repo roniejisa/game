@@ -459,7 +459,7 @@ function initAudio() {
             var data = await getLyricNCT(link);
             if (data) {
                 playlists[songIndexCurrent]['lyrics'] = data;
-                karaokeContentEl.querySelector('.no-lyrics').remove();
+                karaokeContentEl.querySelector('.no-lyrics') && karaokeContentEl.querySelector('.no-lyrics').remove();
             }
         }
     })
@@ -470,6 +470,10 @@ function initAudioKaraoke() {
     audioKaraokeEl.addEventListener('loadeddata', function () {
         changeIconKaraoke();
     })
+
+    audioKaraokeEl.onerror = function () {
+        buttonKaraoke.setAttribute('hidden', '');
+    };
 }
 // function animation 
 
@@ -806,7 +810,8 @@ function loadSongStart() {
 }
 
 function addInfoKaraokeContent() {
-    karaokeContentEl.insertAdjacentHTML('afterbegin', setDataDefaultKaraoke(playlists[songIndexCurrent].lyrics));
+    console.log(playlists[songIndexCurrent].lyrics);
+    karaokeContentEl.insertAdjacentHTML('afterbegin', setDataDefaultKaraoke(playlists[songIndexCurrent].lyrics ?? false));
     songCurrentInfoEl = karaokeContentEl.querySelector('.song-current');
 }
 
@@ -824,7 +829,7 @@ function addOrRemoveIconStartKaraoke(isRemove = true) {
     var lyricFirst = playlists[songIndexCurrent].lyrics[0].words;
     var wordFirst = lyricFirst[0];
     var step = 1000;
-    var initialValue = 5000
+    var initialValue = 8000
     if (wordFirst.startTime < 1000) {
         initialValue = wordFirst.startTime
         step = 100;
@@ -847,7 +852,7 @@ function addOrRemoveIconStartKaraoke(isRemove = true) {
     }, {
         data: `<i class="fa-solid fa-microphone"></i>`,
         startTime: wordFirst.startTime - (initialValue - step * 5),
-        endTime: wordFirst.startTime,
+        endTime: wordFirst.startTime - 500,
     })
 }
 

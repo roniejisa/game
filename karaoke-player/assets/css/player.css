@@ -451,7 +451,7 @@ body {
 }
 @media screen and (min-width: 1024px) {
   .screen-right h2 {
-    font-size: 32px;
+    font-size: 20px;
   }
 }
 .screen-right .playlist {
@@ -533,7 +533,7 @@ body {
   height: 28px;
 }
 .screen-right .song .info h3 {
-  font-size: 1rem;
+  font-size: 18px;
   background: linear-gradient(to bottom, #f7a5be, #f0eef8);
   -webkit-text-fill-color: transparent;
   background-clip: text;

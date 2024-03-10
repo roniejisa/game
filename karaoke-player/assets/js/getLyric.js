@@ -718,7 +718,7 @@ var KaraokeNCT = function () {
         var d = c.decrypt(a);
         data = putils.hexFromArray(d);
         dataLyric = self.parseLrc(data);
-        return toLyricSpotify(dataLyric);
+        return toLyricZingMP3(dataLyric);
     };
 
     this.parseLrc = function (data) {
@@ -1817,7 +1817,7 @@ var getLyricNCT = async function (linkLRC) {
     return await karaoke.getLyric(linkLRC);
 };
 
-function toLyricSpotify(arr) {
+function toLyricZingMP3(arr) {
     return arr.map(function (item) {
         return {
             words: [
@@ -1833,9 +1833,8 @@ function toLyricSpotify(arr) {
 //Cách lấy nhạc 320kb trên nhạc của tui
 // Vào request tìm link: https://www.nhaccuatui.com/flash/xml?html5=true
 
-function getLyricOfSpotify(trackId, authToken = 'Bearer BQBs48bT8GYftcWF9JAXSIH0FHGBL3VOi86TpO-D5e2AOKqI__Dvitmryu9QSHw3BLIvTayfPEqXqHzBy0YN9ONKTPMsbBmzfp8Yd9iW4B0J9uF4A75ybe8QzlwOG1LptwNEcqHZrO6JW-2tg4KRKZRZ6hyc-VCx9wYMYQ0_27kQvY34lSlaZaorBci5Fjx-6oXiSVW3NeqJ0fBUiz7LjFTr9GpCfUEztU2NNB_kP9geNvBcywKltiiIGth7AFkl4TQeiu2lJr0f43myvV2AfuFKF_x3O7QUBsNEel1NrOoCtWC-QVQHPlnGXGRuAjMsHlrHpWpKw3jvtYzUpxsIvBxU') {
-    return fetch(`https://spclient.wg.spotify.com/color-lyrics/v2/track/${trackId}?format=json&vocalRemoval=false&market=from_token`, {
-        method: "GET",
+async function getLyricOfSpotify(trackId, authToken = 'Bearer BQBR-sctHC436smsc49Leaf-ho6eH6PEnRaT-xXZt_hEA28zxRo6GZf4P-gCU54wbbYORNJFPHogqTv--ig9n4rihelEoAyeGzaycjeuiCEfk1JZHEfFltNmMEhzZCGS20kTXoLDDeAc4v3sP_na9uPBlJjkOkOwzeGK5Njv_caKI1rtJUOa9HkuroNopYVuyHVCiCav-yikpFSBDNrZmbvQ1QuMVGq5vSqJ9AhOSidI48Z38Qj2-wPMLYCm4-E0oMv2r59nR6tdgjlSumNxRDO54wxKijFGParNZ8rUC1oLuffWS_GF_rPDx-fO10y8e-uATXkyYoMTdGUVggmeWp9G') {
+    const response = await fetch(`https://spclient.wg.spotify.com/color-lyrics/v2/track/${trackId}?format=json&vocalRemoval=false&market=from_token`, {
         headers: {
             "Accept": `application/json`,
             "Accept-Language": `vi`,
@@ -1847,12 +1846,10 @@ function getLyricOfSpotify(trackId, authToken = 'Bearer BQBs48bT8GYftcWF9JAXSIH0
             "Sec-Ch-Ua-Platform": "Windows",
             "Spotify-App-Version": `1.2.34.0-unknown`,
             "User-Agent": `Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36`,
-        },
-    }).then(res => {
-        return res.json();
-    }).then(res => {
-        return res;
+        }
     });
+    var data = await response.json();
+    return data;
 }
 
 // URL tìm track

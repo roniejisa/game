@@ -262,7 +262,7 @@
 	{
 		"title": "Ai Hát Em Nghe",
 		"url": "./assets/songs/Em Hat Ai Nghe.mp3",
-        "urlKaraoke":"./assets/beats/Em Hat Ai Nghe Beat.mp3",
+		"urlKaraoke": "./assets/beats/Em Hat Ai Nghe Beat.mp3",
 		"author": "Orange",
 		"image": "./assets/images/Ai Hat Em Nghe.jpg",
 		"lyrics": [
@@ -2354,6 +2354,7 @@
 		"author": "tlinh, 2Pillz",
 		"image": "./assets/images/Neu Luc Do.jpg",
 		"url": "./assets/songs/Neu Luc Do.mp3",
+		"urlKaraoke": "./assets/beats/Neu Luc Do.mp3",
 		"lyrics": [
 			{
 				"words": [
