@@ -41,7 +41,7 @@
     background: #ebebeb50;
     border: 1px solid coral;
     cursor: pointer;
-    transform-origin: left;
+    transform-origin: center;
     transition: all 0.2s ease-in-out;
 }
 

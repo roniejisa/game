@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+        <link rel="stylesheet" href="./assets/css/player.css">
+    </head>
+
+    <body>
+        <div class="player-screen">
+            <div class="screen-left">
+            </div>
+            <div class="main">
+                <div class="disc-overlay">
+                    <div class="disc">
+                    </div>
+                </div>
+                <div class="karaoke-screen">
+                    <div class="karaoke-action">
+                        <button class="get-link">
+                            <i class="fa-solid fa-link"></i>
+                        </button>
+                    </div>
+                    <div class="karaoke-content"></div>
+                </div>
+                <div class="song-info">
+                    <div class="play-line">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                    <h1>Ai hát em nghe</h1>
+                </div>
+            </div>
+            <div class="screen-right">
+                <h2>Danh sách phát</h2>
+                <div class="playlist">
+                    <p>Đang tải...</p>
+                </div>
+            </div>
+        </div>
+        <div class="player-dashboard">
+            <div class="player">
+                <span class="time-start">00:00</span>
+                <div class="process">
+                    <div class="process-main">
+                        <span class="process-icon"></span>
+                        <span class="process-timer">00:00</span>
+                    </div>
+                </div>
+                <span class="time-end">00:00</span>
+            </div>
+            <div class="toolbar">
+                <div class="left"></div>
+                <div class="middle actions">
+                    <button class="shuffle" data-title="Ngẫu nhiên">
+                        <i class="fa-solid fa-shuffle"></i>
+                    </button>
+                    <button class="prev" data-title="Bài trước đó">
+                        <i class="fa-solid fa-backward"></i>
+                    </button>
+                    <button class="play big" data-title="Phát nhạc">
+                        <i class="fa-play fa-solid"></i>
+                    </button>
+                    <button class="next" data-title="Bài tiếp theo">
+                        <i class="fa-solid fa-forward"></i>
+                    </button>
+                    <button class="loop" data-title="Lặp lại">
+                        <i class="fa-solid fa-rotate-left"></i>
+                    </button>
+                </div>
+                <div class="right">
+                    <div class="karaoke" data-title="Tách lời" hidden>
+                        <button class="karaoke-show">
+                            <i class="fa-solid fa-microphone-lines-slash"></i>
+                        </button>
+                    </div>
+                    <div class="lyric" data-title="Lời bài hát">
+                        <button class="karaoke-show">
+                            <i class="fa-solid fa-pen-fancy"></i>
+                        </button>
+                    </div>
+                    <div class="volume">
+                        <span class="icon">
+                            <i class="fa-solid fa-volume-low"></i>
+                        </span>
+                        <div class="volume-background">
+                            <div class="volume-process">
+                                <div class="process-main">
+                                    <span class="process-icon"></span>
+                                    <span class="process-percent">100%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src="./assets/js/app.js"></script>
+        <script src="./assets/js/getLyric.js"></script>
+        <script src="./assets/js/player.js"></script>
+    </body>
+
+</html>

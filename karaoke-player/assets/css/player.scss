@@ -1,0 +1,820 @@
+$mainColor: #f7a5be;
+$subColor: #000000;
+$subColorMain: #000000;
+$colorText: #f0eef8;
+$colorProcess: #f7a5be;
+$colorLineSpan: #f7a5be;
+$colorOpacity: #00000099;
+$karaokeColor: #f5c3d2;
+
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+@mixin screen($screen) {
+    @media screen and (min-width:$screen) {
+        @content;
+    }
+}
+
+@mixin textGradient() {
+    background: linear-gradient(to bottom, $mainColor, $colorText);
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    filter: drop-shadow(0 0 20px $mainColor);
+}
+
+@mixin backgroundGradient($radiant: to bottom) {
+    background: linear-gradient($radiant, $mainColor, $subColor);
+    box-shadow: 0 0 6px $subColor, 0 0 10px $mainColor;
+}
+
+@mixin processIconGradient() {
+    background: radial-gradient($mainColor, $subColor);
+    box-shadow: 2px 0 10px $subColor;
+}
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    outline: none;
+    user-select: none;
+}
+
+body {
+    font-family: Montserrat, sans-serif;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background: linear-gradient(to bottom, $mainColor, $subColorMain, $subColor);
+}
+
+// Player 
+.player-dashboard {
+    margin-top: auto;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    max-height: 200px;
+    position: relative;
+    z-index: 9999;
+    background: $subColor;
+
+    .toolbar {
+        position: relative;
+        display: flex;
+        flex-wrap: wrap;
+        width: 100%;
+        justify-content: center;
+
+        .left,
+        .right {
+            flex-basis: 100%;
+
+            @include screen(1024px) {
+                flex-basis: 25%;
+                padding: 0 30px;
+            }
+        }
+
+        // .left {}
+
+        .right {
+            display: flex;
+            justify-content: space-between;
+
+            @include screen(1024px) {
+                justify-content: flex-end;
+            }
+
+            align-items: center;
+            gap: 30px;
+
+            i {
+                @include screen(1024px) {
+                    font-size: 24px;
+                }
+            }
+
+            .lyric,
+            .karaoke {
+                display: flex;
+                position: relative;
+                align-items: center;
+                width: 30px;
+                height: 30px;
+                justify-content: center;
+
+                button {
+                    background: none;
+                    @include textGradient();
+                    border: none;
+                    font-size: 20px;
+                    cursor: pointer;
+                }
+            }
+
+            .volume {
+                display: flex;
+                position: relative;
+                align-items: center;
+                justify-content: center;
+
+                .icon {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    cursor: pointer;
+                    width: 30px;
+                    height: 30px;
+                    @include textGradient()
+                }
+
+                .volume-background {
+                    position: absolute;
+                    left: 50%;
+                    transform: translateX(-50%);
+                    bottom: 50px;
+                    background: $subColorMain;
+                    border-radius: 5px;
+                    height: 100px;
+                    padding: 10px;
+                    width: 50px;
+                    opacity: 0;
+                    pointer-events: none;
+                    visibility: visible;
+                    transition: .3s ease-out;
+                    transition-property: opacity, visibility;
+
+                    &::before {
+                        content: '';
+                        top: -30px;
+                        width: 100%;
+                        height: 30px;
+                        left: 0;
+                        position: absolute;
+                        background: transparent;
+                    }
+
+                    &::after {
+                        content: '';
+                        bottom: -24px;
+                        width: 100%;
+                        height: 30px;
+                        left: 0;
+                        position: absolute;
+                        background: transparent;
+                    }
+
+                    &.show,
+                    &:hover {
+                        opacity: 1;
+                        visibility: visible;
+                        pointer-events: all;
+                    }
+
+                    .volume-process {
+                        position: absolute;
+                        top: 10px;
+                        height: calc(100% - 20px);
+                        width: 5px;
+                        background: $colorProcess;
+                        left: 50%;
+                        border-radius: 10px;
+                        transform: translateX(-50%);
+                        cursor: pointer;
+
+                        .process-main {
+                            position: absolute;
+                            bottom: 0;
+                            width: 5px;
+                            height: 100%;
+                            border-radius: 10px;
+                            background: $colorText;
+
+                            .process-icon {
+                                position: absolute;
+                                top: 0;
+                                width: 14px;
+                                height: 14px;
+                                border-radius: 50%;
+                                @include processIconGradient();
+                                left: 50%;
+                                transform: translateX(-50%) translateY(-50%);
+                            }
+
+                            .process-percent {
+                                position: absolute;
+                                right: 36px;
+                                font-size: 14px;
+                                font-weight: bold;
+                                @include textGradient();
+                                padding: 5px 2px;
+                                border-radius: 5px;
+                                font-weight: bold;
+                                user-select: none;
+                                pointer-events: none;
+                                top: -10px;
+                            }
+                        }
+                    }
+                }
+
+                &:hover {
+                    .volume-background {
+                        opacity: 1;
+                        visibility: visible;
+                        pointer-events: all;
+                    }
+                }
+            }
+        }
+
+        .middle {
+            flex-basis: 100%;
+
+            @include screen(1024px) {
+                flex-basis: 50%;
+            }
+
+            display: flex;
+            justify-content: center;
+
+            @include screen(320px) {
+                gap: 20px;
+            }
+
+            button {
+                background: none;
+                border: none;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+
+                @include screen(400px) {
+                    font-size: 24px;
+                }
+
+                width: 32px;
+                cursor: pointer;
+                transition: transform .3s ease-out;
+                @include textGradient();
+
+                &:active {
+                    transform: scale(1.3);
+                }
+
+                &.big {
+                    margin: 0 20px;
+                    font-size: 36px;
+                }
+            }
+        }
+    }
+
+    .player {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 15px;
+        width: 100%;
+
+        .time-start,
+        .time-end {
+            user-select: none;
+            pointer-events: none;
+            @include textGradient();
+            font-size: 18px;
+            font-weight: 900;
+        }
+
+        .process {
+            height: 6px;
+            display: block;
+            background: $colorProcess;
+            cursor: pointer;
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+
+            &-main {
+                position: absolute;
+                left: 0;
+                top: 50%;
+                transform: translateY(-50%);
+
+                width: 0%;
+                background: $colorText;
+                height: 6px;
+
+                &.show {
+                    height: 10px;
+                }
+            }
+
+            &-icon {
+                height: 14px;
+                width: 14px;
+                @include processIconGradient();
+                position: absolute;
+                top: 50%;
+                right: 0;
+                transform: translateY(-50%);
+            }
+
+            &-timer {
+                position: absolute;
+                bottom: 20px;
+                left: 0px;
+                transform: translateX(-50%);
+                font-size: 12px;
+                color: $subColor;
+                font-weight: bold;
+                background: $mainColor;
+                padding: 4px 8px;
+                display: flex;
+                border-radius: 5px;
+                align-items: center;
+                justify-content: center;
+                opacity: 0;
+                visibility: visible;
+                pointer-events: none;
+                user-select: none;
+                transition: .3s ease-out;
+                transition-property: visibility, opacity;
+
+                &.show {
+                    opacity: 1;
+                    visibility: visible;
+                }
+            }
+        }
+    }
+
+}
+
+//End: Player
+.player-screen {
+    max-height: calc(100% - 200px);
+}
+
+.disc-overlay {
+    display: flex;
+    justify-content: center;
+    height: 300px;
+
+    @include screen(320px) {
+        height: 320px;
+    }
+
+    @include screen(390px) {
+        height: 400px;
+    }
+
+    @include screen(768px) {
+        height: 500px;
+    }
+
+    @include screen(1024px) {
+        height: 70vh;
+    }
+}
+
+.disc {
+    position: relative;
+    top: 10vh;
+    border-radius: 50%;
+    overflow: hidden;
+    width: 30vh;
+    height: 30vh;
+
+    @include screen(1024px) {
+        width: 50vh;
+        height: 50vh;
+    }
+
+    filter: drop-shadow(0 0 3px $mainColor);
+
+    &::before {
+        content: '';
+        width: 5vh;
+        height: 5vh;
+        border: 2vh solid $subColor;
+
+        @include screen(1024px) {
+            border: 4vh solid $subColor;
+        }
+
+        top: 50%;
+        left: 50%;
+        position: absolute;
+        border-radius: 50%;
+        transform: translateX(-50%) translateY(-50%);
+        z-index: 1;
+    }
+
+    &::after {
+        content: '';
+        border-style: solid;
+        border-color: transparent;
+        border-width: 15vh;
+        position: absolute;
+
+        border-image-source: var(--url-image);
+        border-image-repeat: stretch;
+        border-image-slice: 40%;
+        border-image-width: 42%;
+        border-image-outset: 0px;
+        left: 50%;
+        top: 50%;
+        transform: translateX(-50%) translateY(-50%);
+
+        @include screen(1024px) {
+            border-width: 25vh;
+        }
+    }
+}
+
+.song-info {
+    display: flex;
+    justify-content: center;
+    align-items: baseline;
+    gap: 20px;
+    margin-bottom: 20px;
+
+    @include screen(1024px) {
+        margin-bottom: 50px;
+    }
+
+    h1 {
+        font-size: 16px;
+
+        @include screen(320px) {
+            font-size: 22px;
+        }
+
+        @include screen(575px) {
+            font-size: 32px;
+        }
+
+        text-align: center;
+        text-transform: capitalize;
+        line-height: 1;
+        @include textGradient();
+    }
+}
+
+.screen-right {
+    padding: 0 10px;
+
+    @include screen(1024px) {
+        padding: 0;
+        position: fixed;
+        top: 50px;
+        right: 50px;
+    }
+
+    background: linear-gradient(to bottom, $subColor, transparent);
+    box-shadow: 0 0 40px $colorOpacity;
+    border-radius: 4px;
+    overflow: hidden;
+
+    h2 {
+        font-size: 16px;
+
+        @include screen(1024px) {
+            font-size: 32px;
+        }
+
+        color: white;
+        font-weight: bold;
+        @include backgroundGradient(180deg);
+        text-transform: uppercase;
+        padding: 10px 40px;
+        text-align: center;
+    }
+
+    .playlist {
+
+        max-height: calc(100vh - 375px - 200px);
+        height: 300px;
+
+        // @include screen(320px) {
+        //     max-height: calc(100vh - 400px - 200px);
+        // }
+
+        @include screen(390px) {
+            max-height: calc(100vh - 500px - 200px);
+        }
+
+        @include screen(1024px) {
+            max-height: 50vh;
+        }
+
+        overflow: auto;
+
+        &::-webkit-scrollbar {
+            background: transparent;
+            width: 8px;
+        }
+
+        &::-webkit-scrollbar-button {
+            background: transparent;
+            height: 0;
+            display: none;
+        }
+
+        &::-webkit-scrollbar-thumb {
+            background: linear-gradient(to bottom, transparent, $mainColor);
+            border-radius: 10px;
+        }
+
+        &::-webkit-scrollbar-track {
+            background: transparent;
+        }
+    }
+
+    .song {
+        padding: 10px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        cursor: pointer;
+
+        &.playing {
+            @include backgroundGradient(120deg);
+
+            .info {
+                h3 {
+                    text-shadow: 0 0 0px $colorText;
+                    // filter: drop-shadow(0 0 1px $mainColor);
+                }
+            }
+
+            .image {
+                .play-line {
+                    display: flex;
+                    z-index: 10;
+
+                    span {
+                        background-image: linear-gradient(to top, $colorText, $colorLineSpan);
+                        z-index: 10;
+                    }
+                }
+
+                &::before {
+                    content: '';
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    background: $colorOpacity;
+                }
+            }
+        }
+
+        .image {
+            position: relative;
+            font-size: 0;
+            box-shadow: 0 0 10px $mainColor;
+
+            .play-line {
+                display: none;
+                position: absolute;
+                bottom: 5px;
+                left: 50%;
+                transform: translate(-50%);
+            }
+        }
+
+        img {
+            width: auto;
+            height: 28px;
+        }
+
+        .info {
+            h3 {
+                font-size: 1rem;
+                @include textGradient();
+            }
+        }
+    }
+}
+
+.play-line {
+    display: flex;
+    gap: 2px;
+    justify-content: flex-end;
+    align-items: flex-end;
+    overflow: hidden;
+
+    span {
+        background: linear-gradient(to top, $colorText, $colorLineSpan);
+        display: block;
+        height: 0px;
+        width: 2px;
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+        overflow: hidden;
+        position: relative;
+        z-index: 10;
+        box-shadow: 0 -1px 3px $colorLineSpan;
+    }
+}
+
+.karaoke-screen {
+    position: fixed;
+    padding: 30px;
+    height: calc(70vh - 100px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 900px;
+    max-width: 90%;
+    left: 50%;
+    z-index: 9999;
+    transform: translateX(-50%) scale(0);
+    background: $karaokeColor;
+    border-radius: 5px;
+    box-shadow: 0 0 30px $karaokeColor;
+    transition: .4s ease-in-out;
+    transition-property: visibility, transform, top, opacity;
+    top: 100%;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+
+    &.show {
+        top: 40px;
+        opacity: 1;
+        visibility: visible;
+        pointer-events: all;
+        transform: translateX(-50%) scale(1);
+    }
+
+    .karaoke-action {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+
+        button {
+            width: 30px;
+            height: 30px;
+            font-size: 24px;
+            border: none;
+            @include textGradient();
+            filter: drop-shadow(0 0 1px $subColor);
+            cursor: pointer;
+        }
+    }
+
+    .karaoke-content {
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+        width: 100%;
+
+        .song-current {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+
+            .name {
+                font-size: 32px;
+                font-weight: bold;
+                color: black;
+            }
+
+            .author {
+                margin-top: 10px;
+                color: black;
+                font-size: 20px;
+                font-weight: bold;
+            }
+        }
+
+        .no-lyrics {
+            font-size: 32px;
+            color: black;
+            font-weight: bold;
+            text-transform: capitalize;
+            text-shadow: 1px 1px 3px $colorText,
+                1.2px 1.2px 3px $colorText,
+                1.3px 1.3px 3px $colorText,
+                1.4px 1.4px 3px $colorText,
+                1.5px 1.5px 3px $colorText;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .words {
+            display: flex;
+            gap: 10px;
+            height: 32px;
+            white-space: nowrap;
+
+            +.words {
+                margin-top: 20px;
+            }
+        }
+
+        p {
+            height: 32px;
+            white-space: nowrap;
+        }
+
+        .word,
+        p {
+            color: black;
+            position: relative;
+            font-size: 32px;
+            font-weight: bold;
+            text-shadow: 1px 1px 3px white,
+                1.2px 1.2px 3px white,
+                1.3px 1.3px 3px white,
+                1.4px 1.4px 3px white,
+                1.5px 1.5px 3px white;
+
+            span {
+                overflow: hidden;
+                white-space: nowrap;
+                position: absolute;
+                display: block;
+                top: 0;
+                left: 0;
+                width: 0%;
+                color: goldenrod;
+                text-shadow: 1px 1px 3px white,
+                    1.1px 1.1px 3px white,
+                    1.2px 1.2px 3px white,
+                    1.3px 1.3px 3px white,
+                    1.4px 1.4px 3px white,
+                    1.5px 1.5px 3px white;
+            }
+        }
+
+        .words+.words,
+        p:nth-of-type(2) {
+            margin-left: auto;
+            text-align: right;
+        }
+    }
+}
+
+[hidden] {
+    visibility: hidden;
+    pointer-events: none;
+    display: none !important;
+}
+
+[data-title] {
+    position: relative;
+    height: 42px !important;
+
+    .title-show {
+        position: absolute;
+        padding: 5px 10px;
+        background: black;
+        font-size: 16px;
+        white-space: nowrap;
+        color: white !important;
+        top: -100%;
+        -webkit-text-fill-color: initial;
+        left: 50%;
+        border-radius: 5px;
+        transform: translateX(-50%);
+        box-shadow: initial;
+        filter: initial;
+    }
+}
+
+.active {
+    position: relative;
+    filter: drop-shadow(0 0 2px $mainColor) !important;
+    background: initial !important;
+    background-clip: initial !important;
+    -webkit-text-fill-color: initial !important;
+
+    &::before {
+        content: '.';
+        height: 5px;
+        width: 5px;
+        border-radius: 50%;
+        bottom: calc(100% - 2px);
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        background: $mainColor;
+        -webkit-text-fill-color: initial;
+    }
+
+    i {
+        color: $mainColor;
+    }
+}
