@@ -1,4 +1,4 @@
-request.setEndpoint('http://localhost:3030');
+request.setEndpoint('https://music-two-gules.vercel.app');
 var suggestions = document.querySelectorAll('[data-title]');
 //Header Tab
 var tabEl = document.querySelector('header .tabs');
