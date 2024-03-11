@@ -184,6 +184,10 @@ function checkPercent(percent) {
     if (percent < 0) {
         percent = 0;
     }
+    if(isNaN(percent)){
+        percent = 0;
+        alert("Chưa tải được thời gian 😒");
+    }
     return percent
 }
 function percentToHeight() {
@@ -544,6 +548,7 @@ function percentProcessUpdate() {
     if (isShowLyric) {
         checkDataLyric();
     }
+    percentCurrent = checkPercent(percentCurrent);
     var timeCurrent = getTimeSecondHasPercent(percentCurrent);
     audioEl.currentTime = timeCurrent;
     if (audioKaraokeEl.webkitAudioDecodedByteCount) {
@@ -1221,6 +1226,11 @@ document.addEventListener('keydown', function (e) {
  * Cần xử lý khi mở karaoke thì đổi thành link khác
  * 
  */
+
+window.addEventListener('resize', function(){
+    window.location.reload();
+})
+
 window.addEventListener('DOMContentLoaded', async function () {
     playlists = getLocalStorage(KEY_PLAYLIST_MAIN)
     if (playlists.length === 0) {
