@@ -1009,7 +1009,6 @@ main {
             display: flex;
             gap: 10px;
             height: 32px;
-            white-space: nowrap;
 
             +.words {
                 margin-top: 20px;
@@ -1027,6 +1026,7 @@ main {
             position: relative;
             font-size: 32px;
             font-weight: bold;
+            
             text-shadow: 1px 1px 3px white,
                 1.2px 1.2px 3px white,
                 1.3px 1.3px 3px white,
@@ -1035,7 +1035,7 @@ main {
 
             span {
                 overflow: hidden;
-                white-space: nowrap;
+                
                 position: absolute;
                 display: block;
                 top: 0;

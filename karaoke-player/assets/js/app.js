@@ -169,10 +169,13 @@ async function playSong() {
                 id,
                 ...data.data
             })
+            if (playlists[songIndexCurrent].lyrics) {
+                addOrRemoveIconStartKaraoke();
+            }
             addAllEventNewSong(playlists.length - 1);
             songIndexCurrent = playlists.length - 1;
         } else {
-            return alert('Đang gặp 1 chút sự cố vui lòng đợi trong giây lát 😂!');
+            return alert('Vui lòng đăng ký VIP 😂!');
         }
     }
     if (!isPlay) {
@@ -209,6 +212,7 @@ function addAllEventNewSong(index) {
         songIndexCurrent = index;
         loadSongStart();
     })
+
     setLocalStorage(KEY_PLAYLIST_MAIN, playlists);
     playLines = document.querySelectorAll('.play-line');
 }

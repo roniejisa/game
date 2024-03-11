@@ -904,7 +904,6 @@ main {
   display: flex;
   gap: 10px;
   height: 32px;
-  white-space: nowrap;
 }
 .karaoke-screen .karaoke-content .words + .words {
   margin-top: 20px;
@@ -924,7 +923,6 @@ main {
 .karaoke-screen .karaoke-content .word span,
 .karaoke-screen .karaoke-content p span {
   overflow: hidden;
-  white-space: nowrap;
   position: absolute;
   display: block;
   top: 0;
