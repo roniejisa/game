@@ -2,10 +2,11 @@ $mainColor: #f7a5be;
 $subColor: #000000;
 $subColorMain: #000000;
 $colorText: #f0eef8;
-$colorProcess: #f7a5be;
+$colorProcess: #fce9ef;
 $colorLineSpan: #f7a5be;
 $colorOpacity: #00000099;
 $karaokeColor: #f5c3d2;
+$backgroundMain: #ffdfe9;
 
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
 
@@ -19,12 +20,11 @@ $karaokeColor: #f5c3d2;
     background: linear-gradient(to bottom, $mainColor, $colorText);
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    filter: drop-shadow(0 0 20px $mainColor);
+    filter: drop-shadow(0 0 5px $mainColor);
 }
 
 @mixin backgroundGradient($radiant: to bottom) {
     background: linear-gradient($radiant, $mainColor, $subColor);
-    box-shadow: 0 0 6px $subColor, 0 0 10px $mainColor;
 }
 
 @mixin processIconGradient() {
@@ -78,14 +78,15 @@ header {
     .tabs {
         display: flex;
         justify-content: center;
-        background: #f7a5be50;
+        background: $backgroundMain;
         border-radius: 25px;
-        padding: 5px 5px;
+        padding: 6px;
         position: relative;
+        box-shadow: 0 0 6px $mainColor;
 
         button {
-            padding: 10px 20px;
-            width: 150px;
+            padding: 6px 10px;
+            width: 160px;
             border: none;
             background: none;
             cursor: pointer;
@@ -103,7 +104,9 @@ header {
             }
 
             &.selected {
-                color: $mainColor;
+                span {
+                    @include textGradient()
+                }
             }
         }
 
@@ -112,7 +115,7 @@ header {
             top: 50%;
             left: 50%;
             transform: translateX(-50%) translateY(-50%);
-            min-width: 150px;
+            min-width: 160px;
             border-radius: 25px;
             z-index: 1;
             border: 1px solid;
@@ -126,8 +129,8 @@ header {
                 position: absolute;
                 background: #000000eb;
                 border-radius: 25px;
-                width: calc(100% - 3px);
-                height: calc(100% - 3px);
+                width: calc(100%);
+                height: calc(100%);
                 top: 50%;
                 left: 50%;
                 transform: translateX(-50%) translateY(-50%);
@@ -135,17 +138,58 @@ header {
             }
         }
     }
+
+    .header-form {
+        .form-search {
+            position: relative;
+            display: flex;
+            border-radius: 25px;
+            box-shadow: 0 0 6px $mainColor;
+
+            input {
+                &::placeholder {
+                    color: $backgroundMain;
+                }
+
+                padding: 12px 40px 12px 20px;
+                border: none;
+                outline: none;
+                height: 100%;
+                flex: 1;
+                font-weight: bold;
+                color: $mainColor;
+                background: transparent;
+            }
+
+            button {
+                cursor: pointer;
+                border: none;
+                background: none;
+                color: $mainColor;
+                position: absolute;
+
+                top: 50%;
+                transform: translateY(-50%);
+                right: 6px;
+                padding: 10px;
+
+                i {
+                    font-weight: bold;
+                }
+            }
+        }
+    }
 }
 
 // Player 
 .player-dashboard {
-    padding: 20px;
+    padding: 12px 1vw;
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     flex-direction: column;
     align-items: center;
     gap: 12px;
-    max-height: 200px;
+    max-height: 100px;
     position: relative;
     z-index: 9999;
     background: $subColor;
@@ -163,11 +207,33 @@ header {
 
             @include screen(1024px) {
                 flex-basis: 25%;
-                padding: 0 30px;
             }
         }
 
-        // .left {}
+        .left {
+            .info-current {
+                display: flex;
+                gap: 10px;
+            }
+
+            .title {
+                @include textGradient();
+                font-size: 14px;
+            }
+
+            .author {
+                color: $colorText;
+                font-size: 12px;
+            }
+
+            img {
+                height: 42px;
+                width: 42px;
+                object-fit: cover;
+                border-radius: 5px;
+                box-shadow: 0 0 2px $mainColor;
+            }
+        }
 
         .right {
             display: flex;
@@ -198,6 +264,7 @@ header {
                 button {
                     background: none;
                     @include textGradient();
+
                     border: none;
                     font-size: 20px;
                     cursor: pointer;
@@ -217,7 +284,7 @@ header {
                     cursor: pointer;
                     width: 30px;
                     height: 30px;
-                    @include textGradient()
+                    @include textGradient();
                 }
 
                 .volume-background {
@@ -280,7 +347,7 @@ header {
                             width: 5px;
                             height: 100%;
                             border-radius: 10px;
-                            background: $colorText;
+                            background: $mainColor;
 
                             .process-icon {
                                 position: absolute;
@@ -396,7 +463,7 @@ header {
                 transform: translateY(-50%);
 
                 width: 0%;
-                background: $colorText;
+                background: $mainColor;
                 height: 6px;
 
                 &.show {
@@ -405,10 +472,11 @@ header {
             }
 
             &-icon {
-                height: 14px;
-                width: 14px;
-                @include processIconGradient();
+                height: 12px;
+                width: 12px;
                 position: absolute;
+                @include processIconGradient();
+                border-radius: 5px;
                 top: 50%;
                 right: 0;
                 transform: translateY(-50%);
@@ -455,9 +523,67 @@ main {
     width: 100%;
     height: 100%;
 
+    .screen-left {
+        position: relative;
+
+        .songs {
+            max-height: 100%;
+            overflow: auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, 200px);
+            justify-content: center;
+            flex-wrap: wrap;
+            grid-gap: 20px;
+
+            .song-item {
+                flex-basis: calc(100% / 12 * 3 - 20px);
+                position: relative;
+                font-size: 0;
+                cursor: pointer;
+
+                &:hover {}
+
+                img {
+                    width: 100%;
+                    border-radius: 10px;
+                }
+
+                .info {
+                    background: #00000090;
+                    font-size: initial;
+                    position: absolute;
+                    bottom: 0;
+                    left: 0;
+                    padding: 10px;
+                    width: 100%;
+
+                    h3 {
+                        font-size: 14px;
+                        height: 20px;
+                        display: -webkit-box;
+                        -webkit-line-clamp: 1;
+                        -webkit-box-orient: vertical;
+                        overflow: hidden;
+                        @include textGradient()
+                    }
+
+                    .author {
+                        display: -webkit-box;
+                        -webkit-line-clamp: 1;
+                        -webkit-box-orient: vertical;
+                        overflow: hidden;
+                        color: $colorText;
+                        font-size: 12px;
+                    }
+                }
+            }
+        }
+    }
+
     .main {
         align-items: center;
         gap: 30px;
+        padding: 20px 0;
     }
 
     .screen-left,
@@ -484,12 +610,17 @@ main {
             pointer-events: all;
         }
     }
+
+    .screen-right {
+        justify-content: flex-start;
+    }
 }
 
 //End: Player
 .disc-overlay {
     display: flex;
     justify-content: center;
+    padding: 4px;
 
 }
 
@@ -505,7 +636,7 @@ main {
         height: 50vh;
     }
 
-    filter: drop-shadow(0 0 3px $mainColor);
+    filter: drop-shadow(1px 1px 2px $mainColor);
 
     &::before {
         content: '';
@@ -594,6 +725,7 @@ main {
     }
 
     .playlist {
+        position: relative;
         overflow: auto;
 
         &::-webkit-scrollbar {
@@ -714,7 +846,7 @@ main {
     align-items: center;
     z-index: 9999;
     background: $karaokeColor;
-    box-shadow: 0 0 30px $karaokeColor;
+    // box-shadow: 0 0 30px $karaokeColor;
     display: flex;
     position: absolute;
     width: 100%;
@@ -746,7 +878,6 @@ main {
         display: flex;
         flex-direction: column;
         gap: 30px;
-        width: 100%;
 
         .song-current {
             display: flex;
@@ -818,7 +949,7 @@ main {
                 top: 0;
                 left: 0;
                 width: 0%;
-                color: goldenrod;
+                color: #2026da;
                 text-shadow: 1px 1px 3px white,
                     1.1px 1.1px 3px white,
                     1.2px 1.2px 3px white,
@@ -888,6 +1019,10 @@ main {
     }
 }
 
+footer {
+    padding-top: 20px;
+}
+
 @keyframes filterRotate {
     0% {
         filter: hue-rotate(360deg);
@@ -900,5 +1035,40 @@ main {
 
     100% {
         filter: hue-rotate(360deg);
+    }
+}
+
+.loading {
+    position: absolute;
+    left: 50%;
+    top: 30px;
+    border-radius: 50%;
+    transform: translateX(-50%);
+    width: 50px;
+    height: 50px;
+    border: 5px solid $mainColor;
+    border-top-color: transparent;
+    border-bottom-color: transparent;
+    filter: drop-shadow(0 0 5px $mainColor);
+    animation: spin 1s infinite ease-out;
+    z-index: 10;
+    opacity: 0;
+    visibility: hidden;
+    user-select: none;
+    transition-property: visibility, opacity;
+
+    &.show {
+        opacity: 1;
+        visibility: visible
+    }
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
     }
 }

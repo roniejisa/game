@@ -19,11 +19,11 @@
                 </div>
                 <div class="tab-control">
                     <div class="tabs">
-                        <button data-tab="screen-home"><span>Màn hình chính</span></button>
+                        <button data-tab="screen-home"><span>Home</span></button>
                         <button data-tab="screen-main" class="selected">
-                            <span>Main</span>
+                            <span>Player</span>
                         </button>
-                        <button data-tab="screen-playlist"><span>Danh sách phát</span></button>
+                        <button data-tab="screen-playlist"><span>Playlist</span></button>
                         <div class="overlay">
                             <span></span>
                         </div>
@@ -31,7 +31,7 @@
                 </div>
                 <div class="header-form">
                     <form class="form-search">
-                        <input type="text">
+                        <input type="text" placeholder="Tìm kiếm...">
                         <button><i class="fa-solid fa-magnifying-glass"></i></button>
                     </form>
                 </div>
@@ -40,6 +40,18 @@
         <main>
             <div class="player-screen">
                 <div class="screen-left" data-tab-content id="screen-home">
+                    <span class="loading show"></span>
+                    <div class="songs">
+                        <div class="song-item">
+                            <div class="image">
+                                <img src="./assets/images/Anh Da Tu Bo Roi Day.jpg" alt="">
+                            </div>
+                            <div class="info">
+                                <h3 class="title">Anh Đã Từ Bỏ Rồi Đấy</h3>
+                                <span class="author">Ai đấy</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="main show" data-tab-content id="screen-main">
                     <div class="disc-overlay">
@@ -66,8 +78,8 @@
                     </div>
                 </div>
                 <div class="screen-right" data-tab-content id="screen-playlist">
+                    <span class="loading show"></span>
                     <div class="playlist">
-                        <p>Đang tải...</p>
                     </div>
                 </div>
             </div>
@@ -85,7 +97,17 @@
                     <span class="time-end">00:00</span>
                 </div>
                 <div class="toolbar">
-                    <div class="left"></div>
+                    <div class="left">
+                        <div class="info-current">
+                            <div class="image">
+                                <img src="./assets/images/logo.svg" alt="Tiêu đề">
+                            </div>
+                            <div class="info">
+                                <h3 class="title"></h3>
+                                <span class="author"></span>
+                            </div>
+                        </div>
+                    </div>
                     <div class="middle actions">
                         <button class="shuffle" data-title="Ngẫu nhiên">
                             <i class="fa-solid fa-shuffle"></i>
@@ -131,6 +153,7 @@
                 </div>
             </div>
         </footer>
+        <script src="./assets/js/request.js"></script>
         <script src="./assets/js/app.js"></script>
         <script src="./assets/js/getLyric.js"></script>
         <script src="./assets/js/player.js"></script>

@@ -256,8 +256,10 @@ var changeTitle = playerScreen.querySelector('.song-info h1');
 
 //Song Current 
 var songElCurrent = null;
-
-
+var infoCurrent = playerDashboard.querySelector('.left .info-current');
+var imageCurrent = infoCurrent.querySelector('img');
+var titleCurrent = infoCurrent.querySelector('.title');
+var authorCurrent = infoCurrent.querySelector('.author');
 //End
 var audioEl = new Audio();
 var audioKaraokeEl = new Audio();
@@ -404,7 +406,7 @@ function initAudio() {
         changeLoop();
     })
 
-    playlistEl.childNodes.forEach(function (song, index) {
+    Array.from(playlistEl.children).forEach(function (song, index) {
         song.addEventListener('click', function (e) {
             if (songIndexCurrent === index) {
                 // Nếu băng index hiện tại thì dừng;
@@ -434,6 +436,7 @@ function initAudio() {
         }
         resetLyricVariable();
         if (isShowLyric) {
+            changeTab()
             lyricKaraoke.classList.add('active');
             addInfoKaraokeContent();
             karaokeScreenEl.classList.add('show');
@@ -448,7 +451,9 @@ function initAudio() {
     buttonKaraoke.addEventListener('click', function () {
         isKaraoke = !isKaraoke;
         changeIconKaraoke();
-        console.log(isShowLyric, isKaraoke)
+        if(isKaraoke){
+            changeTab();
+        }
         if (isShowLyric === false) {
             lyricKaraoke.click();
         }
@@ -469,7 +474,7 @@ function initAudio() {
 
 function initAudioKaraoke() {
     audioKaraokeEl.addEventListener('loadeddata', function () {
-        if(isPlay){
+        if (isPlay) {
             audioKaraokeEl.play();
         }
         changeIconKaraoke();
@@ -630,10 +635,8 @@ function changeIconKaraoke() {
      * mute audio khi karaoke = true
      * 
      */
-    console.log(isKaraoke,isShowLyric, isKaraoke === false , isShowLyric === false);
     audioKaraokeEl.muted = (isKaraoke === false) || (isShowLyric === false);
     audioEl.muted = (isKaraoke === true);
-    console.log(audioKaraokeEl.muted);
     if (isKaraoke) {
         buttonKaraoke.classList.add('active')
     } else {
@@ -728,6 +731,7 @@ function loadSongInList() {
     playlistEl.innerHTML = playlists.map(function (song, index) {
         return renderSong(song);
     }).join('');
+    onOffLoading(loadingPlaylist, false);
 }
 
 function renderSong(song) {
@@ -751,6 +755,7 @@ function renderSong(song) {
 
 function loadSongStart() {
     // reset luôn
+    changeTab();
     resetLyricVariable();
     let indexActive = Array.from(playlistEl.children).findIndex(song => song.classList.contains('playing'));
     if (indexActive != -1) {
@@ -809,9 +814,12 @@ function loadSongStart() {
         }
         addOrRemoveIconStartKaraoke(false)
     }
+    imageCurrent.src = songCurrent.image;
+    imageCurrent.alt = songCurrent.title;
+    authorCurrent.innerText = songCurrent.author;
+    titleCurrent.innerText = songCurrent.title;
     changeTitle.innerText = songCurrent.title;
-
-    document.body.style.setProperty('--url-image', `url('../${songCurrent.image.replace('./assets/', '')}')`);
+    document.body.style.setProperty('--url-image', `url('${/^https:\/\//.test(songCurrent.image) ? songCurrent.image : `../${songCurrent.image.replace('./assets/', '')}')`}`);
 }
 
 function addInfoKaraokeContent() {
