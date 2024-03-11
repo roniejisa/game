@@ -15,13 +15,15 @@ body {
 }
 
 header {
-  padding: 2vw 3vw 2vw 3vw;
+  padding: 16px 10px;
 }
-header .header-container {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
+header .logo {
+  order: 2;
+}
+@media screen and (min-width: 992px) {
+  header .logo {
+    order: initial;
+  }
 }
 header .logo a {
   font-size: 0;
@@ -31,22 +33,47 @@ header .logo img {
   width: auto;
   height: 100%;
 }
-header .logo,
-header .header-form {
-  flex-basis: 12vw;
+header .tab-control {
+  display: none;
+  position: fixed;
+  top: 60px;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  z-index: 10000;
+  order: 1;
 }
-header .tabs {
-  display: flex;
-  justify-content: center;
+@media screen and (min-width: 992px) {
+  header .tab-control {
+    order: initial;
+    display: block;
+    position: relative;
+    top: initial;
+    left: initial;
+    right: initial;
+    bottom: initial;
+  }
+}
+header .tab-control .tabs {
   background: #ffdfe9;
-  border-radius: 25px;
+  width: 100%;
+  height: 100%;
   padding: 6px;
   position: relative;
   box-shadow: 0 0 6px #f7a5be;
 }
-header .tabs button {
+@media screen and (min-width: 992px) {
+  header .tab-control .tabs {
+    height: initial;
+    display: flex;
+    justify-content: center;
+    border-radius: 25px;
+  }
+}
+header .tab-control .tabs button {
   padding: 6px 10px;
-  width: 160px;
+  width: 100%;
   border: none;
   background: none;
   cursor: pointer;
@@ -58,17 +85,38 @@ header .tabs button {
   position: relative;
   z-index: 2;
 }
-header .tabs button span {
+@media screen and (min-width: 992px) {
+  header .tab-control .tabs button {
+    width: 160px;
+  }
+}
+header .tab-control .tabs button span {
   position: relative;
   z-index: 1;
 }
-header .tabs button.selected span {
-  background: linear-gradient(to bottom, #f7a5be, #f0eef8);
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  filter: drop-shadow(0 0 5px #f7a5be);
+@media screen and (min-width: 992px) {
+  header .tab-control .tabs button.selected span {
+    background: linear-gradient(to bottom, #f7a5be, #f0eef8);
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    filter: drop-shadow(0 0 5px #f7a5be);
+  }
 }
-header .tabs .overlay {
+header .tab-control .tabs .menu-close {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 9999;
+  padding: 10px;
+  cursor: pointer;
+}
+@media screen and (min-width: 992px) {
+  header .tab-control .tabs .menu-close {
+    display: none;
+  }
+}
+header .tab-control .tabs .overlay {
+  display: none;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -83,7 +131,12 @@ header .tabs .overlay {
   z-index: 1;
   animation: filterRotate 4s ease-in-out infinite alternate;
 }
-header .tabs .overlay span {
+@media screen and (min-width: 992px) {
+  header .tab-control .tabs .overlay {
+    display: block;
+  }
+}
+header .tab-control .tabs .overlay span {
   position: absolute;
   background: rgba(0, 0, 0, 0.9215686275);
   border-radius: 25px;
@@ -94,6 +147,31 @@ header .tabs .overlay span {
   transform: translateX(-50%) translateY(-50%);
   z-index: 2;
 }
+header .header-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+header .logo,
+header .header-form {
+  flex-basis: 150px;
+}
+@media screen and (min-width: 992px) {
+  header .logo,
+  header .header-form {
+    flex-basis: 300px;
+  }
+}
+header .header-form {
+  order: 3;
+  flex-basis: 80px;
+}
+@media screen and (min-width: 992px) {
+  header .header-form {
+    order: initial;
+  }
+}
 header .header-form .form-search {
   position: relative;
   display: flex;
@@ -101,10 +179,11 @@ header .header-form .form-search {
   box-shadow: 0 0 6px #f7a5be;
 }
 header .header-form .form-search input {
-  padding: 12px 40px 12px 20px;
+  padding: 5px;
   border: none;
   outline: none;
   height: 100%;
+  width: 100%;
   flex: 1;
   font-weight: bold;
   color: #f7a5be;
@@ -112,6 +191,11 @@ header .header-form .form-search input {
 }
 header .header-form .form-search input::placeholder {
   color: #ffdfe9;
+}
+@media screen and (min-width: 992px) {
+  header .header-form .form-search input {
+    padding: 12px 40px 12px 20px;
+  }
 }
 header .header-form .form-search button {
   cursor: pointer;
@@ -123,9 +207,29 @@ header .header-form .form-search button {
   transform: translateY(-50%);
   right: 6px;
   padding: 10px;
+  display: none;
+}
+@media screen and (min-width: 992px) {
+  header .header-form .form-search button {
+    display: initial;
+  }
 }
 header .header-form .form-search button i {
   font-weight: bold;
+}
+header .menu-open {
+  border: none;
+  background: linear-gradient(to bottom, #f7a5be, #f0eef8);
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  filter: drop-shadow(0 0 5px #f7a5be);
+  flex-basis: 80px;
+  text-align: left;
+}
+@media screen and (min-width: 992px) {
+  header .menu-open {
+    display: none;
+  }
 }
 
 .player-dashboard {
@@ -147,14 +251,24 @@ header .header-form .form-search button i {
   width: 100%;
   justify-content: center;
 }
-.player-dashboard .toolbar .left,
-.player-dashboard .toolbar .right {
-  flex-basis: 100%;
-}
 @media screen and (min-width: 1024px) {
   .player-dashboard .toolbar .left,
   .player-dashboard .toolbar .right {
     flex-basis: 25%;
+  }
+}
+.player-dashboard .toolbar .left {
+  position: absolute;
+  top: -100px;
+  z-index: 10;
+  left: 10px;
+}
+@media screen and (min-width: 992px) {
+  .player-dashboard .toolbar .left {
+    position: initial;
+    top: initial;
+    z-index: initial;
+    left: initial;
   }
 }
 .player-dashboard .toolbar .left .info-current {
@@ -180,14 +294,25 @@ header .header-form .form-search button i {
   box-shadow: 0 0 2px #f7a5be;
 }
 .player-dashboard .toolbar .right {
+  position: absolute;
+  right: 10px;
+  bottom: 100px;
+  gap: 6px;
+  align-items: center;
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  gap: 30px;
 }
-@media screen and (min-width: 1024px) {
+@media screen and (min-width: 992px) {
+  .player-dashboard .toolbar .right {
+    position: initial;
+    width: initial;
+    bottom: initial;
+  }
+}
+@media screen and (min-width: 992px) {
   .player-dashboard .toolbar .right {
     justify-content: flex-end;
+    gap: 30px;
   }
 }
 @media screen and (min-width: 1024px) {
@@ -234,6 +359,7 @@ header .header-form .form-search button i {
   filter: drop-shadow(0 0 5px #f7a5be);
 }
 .player-dashboard .toolbar .right .volume .volume-background {
+  display: none;
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
@@ -243,11 +369,16 @@ header .header-form .form-search button i {
   height: 100px;
   padding: 10px;
   width: 50px;
-  opacity: 0;
-  pointer-events: none;
-  visibility: visible;
   transition: 0.3s ease-out;
   transition-property: opacity, visibility;
+}
+@media screen and (min-width: 992px) {
+  .player-dashboard .toolbar .right .volume .volume-background {
+    display: block;
+    opacity: 0;
+    pointer-events: none;
+    visibility: hidden;
+  }
 }
 .player-dashboard .toolbar .right .volume .volume-background::before {
   content: "";
@@ -517,7 +648,7 @@ main {
   padding-bottom: 10px;
   overflow: auto;
   display: grid;
-  grid-template-columns: repeat(auto-fit, 210px);
+  grid-template-columns: repeat(auto-fit, 160px);
   justify-content: center;
   flex-wrap: wrap;
   grid-gap: 20px;
@@ -541,6 +672,12 @@ main {
 .player-screen .screen-left .search::-webkit-scrollbar-track,
 .player-screen .screen-left .songs::-webkit-scrollbar-track {
   background: transparent;
+}
+@media screen and (min-width: 992px) {
+  .player-screen .screen-left .search,
+  .player-screen .screen-left .songs {
+    grid-template-columns: repeat(auto-fit, 210px);
+  }
 }
 .player-screen .screen-left .search .song-item,
 .player-screen .screen-left .songs .song-item {
@@ -836,18 +973,28 @@ main {
 
 .karaoke-screen {
   height: 100%;
-  padding: 30px;
   display: flex;
   justify-content: center;
-  align-items: center;
+  padding: 15px;
   z-index: 9999;
-  background: #f5c3d2;
+  background: black;
   display: flex;
   position: absolute;
   width: 100%;
   left: 0;
   top: 100%;
   transition: top 400ms;
+}
+@media screen and (min-width: 992px) {
+  .karaoke-screen {
+    padding: 30px;
+    align-items: center;
+  }
+}
+@media screen and (min-width: 992px) {
+  .karaoke-screen {
+    background: #f5c3d2;
+  }
 }
 .karaoke-screen.show {
   top: 0;
@@ -908,20 +1055,19 @@ main {
 .karaoke-screen .karaoke-content .words + .words {
   margin-top: 20px;
 }
-.karaoke-screen .karaoke-content p {
-  height: 32px;
-  white-space: nowrap;
-}
-.karaoke-screen .karaoke-content .word,
-.karaoke-screen .karaoke-content p {
+.karaoke-screen .karaoke-content .word {
   color: black;
   position: relative;
   font-size: 32px;
   font-weight: bold;
   text-shadow: 1px 1px 3px white, 1.2px 1.2px 3px white, 1.3px 1.3px 3px white, 1.4px 1.4px 3px white, 1.5px 1.5px 3px white;
 }
-.karaoke-screen .karaoke-content .word span,
-.karaoke-screen .karaoke-content p span {
+@media screen and (min-width: 992px) {
+  .karaoke-screen .karaoke-content .word {
+    white-space: nowrap;
+  }
+}
+.karaoke-screen .karaoke-content .word span {
   overflow: hidden;
   position: absolute;
   display: block;
@@ -931,8 +1077,7 @@ main {
   color: #2026da;
   text-shadow: 1px 1px 3px white, 1.1px 1.1px 3px white, 1.2px 1.2px 3px white, 1.3px 1.3px 3px white, 1.4px 1.4px 3px white, 1.5px 1.5px 3px white;
 }
-.karaoke-screen .karaoke-content .words + .words,
-.karaoke-screen .karaoke-content p:nth-of-type(2) {
+.karaoke-screen .karaoke-content .word + .words {
   margin-left: auto;
   text-align: right;
 }
