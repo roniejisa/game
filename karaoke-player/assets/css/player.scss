@@ -572,6 +572,7 @@ main {
                 padding: 5px;
                 background: none;
                 @include textGradient();
+                cursor: pointer;
             }
         }
 
