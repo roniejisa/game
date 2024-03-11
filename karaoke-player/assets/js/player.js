@@ -411,7 +411,14 @@ function initAudio() {
             if (songIndexCurrent === index) {
                 // Nếu băng index hiện tại thì dừng;
                 buttonPlayer.click();
+                if (isPlay) {
+                    changeTab();
+                }
                 return false;
+            }
+
+            if (!isPlay) {
+                buttonPlayer.click();
             }
             if (playlists[songIndexCurrent].lyrics) {
                 addOrRemoveIconStartKaraoke();
@@ -451,7 +458,7 @@ function initAudio() {
     buttonKaraoke.addEventListener('click', function () {
         isKaraoke = !isKaraoke;
         changeIconKaraoke();
-        if(isKaraoke){
+        if (isKaraoke) {
             changeTab();
         }
         if (isShowLyric === false) {
@@ -614,8 +621,6 @@ function checkLoopIfEnded(isNext = true, checkLoop = false) {
             songIndexCurrent = playlists.length - 1;
         }
     }
-
-
 
     loadSongStart();
     changeIconPlay();
@@ -1140,7 +1145,7 @@ document.addEventListener('keydown', function (e) {
     //     }
     // }
     // e.preventDefault();
-    if(e.target.localName === 'input'){
+    if (e.target.localName === 'input') {
         return false;
     }
     if (e.which === 37) {
