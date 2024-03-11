@@ -1140,6 +1140,9 @@ document.addEventListener('keydown', function (e) {
     //     }
     // }
     // e.preventDefault();
+    if(e.target.localName === 'input'){
+        return false;
+    }
     if (e.which === 37) {
         audioEl.currentTime -= 1;
     }

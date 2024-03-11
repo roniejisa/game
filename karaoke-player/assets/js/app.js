@@ -41,13 +41,26 @@ var inputSearch = formSearch.querySelector('input');
 var buttonSearch = formSearch.querySelector('button');
 var loadingHome = document.querySelector('.screen-left .loading');
 var loadingPlaylist = document.querySelector('.screen-right .loading');
-var songEl = document.querySelector('.player-screen .songs');
+var homeContainer = document.querySelector('.player-screen .home-container');
+var searchContainer = document.querySelector('.player-screen .search-container');
+
+var songEl = homeContainer.querySelector('.songs');
+var searchEl = searchContainer.querySelector('.search');
+
+var headingSong = homeContainer.querySelector('.heading');
+var headingSearch = searchContainer.querySelector('.heading');
+
+var searchTextEl = searchContainer.querySelector('blockquote');
+var buttonSearchInSong = headingSong.querySelector('button');
+var buttonHomeInSong = headingSearch.querySelector('button');
+
 var KEY_PLAYLIST = 'PLAYLIST';
 var KEY_HOME = 'HOME';
 var playlistHome = [];
 var playHomeCount = 0;
+var playListSearch = [];
 
-
+var keySearch = "";
 suggestions.forEach(item => {
     item.addEventListener('mouseenter', function (e) {
         var title = this.dataset.title;
@@ -66,18 +79,60 @@ suggestions.forEach(item => {
     })
 })
 
-formSearch.addEventListener('submit', function (e) {
+buttonSearchInSong.addEventListener('click', function () {
+    showOrHiddenElement(searchContainer, homeContainer, 'show');
+})
+
+buttonHomeInSong.addEventListener('click', function () {
+    showOrHiddenElement(homeContainer, searchContainer, 'show');
+})
+// Tìm kiếm
+formSearch.addEventListener('submit', async function (e) {
     e.preventDefault();
     var value = inputSearch.value.trim();
     if (value === "") {
         inputSearch.focus();
         return alert("Vui lòng nhập dữ liệu 🤣!");
     }
+    onOffLoading(loadingHome, true)
+    try {
+        var [responseZing, responseNCT] = await Promise.all([request.get(`/zing/search/${value}`), request.get(`/nct/search/${value}`)]);
+    } catch (err) {
+        var responseZing = { status: "False" };
+        var responseNCT = { status: "False" };
+    }
+    playListSearch = [];
+    if (responseZing.status === 'OK' && responseZing.data.status === 200) {
+        playListSearch = playListSearch.concat(responseZing.data.data);
+
+    }
+
+    if (responseNCT.status === "OK" && responseNCT.data.status === 200) {
+        playListSearch = playListSearch.concat(responseNCT.data.data);
+    }
+    searchTextEl.innerText = value;
+    buttonSearchInSong.removeAttribute('hidden');
+    changeTab('screen-home');
+    await renderSongSearch();
+    onOffLoading(loadingHome, false);
+    showOrHiddenElement(searchContainer, homeContainer, 'show');
+    chooseSongSearch();
 })
-var homeScreen = document.querySelector('selectors')
+
+function showOrHiddenElement(elementShow, elementHidden, className) {
+    elementShow.classList.add(className);
+    elementHidden.classList.remove(className);
+}
+
 
 function chooseSongHome() {
     Array.from(songEl.children).forEach(songItem => {
+        songItem.addEventListener('click', playSong);
+    })
+}
+
+function chooseSongSearch() {
+    Array.from(searchEl.children).forEach(songItem => {
         songItem.addEventListener('click', playSong);
     })
 }
@@ -139,10 +194,26 @@ function addAllEventNewSong(index) {
         songIndexCurrent = index;
         loadSongStart();
     })
+    playLines = document.querySelectorAll('.play-line');
 }
 function renderSongHome() {
     return new Promise(resolve => {
         songEl.innerHTML = playlistHome.map(({ title, id, type, image, author }) => `<div class="song-item" title="${title} - ${author}" data-id="${id}" data-type="${type}">
+            <div class="image" >
+                <img src="${image}" alt="">
+            </div>
+            <div class="info">
+                <h3 class="title">${title}</h3>
+                <span class="author">${author}</span>
+            </div>
+        </div>`).join('')
+        return resolve(songEl.children);
+    });
+}
+
+function renderSongSearch() {
+    return new Promise(resolve => {
+        searchEl.innerHTML = playListSearch.map(({ title, id, type, image, author }) => `<div class="song-item" title="${title} - ${author}" data-id="${id}" data-type="${type}">
             <div class="image" >
                 <img src="${image}" alt="">
             </div>
@@ -175,6 +246,7 @@ function onOffLoading(element, isLoading) {
         element.classList.remove('show');
     }
 }
+
 
 window.addEventListener('DOMContentLoaded', async function () {
     playlistHome = getLocalStorage(KEY_HOME);
