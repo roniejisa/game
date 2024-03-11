@@ -16,7 +16,7 @@ var requestAnimationFrame =
 
 var cancelAnimationFrame =
     window.cancelAnimationFrame || window.mozCancelAnimationFrame;
-
+var KEY_PLAYLIST_MAIN = 'PLAYLIST_MAIN';
 var playerDashboard = document.querySelector('.player-dashboard');
 
 var player = playerDashboard.querySelector('.player')
@@ -1221,20 +1221,18 @@ document.addEventListener('keydown', function (e) {
  * Cần xử lý khi mở karaoke thì đổi thành link khác
  * 
  */
-window.addEventListener('DOMContentLoaded', function () {
-    fetch('./assets/data/songs.json').then(function (res) {
-        return res.json();
-    }).then(function (res) {
-        playlists = res;
-        //Load list
-        loadSongInList();
-        //Add Url One
-        loadSongStart();
-        initAudio();
-
-
-        changeIconPlay();
-        changeIconVolume()
-        changeHeightProcess(percentVolumeCurrent);
-    })
+window.addEventListener('DOMContentLoaded', async function () {
+    playlists = getLocalStorage(KEY_PLAYLIST_MAIN)
+    if (playlists.length === 0) {
+        const response = await fetch('./assets/data/songs.json')
+        playlists = await response.json();
+        setLocalStorage(KEY_PLAYLIST_MAIN, playlists);
+    }
+    loadSongInList();
+    //Add Url One
+    loadSongStart();
+    initAudio();
+    changeIconPlay();
+    changeIconVolume()
+    changeHeightProcess(percentVolumeCurrent);
 })
