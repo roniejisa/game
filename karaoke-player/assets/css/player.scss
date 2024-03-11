@@ -42,15 +42,103 @@ $karaokeColor: #f5c3d2;
 
 body {
     font-family: Montserrat, sans-serif;
-    height: 100vh;
     display: flex;
     flex-direction: column;
-    background: linear-gradient(to bottom, $mainColor, $subColorMain, $subColor);
+    background: black
+}
+
+//Header
+header {
+    padding: 2vw 3vw 2vw 3vw;
+
+    .header-container {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+    }
+
+    .logo {
+        a {
+            font-size: 0;
+        }
+
+        img {
+            display: block;
+            width: auto;
+            height: 100%;
+        }
+    }
+
+    .logo,
+    .header-form {
+        flex-basis: 12vw;
+    }
+
+    .tabs {
+        display: flex;
+        justify-content: center;
+        background: #f7a5be50;
+        border-radius: 25px;
+        padding: 5px 5px;
+        position: relative;
+
+        button {
+            padding: 10px 20px;
+            width: 150px;
+            border: none;
+            background: none;
+            cursor: pointer;
+            border-radius: 25px;
+            font-weight: bold;
+            transform-origin: center;
+            transition: .4s ease;
+            transition-property: min-width, opacity, color;
+            position: relative;
+            z-index: 2;
+
+            span {
+                position: relative;
+                z-index: 1;
+            }
+
+            &.selected {
+                color: $mainColor;
+            }
+        }
+
+        .overlay {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translateX(-50%) translateY(-50%);
+            min-width: 150px;
+            border-radius: 25px;
+            z-index: 1;
+            border: 1px solid;
+            border-color: $mainColor $colorText $mainColor $colorText;
+            height: calc(100% - 10px);
+            transition: transform .4s ease;
+            z-index: 1;
+            animation: filterRotate 4s ease-in-out infinite alternate;
+
+            span {
+                position: absolute;
+                background: #000000eb;
+                border-radius: 25px;
+                width: calc(100% - 3px);
+                height: calc(100% - 3px);
+                top: 50%;
+                left: 50%;
+                transform: translateX(-50%) translateY(-50%);
+                z-index: 2;
+            }
+        }
+    }
 }
 
 // Player 
 .player-dashboard {
-    margin-top: auto;
     padding: 20px;
     display: flex;
     justify-content: center;
@@ -357,36 +445,56 @@ body {
 
 }
 
-//End: Player
-.player-screen {
-    max-height: calc(100% - 200px);
+main {
+    position: relative;
+    overflow: hidden;
 }
 
+.player-screen {
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+
+    .main {
+        align-items: center;
+        gap: 30px;
+    }
+
+    .screen-left,
+    .main,
+    .screen-right {
+        opacity: 0;
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        left: 0;
+        visibility: hidden;
+        pointer-events: none;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        top: 100%;
+        transition-property: top, opacity, visibility;
+        transition-duration: 300ms;
+
+        &.show {
+            opacity: 1;
+            top: 0;
+            visibility: visible;
+            pointer-events: all;
+        }
+    }
+}
+
+//End: Player
 .disc-overlay {
     display: flex;
     justify-content: center;
-    height: 300px;
 
-    @include screen(320px) {
-        height: 320px;
-    }
-
-    @include screen(390px) {
-        height: 400px;
-    }
-
-    @include screen(768px) {
-        height: 500px;
-    }
-
-    @include screen(1024px) {
-        height: 70vh;
-    }
 }
 
 .disc {
     position: relative;
-    top: 10vh;
     border-radius: 50%;
     overflow: hidden;
     width: 30vh;
@@ -444,11 +552,6 @@ body {
     justify-content: center;
     align-items: baseline;
     gap: 20px;
-    margin-bottom: 20px;
-
-    @include screen(1024px) {
-        margin-bottom: 50px;
-    }
 
     h1 {
         font-size: 16px;
@@ -470,14 +573,6 @@ body {
 
 .screen-right {
     padding: 0 10px;
-
-    @include screen(1024px) {
-        padding: 0;
-        position: fixed;
-        top: 50px;
-        right: 50px;
-    }
-
     background: linear-gradient(to bottom, $subColor, transparent);
     box-shadow: 0 0 40px $colorOpacity;
     border-radius: 4px;
@@ -499,22 +594,6 @@ body {
     }
 
     .playlist {
-
-        max-height: calc(100vh - 375px - 200px);
-        height: 300px;
-
-        // @include screen(320px) {
-        //     max-height: calc(100vh - 400px - 200px);
-        // }
-
-        @include screen(390px) {
-            max-height: calc(100vh - 500px - 200px);
-        }
-
-        @include screen(1024px) {
-            max-height: 50vh;
-        }
-
         overflow: auto;
 
         &::-webkit-scrollbar {
@@ -628,33 +707,23 @@ body {
 }
 
 .karaoke-screen {
-    position: fixed;
+    height: 100%;
     padding: 30px;
-    height: calc(70vh - 100px);
     display: flex;
     justify-content: center;
     align-items: center;
-    min-width: 900px;
-    max-width: 90%;
-    left: 50%;
     z-index: 9999;
-    transform: translateX(-50%) scale(0);
     background: $karaokeColor;
-    border-radius: 5px;
     box-shadow: 0 0 30px $karaokeColor;
-    transition: .4s ease-in-out;
-    transition-property: visibility, transform, top, opacity;
+    display: flex;
+    position: absolute;
+    width: 100%;
+    left: 0;
     top: 100%;
-    opacity: 0;
-    visibility: hidden;
-    pointer-events: none;
+    transition: top 400ms;
 
     &.show {
-        top: 40px;
-        opacity: 1;
-        visibility: visible;
-        pointer-events: all;
-        transform: translateX(-50%) scale(1);
+        top: 0;
     }
 
     .karaoke-action {
@@ -816,5 +885,20 @@ body {
 
     i {
         color: $mainColor;
+    }
+}
+
+@keyframes filterRotate {
+    0% {
+        filter: hue-rotate(360deg);
+
+    }
+
+    50% {
+        filter: hue-rotate(0deg);
+    }
+
+    100% {
+        filter: hue-rotate(360deg);
     }
 }

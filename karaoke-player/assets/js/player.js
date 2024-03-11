@@ -428,10 +428,10 @@ function initAudio() {
     })
 
     lyricKaraoke.addEventListener('click', function () {
-        if (!isPlay) {
+        isShowLyric = !isShowLyric
+        if (!isPlay && isShowLyric) {
             buttonPlayer.click();
         }
-        isShowLyric = !isShowLyric
         resetLyricVariable();
         if (isShowLyric) {
             lyricKaraoke.classList.add('active');
@@ -448,6 +448,7 @@ function initAudio() {
     buttonKaraoke.addEventListener('click', function () {
         isKaraoke = !isKaraoke;
         changeIconKaraoke();
+        console.log(isShowLyric, isKaraoke)
         if (isShowLyric === false) {
             lyricKaraoke.click();
         }
@@ -468,6 +469,9 @@ function initAudio() {
 
 function initAudioKaraoke() {
     audioKaraokeEl.addEventListener('loadeddata', function () {
+        if(isPlay){
+            audioKaraokeEl.play();
+        }
         changeIconKaraoke();
     })
 
@@ -555,7 +559,6 @@ function checkLoopIfEnded(isNext = true, checkLoop = false) {
     if (isShuffle && isNext) {
         songIndexPrevious = songIndexCurrent;
     }
-    console.log(songIndexPrevious);
     if (songIndexPrevious && !isNext && isShuffle && songIndexCurrent !== songIndexPrevious) {
         songIndexCurrent = songIndexPrevious;
         loadSongStart();
@@ -627,8 +630,10 @@ function changeIconKaraoke() {
      * mute audio khi karaoke = true
      * 
      */
+    console.log(isKaraoke,isShowLyric, isKaraoke === false , isShowLyric === false);
     audioKaraokeEl.muted = (isKaraoke === false) || (isShowLyric === false);
     audioEl.muted = (isKaraoke === true);
+    console.log(audioKaraokeEl.muted);
     if (isKaraoke) {
         buttonKaraoke.classList.add('active')
     } else {
@@ -810,7 +815,6 @@ function loadSongStart() {
 }
 
 function addInfoKaraokeContent() {
-    console.log(playlists[songIndexCurrent].lyrics);
     karaokeContentEl.insertAdjacentHTML('afterbegin', setDataDefaultKaraoke(playlists[songIndexCurrent].lyrics ?? false));
     songCurrentInfoEl = karaokeContentEl.querySelector('.song-current');
 }
@@ -852,7 +856,7 @@ function addOrRemoveIconStartKaraoke(isRemove = true) {
     }, {
         data: `<i class="fa-solid fa-microphone"></i>`,
         startTime: wordFirst.startTime - (initialValue - step * 5),
-        endTime: wordFirst.startTime - 500,
+        endTime: wordFirst.startTime - 500 > 0 ? wordFirst.startTime - 500 : wordFirst.startTime,
     })
 }
 
