@@ -17,6 +17,11 @@ body {
 header {
   padding: 16px 10px;
 }
+@media screen and (min-width: 992px) {
+  header {
+    padding: 18px 20px;
+  }
+}
 header .logo {
   order: 2;
 }
@@ -160,7 +165,7 @@ header .header-form {
 @media screen and (min-width: 992px) {
   header .logo,
   header .header-form {
-    flex-basis: 300px;
+    flex-basis: 200px;
   }
 }
 header .header-form {
@@ -170,6 +175,7 @@ header .header-form {
 @media screen and (min-width: 992px) {
   header .header-form {
     order: initial;
+    flex-basis: 200px;
   }
 }
 header .header-form .form-search {

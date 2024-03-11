@@ -50,7 +50,9 @@ body {
 //Header
 header {
     padding: 16px 10px;
-
+    @include screen(992px){
+        padding: 18px 20px;
+    }
     .logo {
         order: 2;
 
@@ -206,7 +208,7 @@ header {
         flex-basis: 150px;
 
         @include screen(992px) {
-            flex-basis: 300px;
+            flex-basis: 200px;
         }
     }
 
@@ -216,6 +218,7 @@ header {
 
         @include screen(992px) {
             order: initial;
+            flex-basis: 200px;
         }
 
         .form-search {
