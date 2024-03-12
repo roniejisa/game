@@ -191,8 +191,8 @@ iconVolumeProcess.addEventListener(typeMouseDown, function (e) {
 })
 
 document.addEventListener(typeMouseMove, function (e) {
-    e.preventDefault();
     if (isDragVolume) {
+        e.preventDefault();
         dragClientY = !mobileAndTabletCheck() ? e.clientY : e.changedTouches[0].clientY;
         transform = Math.abs(dragClientY - clientYIconProcess);
         var heightMainProcessCurrent = heightMainProcess - transform;
