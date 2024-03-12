@@ -15,8 +15,7 @@ var offsetCurrent = 0;
 var percentCurrent = 0;
 var clientXIconProcess = 0;
 var widthMainProcess = 0;
-
-process.addEventListener('mousedown', function (e) {
+process.addEventListener(typeMouseDown, function (e) {
     isDrag = true;
     var targetEl = e.target;
     if (targetEl.classList.contains('process-icon')) {
@@ -31,23 +30,23 @@ process.addEventListener('mousedown', function (e) {
     clientXIconProcess = e.clientX;
 })
 
+// Di chuyển để hiên thị thẻ html
 process.addEventListener(typeMouseMove, function (e) {
-    if (isDrag) {
-        e.preventDefault();
-        timerProcess.classList.add('show');
-        var left = !mobileAndTabletCheck() ? e.clientX : e.changedTouches[0].clientX;
-        if (e.clientX < timerProcess.clientWidth) {
-            left = timerProcess.clientWidth;
-        } else if (window.innerWidth < timerProcess.clientWidth + (!mobileAndTabletCheck() ? e.clientX : e.changedTouches[0].clientX)) {
-            left = window.innerWidth - timerProcess.clientWidth;
-        }
-        timerProcess.style.left = left + 'px';
+    e.stopPropagation();
+    e.preventDefault();
+    timerProcess.classList.add('show');
+    var left = !mobileAndTabletCheck() ? e.clientX : e.changedTouches[0].clientX;
+    if (e.clientX < timerProcess.clientWidth) {
+        left = timerProcess.clientWidth;
+    } else if (window.innerWidth < timerProcess.clientWidth + (!mobileAndTabletCheck() ? e.clientX : e.changedTouches[0].clientX)) {
+        left = window.innerWidth - timerProcess.clientWidth;
+    }
+    timerProcess.style.left = left + 'px';
 
-        if (e.target.classList.contains('process-icon')) {
-            changeProcessTimer(percentCurrent);
-        } else {
-            changeProcessTimer(toPercent(!mobileAndTabletCheck() ? e.offsetX : e.changedTouches[0].clientX));
-        }
+    if (e.target.classList.contains('process-icon')) {
+        changeProcessTimer(percentCurrent);
+    } else {
+        changeProcessTimer(toPercent(!mobileAndTabletCheck() ? e.offsetX : e.changedTouches[0].clientX));
     }
 }, { passive: false })
 
@@ -100,15 +99,6 @@ document.addEventListener(typeMouseUp, function () {
     isDrag = false;
 })
 
-document.addEventListener('mousedown', function () {
-    if (isDrag) {
-        checkTimeLyric();
-        percentProcessUpdate();
-    }
-    isDrag = false;
-})
-
-
 // Xử lý process volume
 var rightEl = playerDashboard.querySelector('.right');
 var volume = playerDashboard.querySelector('.volume');
@@ -131,7 +121,7 @@ var volumeHightSmallIcon = '<i class="fa-solid fa-volume-low"></i>';
 var volumeHightOffIcon = '<i class="fa-solid fa-volume-off"></i>';
 var volumeHightXIcon = '<i class="fa-solid fa-volume-xmark"></i>';
 
-volumeProcess.addEventListener('mousedown', function (e) {
+volumeProcess.addEventListener(typeMouseDown, function (e) {
     isDragVolume = true;
     var targetEl = e.target;
     if (targetEl.classList.contains('process-icon')) {
@@ -150,15 +140,6 @@ volumeProcess.addEventListener('mousedown', function (e) {
     clientYIconProcess = e.clientY;
     changeIconVolume();
 })
-
-// volumeProcess.addEventListener(typeMouseMove, function (e) {
-// percentVolumeProcess.classList.add('show');
-// percentVolumeProcess.style.left = e.clientX - process.offsetLeft + 'px';
-// })
-
-// volumeProcess.addEventListener('mouseleave', function (e) {
-// percentVolumeProcess.classList.remove('show');
-// })
 
 function toPercentHeight(height) {
     var percent = checkPercent(height / heightProcess * 100);
@@ -215,14 +196,6 @@ document.addEventListener(typeMouseMove, function (e) {
 }, { passive: false })
 
 document.addEventListener(typeMouseUp, function () {
-    if (isDragVolume) {
-        heightMainProcess = percentVolumeCurrent === 100 ? heightProcess : heightMainProcess;
-        volumeBackground.classList.remove('show')
-    }
-    isDragVolume = false;
-})
-
-document.addEventListener('mouseup', function () {
     if (isDragVolume) {
         heightMainProcess = percentVolumeCurrent === 100 ? heightProcess : heightMainProcess;
         volumeBackground.classList.remove('show')
