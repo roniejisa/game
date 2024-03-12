@@ -1,265 +1,5 @@
 [
 	{
-		"title": "Chúng Ta Của Tương Lai",
-		"url": "./assets/songs/Chúng Ta Của Tương Lai.mp3",
-		"image": "./assets/images/Chung Ta Cua Tuong Lai.jpg",
-		"author": "Sơn Tùng MPT",
-		"lyrics": [
-			{
-				"words": "Liệu mai sau phai vội mau không bước bên cạnh nhau",
-				"startTimeMs": "27667.19"
-			},
-			{
-				"words": "Thì ta có đau?",
-				"startTimeMs": "31927.31"
-			},
-			{
-				"words": "Đôi mi nhoè phai ai sẽ lau",
-				"startTimeMs": "34647.97"
-			},
-			{
-				"words": "Ai sẽ đến lau nỗi đau này",
-				"startTimeMs": "36990.33"
-			},
-			{
-				"words": "Vô tâm quay lưng ta thờ ơ lạnh lùng băng giá như vậy sao",
-				"startTimeMs": "39667.60"
-			},
-			{
-				"words": "Vờ không biết nhau",
-				"startTimeMs": "44964.26"
-			},
-			{
-				"words": "Lặng im băng qua chẳng nói một lời",
-				"startTimeMs": "47361.50"
-			},
-			{
-				"words": "Rồi niềm đau có chóng quên",
-				"startTimeMs": "54081.16"
-			},
-			{
-				"words": "Hay càng quên càng nhớ thêm",
-				"startTimeMs": "57746.55"
-			},
-			{
-				"words": "Vấn vương vết thương lòng xót xa",
-				"startTimeMs": "59944.05"
-			},
-			{
-				"words": "Đừng như con nít",
-				"startTimeMs": "64880.29"
-			},
-			{
-				"words": "Từng mặn nồng say đắm say",
-				"startTimeMs": "67324.58"
-			},
-			{
-				"words": "Cớ sao khi chia tay, ta xa lạ đến kì lạ?",
-				"startTimeMs": "71561.18"
-			},
-			{
-				"words": "Ai dám nói trước sau này",
-				"startTimeMs": "77558.73"
-			},
-			{
-				"words": "Chẳng ai biết trước tương lai sau này",
-				"startTimeMs": "80613.90"
-			},
-			{
-				"words": "Tình yêu đâu biết mai này có vẹn nguyên",
-				"startTimeMs": "83958.75"
-			},
-			{
-				"words": "Còn nguyên như lời ta đã hứa trước đây",
-				"startTimeMs": "86518.60"
-			},
-			{
-				"words": "Dẫu cho giông tố xô xa rời",
-				"startTimeMs": "90237.77"
-			},
-			{
-				"words": "Còn mãi những điều đẹp đẽ say đắm một thời",
-				"startTimeMs": "93250.79"
-			},
-			{
-				"words": "Nụ cười và giọt nước mắt rơi từng trao cùng ta",
-				"startTimeMs": "97320.35"
-			},
-			{
-				"words": "Nhìn lại về phía mặt trời (Mặt trời)",
-				"startTimeMs": "100369.37"
-			},
-			{
-				"words": "(Nhìn lại về phía mặt trời)",
-				"startTimeMs": "103665.34"
-			},
-			{
-				"words": "Tương lai ngày mai ai nào hay",
-				"startTimeMs": "108869.61"
-			},
-			{
-				"words": "Yêu thương rồi buông đôi bàn tay",
-				"startTimeMs": "110426.74"
-			},
-			{
-				"words": "Mong manh đường duyên như vận may",
-				"startTimeMs": "112062.06"
-			},
-			{
-				"words": "Chia ly hợp tan nhanh còn hơn mây trời bay",
-				"startTimeMs": "113330.38"
-			},
-			{
-				"words": "Quên nhau vờ như chưa từng quen (Sao quên)",
-				"startTimeMs": "115242.42"
-			},
-			{
-				"words": "Quên luôn mặt quên luôn cả tên (Sao quên)",
-				"startTimeMs": "116929.18"
-			},
-			{
-				"words": "Quên đi làm sao mà đòi quên",
-				"startTimeMs": "118742.75"
-			},
-			{
-				"words": "Khi câu thề xưa vẫn vẹn nguyên nên đừng cố quên",
-				"startTimeMs": "119863.85"
-			},
-			{
-				"words": "Vấn vương cũng chẳng sao mà",
-				"startTimeMs": "122164.11"
-			},
-			{
-				"words": "Nhớ nhung cũng chẳng sao mà",
-				"startTimeMs": "123464.09"
-			},
-			{
-				"words": "Đớn đau cũng chẳng sao mà",
-				"startTimeMs": "125247.60"
-			},
-			{
-				"words": "Dù có đắng cay ta cũng chẳng sao đâu",
-				"startTimeMs": "126784.82"
-			},
-			{
-				"words": "Chân thành khi còn bên nhau",
-				"startTimeMs": "128524.57"
-			},
-			{
-				"words": "Và trân trọng hơn mỗi phút giây",
-				"startTimeMs": "130039.74"
-			},
-			{
-				"words": "(Hơn mỗi phút giây)",
-				"startTimeMs": "132151.74"
-			},
-			{
-				"words": "Thành thật bên nhau mỗi phút giây",
-				"startTimeMs": "133283.63"
-			},
-			{
-				"words": "Rồi niềm đau có chóng quên",
-				"startTimeMs": "136314.61"
-			},
-			{
-				"words": "Hay càng quên càng nhớ thêm",
-				"startTimeMs": "140048.48"
-			},
-			{
-				"words": "Vấn vương vết thương lòng xót xa",
-				"startTimeMs": "142033.02"
-			},
-			{
-				"words": "Đừng như con nít",
-				"startTimeMs": "146924.74"
-			},
-			{
-				"words": "Từng mặn nồng say đắm say",
-				"startTimeMs": "149531.56"
-			},
-			{
-				"words": "Cớ sao khi chia tay, ta xa lạ đến kì lạ?",
-				"startTimeMs": "153825.61"
-			},
-			{
-				"words": "Ai dám nói trước sau này",
-				"startTimeMs": "159662.92"
-			},
-			{
-				"words": "Chẳng ai biết trước tương lai sau này",
-				"startTimeMs": "162816.18"
-			},
-			{
-				"words": "Tình yêu đâu biết mai này có vẹn nguyên",
-				"startTimeMs": "166142.80"
-			},
-			{
-				"words": "Còn nguyên như lời ta đã hứa trước đây",
-				"startTimeMs": "168777.77"
-			},
-			{
-				"words": "Dẫu cho giông tố xô xa rời",
-				"startTimeMs": "172340.09"
-			},
-			{
-				"words": "Còn mãi những điều đẹp đẽ say đắm một thời",
-				"startTimeMs": "175561.72"
-			},
-			{
-				"words": "Nụ cười và giọt nước mắt rơi từng trao cùng ta",
-				"startTimeMs": "179278.59"
-			},
-			{
-				"words": "Nhìn lại về phía mặt trời (Mặt trời)",
-				"startTimeMs": "182562.95"
-			},
-			{
-				"words": " ",
-				"startTimeMs": "184975.73"
-			},
-			{
-				"words": "Ai dám nói trước sau này",
-				"startTimeMs": "215619.55"
-			},
-			{
-				"words": "Chẳng ai biết trước tương lai sau này",
-				"startTimeMs": "218610.05"
-			},
-			{
-				"words": "Tình yêu đâu biết mai này có vẹn nguyên",
-				"startTimeMs": "221980.03"
-			},
-			{
-				"words": "Còn nguyên như lời ta đã hứa trước đây",
-				"startTimeMs": "224700.70"
-			},
-			{
-				"words": "Dẫu cho giông tố xô xa rời",
-				"startTimeMs": "228263.34"
-			},
-			{
-				"words": "Còn mãi những điều đẹp đẽ say đắm một thời",
-				"startTimeMs": "231371.15"
-			},
-			{
-				"words": "Nụ cười và giọt nước mắt rơi từng trao cùng ta",
-				"startTimeMs": "235060.77"
-			},
-			{
-				"words": "Nhìn lại về phía mặt trời (mặt trời)",
-				"startTimeMs": "238498.97"
-			},
-			{
-				"words": "Nhìn lại về phía mặt trời",
-				"startTimeMs": "242583.91"
-			},
-			{
-				"words": " ",
-				"startTimeMs": "243200.00"
-			}
-		]
-	},
-	{
 		"title": "Ai Hát Em Nghe",
 		"url": "./assets/songs/Em Hat Ai Nghe.mp3",
 		"urlKaraoke": "./assets/beats/Em Hat Ai Nghe Beat.mp3",
@@ -2346,6 +2086,266 @@
 						"data": "tơi"
 					}
 				]
+			}
+		]
+	},
+	{
+		"title": "Chúng Ta Của Tương Lai",
+		"url": "./assets/songs/Chúng Ta Của Tương Lai.mp3",
+		"image": "./assets/images/Chung Ta Cua Tuong Lai.jpg",
+		"author": "Sơn Tùng MPT",
+		"lyrics": [
+			{
+				"words": "Liệu mai sau phai vội mau không bước bên cạnh nhau",
+				"startTimeMs": "27667.19"
+			},
+			{
+				"words": "Thì ta có đau?",
+				"startTimeMs": "31927.31"
+			},
+			{
+				"words": "Đôi mi nhoè phai ai sẽ lau",
+				"startTimeMs": "34647.97"
+			},
+			{
+				"words": "Ai sẽ đến lau nỗi đau này",
+				"startTimeMs": "36990.33"
+			},
+			{
+				"words": "Vô tâm quay lưng ta thờ ơ lạnh lùng băng giá như vậy sao",
+				"startTimeMs": "39667.60"
+			},
+			{
+				"words": "Vờ không biết nhau",
+				"startTimeMs": "44964.26"
+			},
+			{
+				"words": "Lặng im băng qua chẳng nói một lời",
+				"startTimeMs": "47361.50"
+			},
+			{
+				"words": "Rồi niềm đau có chóng quên",
+				"startTimeMs": "54081.16"
+			},
+			{
+				"words": "Hay càng quên càng nhớ thêm",
+				"startTimeMs": "57746.55"
+			},
+			{
+				"words": "Vấn vương vết thương lòng xót xa",
+				"startTimeMs": "59944.05"
+			},
+			{
+				"words": "Đừng như con nít",
+				"startTimeMs": "64880.29"
+			},
+			{
+				"words": "Từng mặn nồng say đắm say",
+				"startTimeMs": "67324.58"
+			},
+			{
+				"words": "Cớ sao khi chia tay, ta xa lạ đến kì lạ?",
+				"startTimeMs": "71561.18"
+			},
+			{
+				"words": "Ai dám nói trước sau này",
+				"startTimeMs": "77558.73"
+			},
+			{
+				"words": "Chẳng ai biết trước tương lai sau này",
+				"startTimeMs": "80613.90"
+			},
+			{
+				"words": "Tình yêu đâu biết mai này có vẹn nguyên",
+				"startTimeMs": "83958.75"
+			},
+			{
+				"words": "Còn nguyên như lời ta đã hứa trước đây",
+				"startTimeMs": "86518.60"
+			},
+			{
+				"words": "Dẫu cho giông tố xô xa rời",
+				"startTimeMs": "90237.77"
+			},
+			{
+				"words": "Còn mãi những điều đẹp đẽ say đắm một thời",
+				"startTimeMs": "93250.79"
+			},
+			{
+				"words": "Nụ cười và giọt nước mắt rơi từng trao cùng ta",
+				"startTimeMs": "97320.35"
+			},
+			{
+				"words": "Nhìn lại về phía mặt trời (Mặt trời)",
+				"startTimeMs": "100369.37"
+			},
+			{
+				"words": "(Nhìn lại về phía mặt trời)",
+				"startTimeMs": "103665.34"
+			},
+			{
+				"words": "Tương lai ngày mai ai nào hay",
+				"startTimeMs": "108869.61"
+			},
+			{
+				"words": "Yêu thương rồi buông đôi bàn tay",
+				"startTimeMs": "110426.74"
+			},
+			{
+				"words": "Mong manh đường duyên như vận may",
+				"startTimeMs": "112062.06"
+			},
+			{
+				"words": "Chia ly hợp tan nhanh còn hơn mây trời bay",
+				"startTimeMs": "113330.38"
+			},
+			{
+				"words": "Quên nhau vờ như chưa từng quen (Sao quên)",
+				"startTimeMs": "115242.42"
+			},
+			{
+				"words": "Quên luôn mặt quên luôn cả tên (Sao quên)",
+				"startTimeMs": "116929.18"
+			},
+			{
+				"words": "Quên đi làm sao mà đòi quên",
+				"startTimeMs": "118742.75"
+			},
+			{
+				"words": "Khi câu thề xưa vẫn vẹn nguyên nên đừng cố quên",
+				"startTimeMs": "119863.85"
+			},
+			{
+				"words": "Vấn vương cũng chẳng sao mà",
+				"startTimeMs": "122164.11"
+			},
+			{
+				"words": "Nhớ nhung cũng chẳng sao mà",
+				"startTimeMs": "123464.09"
+			},
+			{
+				"words": "Đớn đau cũng chẳng sao mà",
+				"startTimeMs": "125247.60"
+			},
+			{
+				"words": "Dù có đắng cay ta cũng chẳng sao đâu",
+				"startTimeMs": "126784.82"
+			},
+			{
+				"words": "Chân thành khi còn bên nhau",
+				"startTimeMs": "128524.57"
+			},
+			{
+				"words": "Và trân trọng hơn mỗi phút giây",
+				"startTimeMs": "130039.74"
+			},
+			{
+				"words": "(Hơn mỗi phút giây)",
+				"startTimeMs": "132151.74"
+			},
+			{
+				"words": "Thành thật bên nhau mỗi phút giây",
+				"startTimeMs": "133283.63"
+			},
+			{
+				"words": "Rồi niềm đau có chóng quên",
+				"startTimeMs": "136314.61"
+			},
+			{
+				"words": "Hay càng quên càng nhớ thêm",
+				"startTimeMs": "140048.48"
+			},
+			{
+				"words": "Vấn vương vết thương lòng xót xa",
+				"startTimeMs": "142033.02"
+			},
+			{
+				"words": "Đừng như con nít",
+				"startTimeMs": "146924.74"
+			},
+			{
+				"words": "Từng mặn nồng say đắm say",
+				"startTimeMs": "149531.56"
+			},
+			{
+				"words": "Cớ sao khi chia tay, ta xa lạ đến kì lạ?",
+				"startTimeMs": "153825.61"
+			},
+			{
+				"words": "Ai dám nói trước sau này",
+				"startTimeMs": "159662.92"
+			},
+			{
+				"words": "Chẳng ai biết trước tương lai sau này",
+				"startTimeMs": "162816.18"
+			},
+			{
+				"words": "Tình yêu đâu biết mai này có vẹn nguyên",
+				"startTimeMs": "166142.80"
+			},
+			{
+				"words": "Còn nguyên như lời ta đã hứa trước đây",
+				"startTimeMs": "168777.77"
+			},
+			{
+				"words": "Dẫu cho giông tố xô xa rời",
+				"startTimeMs": "172340.09"
+			},
+			{
+				"words": "Còn mãi những điều đẹp đẽ say đắm một thời",
+				"startTimeMs": "175561.72"
+			},
+			{
+				"words": "Nụ cười và giọt nước mắt rơi từng trao cùng ta",
+				"startTimeMs": "179278.59"
+			},
+			{
+				"words": "Nhìn lại về phía mặt trời (Mặt trời)",
+				"startTimeMs": "182562.95"
+			},
+			{
+				"words": " ",
+				"startTimeMs": "184975.73"
+			},
+			{
+				"words": "Ai dám nói trước sau này",
+				"startTimeMs": "215619.55"
+			},
+			{
+				"words": "Chẳng ai biết trước tương lai sau này",
+				"startTimeMs": "218610.05"
+			},
+			{
+				"words": "Tình yêu đâu biết mai này có vẹn nguyên",
+				"startTimeMs": "221980.03"
+			},
+			{
+				"words": "Còn nguyên như lời ta đã hứa trước đây",
+				"startTimeMs": "224700.70"
+			},
+			{
+				"words": "Dẫu cho giông tố xô xa rời",
+				"startTimeMs": "228263.34"
+			},
+			{
+				"words": "Còn mãi những điều đẹp đẽ say đắm một thời",
+				"startTimeMs": "231371.15"
+			},
+			{
+				"words": "Nụ cười và giọt nước mắt rơi từng trao cùng ta",
+				"startTimeMs": "235060.77"
+			},
+			{
+				"words": "Nhìn lại về phía mặt trời (mặt trời)",
+				"startTimeMs": "238498.97"
+			},
+			{
+				"words": "Nhìn lại về phía mặt trời",
+				"startTimeMs": "242583.91"
+			},
+			{
+				"words": " ",
+				"startTimeMs": "243200.00"
 			}
 		]
 	},
