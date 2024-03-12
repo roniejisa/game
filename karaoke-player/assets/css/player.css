@@ -102,6 +102,7 @@ header .tab-control .tabs button {
   }
 }
 header .tab-control .tabs button span {
+  color: black;
   position: relative;
   z-index: 1;
 }

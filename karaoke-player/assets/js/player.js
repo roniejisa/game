@@ -16,7 +16,7 @@ var percentCurrent = 0;
 var clientXIconProcess = 0;
 var widthMainProcess = 0;
 
-process.addEventListener(typeMouseDown, function (e) {
+process.addEventListener('mousedown', function (e) {
     isDrag = true;
     var targetEl = e.target;
     if (targetEl.classList.contains('process-icon')) {
@@ -24,13 +24,12 @@ process.addEventListener(typeMouseDown, function (e) {
         return false;
     }
 
-    widthMainProcess = !mobileAndTabletCheck() ? e.offsetX : e.changedTouches[0].clientX;
+    widthMainProcess = e.offsetX;
     percentCurrent = toPercent(widthMainProcess);
 
     changeProcess(percentCurrent);
-
     // Tính khoảng cách của icon so với client
-    clientXIconProcess = !mobileAndTabletCheck() ? e.clientX : e.changedTouches[0].clientX;
+    clientXIconProcess = e.clientX;
 })
 
 process.addEventListener(typeMouseMove, function (e) {
@@ -80,8 +79,8 @@ iconProcess.addEventListener(typeMouseDown, function (e) {
 })
 
 document.addEventListener(typeMouseMove, function (e) {
+    e.preventDefault();
     if (isDrag) {
-        e.preventDefault();
         dragClientX = !mobileAndTabletCheck() ? e.clientX : e.changedTouches[0].clientX
         transform = Math.abs(dragClientX - clientXIconProcess);
         var widthMainProcessCurrent = widthMainProcess + transform;
@@ -192,8 +191,8 @@ iconVolumeProcess.addEventListener(typeMouseDown, function (e) {
 })
 
 document.addEventListener(typeMouseMove, function (e) {
+    e.preventDefault();
     if (isDragVolume) {
-        e.preventDefault()
         dragClientY = !mobileAndTabletCheck() ? e.clientY : e.changedTouches[0].clientY;
         transform = Math.abs(dragClientY - clientYIconProcess);
         var heightMainProcessCurrent = heightMainProcess - transform;
