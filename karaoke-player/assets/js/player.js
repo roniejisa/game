@@ -26,7 +26,6 @@ process.addEventListener('mousedown', function (e) {
 
     widthMainProcess = e.offsetX;
     percentCurrent = toPercent(widthMainProcess);
-
     changeProcess(percentCurrent);
     // Tính khoảng cách của icon so với client
     clientXIconProcess = e.clientX;
@@ -94,6 +93,14 @@ document.addEventListener(typeMouseMove, function (e) {
 }, { passive: false })
 
 document.addEventListener(typeMouseUp, function () {
+    if (isDrag) {
+        checkTimeLyric();
+        percentProcessUpdate();
+    }
+    isDrag = false;
+})
+
+document.addEventListener('mousedown', function () {
     if (isDrag) {
         checkTimeLyric();
         percentProcessUpdate();
@@ -208,6 +215,14 @@ document.addEventListener(typeMouseMove, function (e) {
 }, { passive: false })
 
 document.addEventListener(typeMouseUp, function () {
+    if (isDragVolume) {
+        heightMainProcess = percentVolumeCurrent === 100 ? heightProcess : heightMainProcess;
+        volumeBackground.classList.remove('show')
+    }
+    isDragVolume = false;
+})
+
+document.addEventListener('mouseup', function () {
     if (isDragVolume) {
         heightMainProcess = percentVolumeCurrent === 100 ? heightProcess : heightMainProcess;
         volumeBackground.classList.remove('show')
@@ -455,6 +470,9 @@ function initAudio() {
         isKaraoke = !isKaraoke;
         if (isKaraoke) {
             changeTab();
+            audioKaraokeEl.currentTime = audioEl.currentTime
+        } else {
+            audioEl.currentTime = audioKaraokeEl.currentTime;
         }
         if (isShowLyric === false) {
             lyricKaraoke.click();
