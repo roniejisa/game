@@ -712,6 +712,12 @@ main {
 @media screen and (min-width: 992px) {
   .player-screen .screen-left .search,
   .player-screen .screen-left .songs {
+    max-height: calc(100% - 50px);
+  }
+}
+@media screen and (min-width: 992px) {
+  .player-screen .screen-left .search,
+  .player-screen .screen-left .songs {
     grid-template-columns: repeat(auto-fit, 210px);
   }
 }
@@ -917,6 +923,11 @@ main {
   max-height: calc(100% - 90px);
   position: relative;
   overflow: auto;
+}
+@media screen and (min-width: 992px) {
+  .screen-right .playlist {
+    max-height: 100%;
+  }
 }
 .screen-right .playlist::-webkit-scrollbar {
   background: transparent;

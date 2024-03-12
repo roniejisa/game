@@ -783,6 +783,9 @@ main {
             position: absolute;
             width: 100%;
             max-height: calc(100% - 90px);
+            @include screen(992px){
+                max-height: calc(100% - 50px);
+            }
             padding-bottom: 10px;
             overflow: auto;
             display: grid;
@@ -1005,6 +1008,9 @@ main {
 
     .playlist {
         max-height: calc(100% - 90px);
+        @include screen(992px){
+            max-height: 100%;
+        }
         position: relative;
         overflow: auto;
 
