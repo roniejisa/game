@@ -1,21 +1,4 @@
-HTMLDivElement.prototype.getRect = function () {
-    var { clientHeight, clientLeft, clientTop, clientWidth, offsetHeight, offsetLeft, offsetTop, offsetWidth, scrollHeight, scrollLeft, scrollTop, scrollWidth, } = this
-    return { clientHeight, clientLeft, clientTop, clientWidth, offsetHeight, offsetLeft, offsetTop, offsetWidth, scrollHeight, scrollLeft, scrollTop, scrollWidth };
-}
 
-function getRectEvent(event) {
-    var { clientX, clientY, layerX, layerY, movementX, movementY, offsetX, offsetY, pageX, pageY, screenX, screenY, x, y, } = event;
-    return { clientX, clientY, layerX, layerY, movementX, movementY, offsetX, offsetY, pageX, pageY, screenX, screenY, x, y, };
-}
-
-var requestAnimationFrame =
-    window.requestAnimationFrame ||
-    window.mozRequestAnimationFrame ||
-    window.webkitRequestAnimationFrame ||
-    window.msRequestAnimationFrame;
-
-var cancelAnimationFrame =
-    window.cancelAnimationFrame || window.mozCancelAnimationFrame;
 var KEY_PLAYLIST_MAIN = 'PLAYLIST_MAIN';
 var playerDashboard = document.querySelector('.player-dashboard');
 
@@ -33,7 +16,7 @@ var percentCurrent = 0;
 var clientXIconProcess = 0;
 var widthMainProcess = 0;
 
-process.addEventListener('mousedown', function (e) {
+process.addEventListener(typeMouseDown, function (e) {
     isDrag = true;
     var targetEl = e.target;
     if (targetEl.classList.contains('process-icon')) {
@@ -41,31 +24,34 @@ process.addEventListener('mousedown', function (e) {
         return false;
     }
 
-    widthMainProcess = e.offsetX;
+    widthMainProcess = !mobileAndTabletCheck() ? e.offsetX : e.changedTouches[0].clientX;
     percentCurrent = toPercent(widthMainProcess);
 
     changeProcess(percentCurrent);
 
     // Tính khoảng cách của icon so với client
-    clientXIconProcess = e.clientX;
+    clientXIconProcess = !mobileAndTabletCheck() ? e.clientX : e.changedTouches[0].clientX;
 })
 
-process.addEventListener('mousemove', function (e) {
-    timerProcess.classList.add('show');
-    var left = e.clientX;
-    if (e.clientX < timerProcess.clientWidth) {
-        left = timerProcess.clientWidth;
-    } else if (window.innerWidth < timerProcess.clientWidth + e.clientX) {
-        left = window.innerWidth - timerProcess.clientWidth;
-    }
-    timerProcess.style.left = left + 'px';
+process.addEventListener(typeMouseMove, function (e) {
+    if (isDrag) {
+        e.preventDefault();
+        timerProcess.classList.add('show');
+        var left = !mobileAndTabletCheck() ? e.clientX : e.changedTouches[0].clientX;
+        if (e.clientX < timerProcess.clientWidth) {
+            left = timerProcess.clientWidth;
+        } else if (window.innerWidth < timerProcess.clientWidth + (!mobileAndTabletCheck() ? e.clientX : e.changedTouches[0].clientX)) {
+            left = window.innerWidth - timerProcess.clientWidth;
+        }
+        timerProcess.style.left = left + 'px';
 
-    if (e.target.classList.contains('process-icon')) {
-        changeProcessTimer(percentCurrent);
-    } else {
-        changeProcessTimer(toPercent(e.offsetX));
+        if (e.target.classList.contains('process-icon')) {
+            changeProcessTimer(percentCurrent);
+        } else {
+            changeProcessTimer(toPercent(!mobileAndTabletCheck() ? e.offsetX : e.changedTouches[0].clientX));
+        }
     }
-})
+}, { passive: false })
 
 process.addEventListener('mouseleave', function (e) {
     timerProcess.classList.remove('show');
@@ -87,15 +73,16 @@ function percentToWidth() {
 //Drag
 var isDrag = false;
 
-iconProcess.addEventListener('mousedown', function (e) {
-    clientXIconProcess = e.clientX;
+iconProcess.addEventListener(typeMouseDown, function (e) {
+    clientXIconProcess = !mobileAndTabletCheck() ? e.clientX : e.changedTouches[0].clientX;
     widthMainProcess = mainProcess.clientWidth;
     isDrag = true;
 })
 
-document.addEventListener('mousemove', function (e) {
+document.addEventListener(typeMouseMove, function (e) {
     if (isDrag) {
-        dragClientX = e.clientX
+        e.preventDefault();
+        dragClientX = !mobileAndTabletCheck() ? e.clientX : e.changedTouches[0].clientX
         transform = Math.abs(dragClientX - clientXIconProcess);
         var widthMainProcessCurrent = widthMainProcess + transform;
         if (dragClientX < clientXIconProcess) {
@@ -105,9 +92,9 @@ document.addEventListener('mousemove', function (e) {
         changeProcess(percentCurrent)
         changeTimeStart(percentCurrent);
     }
-})
+}, { passive: false })
 
-document.addEventListener('mouseup', function () {
+document.addEventListener(typeMouseUp, function () {
     if (isDrag) {
         checkTimeLyric();
         percentProcessUpdate();
@@ -131,7 +118,7 @@ var heightProcess = volumeProcess.clientHeight;
 var offsetVolumeCurrent = 0;
 var percentVolumeCurrent = 100;
 var clientYIconProcess = 0;
-var heightMainProcess = heightProcess;
+var heightMainProcess = volumeProcess.clientHeight;
 
 var volumeHightIcon = '<i class="fa-solid fa-volume-high"></i>';
 var volumeHightSmallIcon = '<i class="fa-solid fa-volume-low"></i>';
@@ -158,7 +145,7 @@ volumeProcess.addEventListener('mousedown', function (e) {
     changeIconVolume();
 })
 
-// volumeProcess.addEventListener('mousemove', function (e) {
+// volumeProcess.addEventListener(typeMouseMove, function (e) {
 // percentVolumeProcess.classList.add('show');
 // percentVolumeProcess.style.left = e.clientX - process.offsetLeft + 'px';
 // })
@@ -198,15 +185,16 @@ function percentToHeight() {
 //Drag
 var isDragVolume = false;
 
-iconVolumeProcess.addEventListener('mousedown', function (e) {
-    clientYIconProcess = e.clientY;
+iconVolumeProcess.addEventListener(typeMouseDown, function (e) {
+    clientYIconProcess = !mobileAndTabletCheck() ? e.clientY : e.changedTouches[0].clientY;
     heightMainProcess = volumeProcessMain.clientHeight;
     isDragVolume = true;
 })
 
-document.addEventListener('mousemove', function (e) {
+document.addEventListener(typeMouseMove, function (e) {
     if (isDragVolume) {
-        dragClientY = e.clientY;
+        e.preventDefault()
+        dragClientY = !mobileAndTabletCheck() ? e.offsetY : e.changedTouches[0].clientY;
         transform = Math.abs(dragClientY - clientYIconProcess);
         var heightMainProcessCurrent = heightMainProcess - transform;
         if (dragClientY < clientYIconProcess) {
@@ -218,9 +206,9 @@ document.addEventListener('mousemove', function (e) {
         changeIconVolume()
         volumeBackground.classList.add('show')
     }
-})
+}, { passive: false })
 
-document.addEventListener('mouseup', function () {
+document.addEventListener(typeMouseUp, function () {
     if (isDragVolume) {
         heightMainProcess = percentVolumeCurrent === 100 ? heightProcess : heightMainProcess;
         volumeBackground.classList.remove('show')
@@ -1152,21 +1140,12 @@ function resetLyricVariable() {
  * Thêm tính năng kiểm tra thoát trang
  */
 // Fix lỗi khi kéo && cấm mở develop tool
-// document.addEventListener('mousemove', function (e) {
-//     e.preventDefault();
-// })
-
-// document.addEventListener('contextmenu', function (e) {
-//     e.preventDefault();
-// })
-
 document.addEventListener('keydown', function (e) {
     // if (e.which === 123 || (e.ctrlKey && e.shiftKey && e.which === 73)) {
     //     while (true) {
     //         debugger;
     //     }
     // }
-    // e.preventDefault();
     if (e.target.localName === 'input') {
         return false;
     }

@@ -11,8 +11,6 @@ var footer = document.querySelector('footer');
 var openMenuEl = header.querySelector('.menu-open')
 var closeMenuEl = header.querySelector('.menu-close');
 var tabControl = header.querySelector('.tab-control');
-
-
 var spanOverlay = header.querySelector('.overlay');
 
 buttonEls.forEach((buttonEl, index) => {
@@ -281,10 +279,11 @@ openMenuEl.addEventListener('click', function () {
 })
 
 function setSizeAll() {
-    widthProcess = process.clientWidth; 
+    widthProcess = process.clientWidth;
     main.style.height = `calc(100vh - ${header.clientHeight}px - ${footer.clientHeight}px)`;
     spanOverlay.style.width = buttonEls[0].clientWidth + "px";
     spanOverlay.style.left = 6 + buttonEls[0].clientWidth + "px";
+    heightMainProcess = volumeProcess.clientHeight
 }
 
 window.addEventListener('DOMContentLoaded', async function () {
