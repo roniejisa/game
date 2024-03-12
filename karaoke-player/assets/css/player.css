@@ -231,6 +231,7 @@ header .menu-open {
   filter: drop-shadow(0 0 5px #f7a5be);
   flex-basis: 80px;
   text-align: left;
+  font-size: 28px;
 }
 @media screen and (min-width: 992px) {
   header .menu-open {
@@ -265,16 +266,22 @@ header .menu-open {
 }
 .player-dashboard .toolbar .left {
   position: absolute;
-  top: -100px;
+  top: -105px;
   z-index: 10;
-  left: 10px;
+  left: -1vw;
+  width: 70%;
+  padding-top: 10px;
+  padding-left: 15px;
+  background: black;
 }
 @media screen and (min-width: 992px) {
   .player-dashboard .toolbar .left {
     position: initial;
-    top: initial;
+    bottom: initial;
     z-index: initial;
     left: initial;
+    padding: initial;
+    background: initial;
   }
 }
 .player-dashboard .toolbar .left .info-current {
@@ -301,23 +308,28 @@ header .menu-open {
 }
 .player-dashboard .toolbar .right {
   position: absolute;
-  right: 10px;
-  bottom: 100px;
+  bottom: 95px;
   gap: 6px;
+  background: black;
+  padding-top: 10px;
+  padding-right: 15px;
+  right: -1vw;
+  width: 35%;
   align-items: center;
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
 }
 @media screen and (min-width: 992px) {
   .player-dashboard .toolbar .right {
     position: initial;
     width: initial;
     bottom: initial;
+    padding-top: initial;
+    padding-right: initial;
   }
 }
 @media screen and (min-width: 992px) {
   .player-dashboard .toolbar .right {
-    justify-content: flex-end;
     gap: 30px;
   }
 }
@@ -983,7 +995,7 @@ main {
   justify-content: center;
   padding: 15px;
   z-index: 9999;
-  background: black;
+  background: #f5c3d2;
   display: flex;
   position: absolute;
   width: 100%;
@@ -995,11 +1007,6 @@ main {
   .karaoke-screen {
     padding: 30px;
     align-items: center;
-  }
-}
-@media screen and (min-width: 992px) {
-  .karaoke-screen {
-    background: #f5c3d2;
   }
 }
 .karaoke-screen.show {
@@ -1056,7 +1063,7 @@ main {
 .karaoke-screen .karaoke-content .words {
   display: flex;
   gap: 10px;
-  height: 32px;
+  flex-wrap: wrap;
 }
 .karaoke-screen .karaoke-content .words + .words {
   margin-top: 20px;

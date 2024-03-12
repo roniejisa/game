@@ -50,9 +50,11 @@ body {
 //Header
 header {
     padding: 16px 10px;
-    @include screen(992px){
+
+    @include screen(992px) {
         padding: 18px 20px;
     }
+
     .logo {
         order: 2;
 
@@ -231,10 +233,13 @@ header {
                 &::placeholder {
                     color: $backgroundMain;
                 }
+
                 padding: 5px;
-                @include screen(992px){
+
+                @include screen(992px) {
                     padding: 12px 40px 12px 20px;
                 }
+
                 border: none;
                 outline: none;
                 height: 100%;
@@ -256,9 +261,11 @@ header {
                 right: 6px;
                 padding: 10px;
                 display: none;
-                @include screen(992px){
+
+                @include screen(992px) {
                     display: initial;
                 }
+
                 i {
                     font-weight: bold;
                 }
@@ -271,6 +278,8 @@ header {
         @include textGradient();
         flex-basis: 80px;
         text-align: left;
+        font-size: 28px;    
+
         @include screen(992px) {
             display: none;
         }
@@ -310,16 +319,22 @@ header {
         .left {
             //style mobile
             position: absolute;
-            top: -100px;
+            top: -105px;
             z-index: 10;
-            left: 10px;
+            left: -1vw;
+            width: 70%;
+            padding-top: 10px;
+            padding-left: 15px;
+            background: black;
 
             //Style 992px
             @include screen(992px) {
                 position: initial;
-                top: initial;
+                bottom: initial;
                 z-index: initial;
                 left: initial;
+                padding: initial;
+                background: initial
             }
 
 
@@ -350,22 +365,27 @@ header {
 
         .right {
             position: absolute;
-            right: 10px;
-            bottom: 100px;
+            bottom: 95px;
             gap: 6px;
+            background: black;
+            padding-top: 10px;
+            padding-right: 15px;
+            right: -1vw;
+            width: 35%;
 
             @include screen(992px) {
                 position: initial;
                 width: initial;
                 bottom: initial;
+                padding-top: initial;
+                padding-right: initial;
             }
 
             align-items: center;
             display: flex;
-            justify-content: space-between;
+            justify-content: flex-end;
 
             @include screen(992px) {
-                justify-content: flex-end;
                 gap: 30px;
             }
 
@@ -738,13 +758,15 @@ main {
             overflow: auto;
             display: grid;
             grid-template-columns: repeat(auto-fit, 160px);
-            @include screen(992px){
+
+            @include screen(992px) {
                 grid-template-columns: repeat(auto-fit, 210px);
             }
+
             justify-content: center;
             flex-wrap: wrap;
             grid-gap: 20px;
-            
+
             .song-item {
                 flex-basis: calc(100% / 12 * 3 - 20px);
                 position: relative;
@@ -1078,11 +1100,7 @@ main {
     }
 
     z-index: 9999;
-    background: black;
-
-    @include screen(992px) {
-        background: $karaokeColor;
-    }
+    background: $karaokeColor;
 
     // box-shadow: 0 0 30px $karaokeColor;
     display: flex;
@@ -1154,7 +1172,7 @@ main {
         .words {
             display: flex;
             gap: 10px;
-            height: 32px;
+            flex-wrap: wrap;
 
             +.words {
                 margin-top: 20px;

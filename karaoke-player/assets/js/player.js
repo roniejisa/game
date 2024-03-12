@@ -37,6 +37,7 @@ process.addEventListener('mousedown', function (e) {
     isDrag = true;
     var targetEl = e.target;
     if (targetEl.classList.contains('process-icon')) {
+        // iconProcess
         return false;
     }
 
@@ -312,6 +313,10 @@ function initAudio() {
         } else {
             cancelAnimationFrame(animationFrame);
         }
+    })
+
+    audioEl.addEventListener('change', function () {
+
     })
 
     audioEl.addEventListener('play', function () {
@@ -818,7 +823,7 @@ function loadSongStart() {
                 var arrWords = lyric.words.split(' ');
                 var totalTime = endTime - +lyric.startTimeMs;
                 var oneTime = totalTime / arrWords.length;
-                    
+
                 for (var i = 0; i < arrWords.length; i++) {
                     words.push({
                         data: arrWords[i],
@@ -826,8 +831,12 @@ function loadSongStart() {
                         endTime: +lyric.startTimeMs + (oneTime * (i + 1))
                     })
                 }
+                newArray.push({
+                    words
+                });
                 return newArray;
             }, [])
+            console.log(songCurrent.lyrics);
         }
         addOrRemoveIconStartKaraoke(false)
     }
@@ -1235,7 +1244,9 @@ document.addEventListener('keydown', function (e) {
  */
 
 window.addEventListener('resize', function () {
-    window.location.reload();
+    widthProcess = process.clientWidth;
+    main.style.height = `calc(100vh - ${header.clientHeight}px - ${footer.clientHeight}px)`;
+    // window.location.reload();    
 })
 
 window.addEventListener('DOMContentLoaded', async function () {
