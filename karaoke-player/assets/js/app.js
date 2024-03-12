@@ -299,7 +299,7 @@ function setSizeAll() {
 function setSizeSongEl(hasTab = false) {
     var tabHeight = hasTab ? 50 : 0;
     var heightMarginHeading = 20;
-    if (mobileAndTabletCheck()) {
+    if (isMobile) {
         songEl.style.maxHeight = `calc(${window.innerHeight}px - ${header.clientHeight}px - ${footer.clientHeight}px - ${headingSong.clientHeight}px - ${heightMarginHeading}px - ${tabHeight}px - ${footerLeft.clientHeight}px)`;
     } else {
         songEl.style.maxHeight = `calc(${window.innerHeight}px - ${header.clientHeight}px - ${footer.clientHeight}px - ${headingSong.clientHeight}px - ${heightMarginHeading}px)`;
@@ -308,7 +308,7 @@ function setSizeSongEl(hasTab = false) {
 
 function setSizeMain(hasTab = false) {
     var tabHeight = hasTab ? 50 : 0;
-    if (mobileAndTabletCheck()) {
+    if (isMobile) {
         main.style.height = `calc(${window.innerHeight}px - ${header.clientHeight}px - ${footer.clientHeight}px - ${footerLeft.clientHeight}px - ${tabHeight}px)`;
     } else {
         main.style.height = `calc(${window.innerHeight}px - ${header.clientHeight}px - ${footer.clientHeight}px)`;
@@ -317,7 +317,7 @@ function setSizeMain(hasTab = false) {
 
 function setSizePlaylistEl(hasTab = false) {
     var tabHeight = hasTab ? 50 : 0;
-    if (mobileAndTabletCheck()) {
+    if (isMobile) {
         playlistEl.style.maxHeight = `calc(${window.innerHeight}px - ${header.clientHeight}px - ${footer.clientHeight}px - ${footerLeft.clientHeight}px - ${tabHeight}px)`;
     } else {
         playlistEl.style.maxHeight = `calc(${window.innerHeight}px - ${header.clientHeight}px - ${footer.clientHeight}px)`;
