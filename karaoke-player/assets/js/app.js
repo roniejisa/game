@@ -8,6 +8,9 @@ var overlay = tabEl.querySelector('.overlay');
 var main = document.querySelector('main');
 var header = document.querySelector('header');
 var footer = document.querySelector('footer');
+var openMenuEl = header.querySelector('.menu-open')
+var closeMenuEl = header.querySelector('.menu-close');
+var tabControl = header.querySelector('.tab-control');
 main.style.height = `calc(100vh - ${header.clientHeight}px - ${footer.clientHeight}px)`;
 buttonEls.forEach((buttonEl, index) => {
     buttonEl.addEventListener('click', function (e) {
@@ -284,4 +287,12 @@ window.addEventListener('DOMContentLoaded', async function () {
     await renderSongHome();
     onOffLoading(loadingHome, false);
     chooseSongHome();
+})
+
+openMenuEl.addEventListener('click', function () {
+    if (tabControl.classList.contains('show')) {
+        tabControl.classList.remove('show')
+    } else {
+        tabControl.classList.add('show')
+    }
 })

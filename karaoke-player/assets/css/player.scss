@@ -48,6 +48,25 @@ body {
 }
 
 //Header
+body:has(.tab-control.show) {
+
+    .screen-right,
+    .screen-left,
+    .main {
+        top: 50px;
+    }
+
+    .player-screen {
+        .screen-left {
+
+            .search,
+            .songs {
+                max-height: calc(100% - 130px);
+            }
+        }
+    }
+}
+
 header {
     padding: 16px 10px;
 
@@ -55,34 +74,37 @@ header {
         padding: 18px 20px;
     }
 
-    .logo {
-        order: 2;
 
-        @include screen(992px) {
-            order: initial;
-        }
-
-        a {
-            font-size: 0;
-        }
-
-        img {
-            display: block;
-            width: auto;
-            height: 100%;
-        }
-    }
 
     .tab-control {
-        display: none;
         position: fixed;
-        top: 60px;
-        left: 0;
-        top: 0;
-        bottom: 0;
-        right: 0;
         z-index: 10000;
         order: 1;
+        left: 15px;
+        right: 15px;
+        transform: translateY(-100%);
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+        transition-duration: 400ms;
+        transition-timing-function: ease-out;
+        transition-property: visibility, transform, opacity;
+
+        @include screen(992px) {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: all;
+            transform: translateY(0%);
+        }
+
+        top: 55px;
+
+        &.show {
+            transform: translateY(0%);
+            opacity: 1;
+            visibility: visible;
+            pointer-events: all;
+        }
 
         @include screen(992px) {
             order: initial;
@@ -96,15 +118,9 @@ header {
 
         .tabs {
             background: $backgroundMain;
-            width: 100%;
-            height: 100%;
-
-            @include screen(992px) {
-                height: initial;
-                display: flex;
-                justify-content: center;
-                border-radius: 25px;
-            }
+            display: flex;
+            justify-content: center;
+            border-radius: 25px;
 
             padding: 6px;
             position: relative;
@@ -138,9 +154,7 @@ header {
 
                 &.selected {
                     span {
-                        @include screen(992px) {
-                            @include textGradient()
-                        }
+                        @include textGradient()
                     }
                 }
             }
@@ -161,17 +175,16 @@ header {
 
 
             .overlay {
-                display: none;
-
-                @include screen(992px) {
-                    display: block;
-                }
-
                 position: absolute;
                 top: 50%;
                 left: 50%;
                 transform: translateX(-50%) translateY(-50%);
-                min-width: 160px;
+                min-width: 110px;
+
+                @include screen(992px) {
+                    min-width: 160px;
+                }
+
                 border-radius: 25px;
                 z-index: 1;
                 border: 1px solid;
@@ -197,12 +210,14 @@ header {
 
     }
 
+    &:has(.tab-control.show) {}
 
     .header-container {
         display: flex;
         align-items: center;
         justify-content: space-between;
         flex-wrap: wrap;
+        gap: 20px;
     }
 
     .logo,
@@ -214,9 +229,31 @@ header {
         }
     }
 
+    .logo {
+        flex: 1;
+        flex-basis: initial;
+        order: 2;
+
+        @include screen(992px) {
+            flex: initial;
+            order: initial;
+            flex-basis: 200px;
+        }
+
+        a {
+            font-size: 0;
+        }
+
+        img {
+            display: block;
+            width: auto;
+            height: 100%;
+        }
+    }
+
     .header-form {
         order: 3;
-        flex-basis: 80px;
+        flex-basis: 100px;
 
         @include screen(992px) {
             order: initial;
@@ -234,7 +271,7 @@ header {
                     color: $backgroundMain;
                 }
 
-                padding: 5px;
+                padding: 8px 10px;
 
                 @include screen(992px) {
                     padding: 12px 40px 12px 20px;
@@ -277,8 +314,9 @@ header {
         border: none;
         @include textGradient();
         flex-basis: 80px;
-        text-align: left;
-        font-size: 28px;    
+        font-size: 28px;
+        cursor: pointer;
+        padding-right: 20px;
 
         @include screen(992px) {
             display: none;
@@ -591,8 +629,11 @@ header {
             user-select: none;
             pointer-events: none;
             @include textGradient();
-            font-size: 18px;
-            font-weight: 900;
+            font-weight: bold;
+
+            @include screen(992px) {
+                font-size: 18px;
+            }
         }
 
         .process {
@@ -753,7 +794,7 @@ main {
 
             position: absolute;
             width: 100%;
-            max-height: calc(100% - 50px);
+            max-height: calc(100% - 90px);
             padding-bottom: 10px;
             overflow: auto;
             display: grid;
@@ -975,6 +1016,7 @@ main {
     }
 
     .playlist {
+        max-height: calc(100% - 90px);
         position: relative;
         overflow: auto;
 
@@ -1142,7 +1184,12 @@ main {
             flex-direction: column;
 
             .name {
-                font-size: 32px;
+                font-size: 24px;
+
+                @include screen(992px) {
+                    font-size: 32px;
+                }
+
                 font-weight: bold;
                 color: black;
             }

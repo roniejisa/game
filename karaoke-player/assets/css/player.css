@@ -14,6 +14,16 @@ body {
   background: black;
 }
 
+body:has(.tab-control.show) .screen-right,
+body:has(.tab-control.show) .screen-left,
+body:has(.tab-control.show) .main {
+  top: 50px;
+}
+body:has(.tab-control.show) .player-screen .screen-left .search,
+body:has(.tab-control.show) .player-screen .screen-left .songs {
+  max-height: calc(100% - 130px);
+}
+
 header {
   padding: 16px 10px;
 }
@@ -22,32 +32,34 @@ header {
     padding: 18px 20px;
   }
 }
-header .logo {
-  order: 2;
-}
-@media screen and (min-width: 992px) {
-  header .logo {
-    order: initial;
-  }
-}
-header .logo a {
-  font-size: 0;
-}
-header .logo img {
-  display: block;
-  width: auto;
-  height: 100%;
-}
 header .tab-control {
-  display: none;
   position: fixed;
-  top: 60px;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  right: 0;
   z-index: 10000;
   order: 1;
+  left: 15px;
+  right: 15px;
+  transform: translateY(-100%);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition-duration: 400ms;
+  transition-timing-function: ease-out;
+  transition-property: visibility, transform, opacity;
+  top: 55px;
+}
+@media screen and (min-width: 992px) {
+  header .tab-control {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: all;
+    transform: translateY(0%);
+  }
+}
+header .tab-control.show {
+  transform: translateY(0%);
+  opacity: 1;
+  visibility: visible;
+  pointer-events: all;
 }
 @media screen and (min-width: 992px) {
   header .tab-control {
@@ -62,19 +74,12 @@ header .tab-control {
 }
 header .tab-control .tabs {
   background: #ffdfe9;
-  width: 100%;
-  height: 100%;
+  display: flex;
+  justify-content: center;
+  border-radius: 25px;
   padding: 6px;
   position: relative;
   box-shadow: 0 0 6px #f7a5be;
-}
-@media screen and (min-width: 992px) {
-  header .tab-control .tabs {
-    height: initial;
-    display: flex;
-    justify-content: center;
-    border-radius: 25px;
-  }
 }
 header .tab-control .tabs button {
   padding: 6px 10px;
@@ -99,13 +104,11 @@ header .tab-control .tabs button span {
   position: relative;
   z-index: 1;
 }
-@media screen and (min-width: 992px) {
-  header .tab-control .tabs button.selected span {
-    background: linear-gradient(to bottom, #f7a5be, #f0eef8);
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    filter: drop-shadow(0 0 5px #f7a5be);
-  }
+header .tab-control .tabs button.selected span {
+  background: linear-gradient(to bottom, #f7a5be, #f0eef8);
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  filter: drop-shadow(0 0 5px #f7a5be);
 }
 header .tab-control .tabs .menu-close {
   position: absolute;
@@ -121,12 +124,11 @@ header .tab-control .tabs .menu-close {
   }
 }
 header .tab-control .tabs .overlay {
-  display: none;
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translateX(-50%) translateY(-50%);
-  min-width: 160px;
+  min-width: 110px;
   border-radius: 25px;
   z-index: 1;
   border: 1px solid;
@@ -138,7 +140,7 @@ header .tab-control .tabs .overlay {
 }
 @media screen and (min-width: 992px) {
   header .tab-control .tabs .overlay {
-    display: block;
+    min-width: 160px;
   }
 }
 header .tab-control .tabs .overlay span {
@@ -157,6 +159,7 @@ header .header-container {
   align-items: center;
   justify-content: space-between;
   flex-wrap: wrap;
+  gap: 20px;
 }
 header .logo,
 header .header-form {
@@ -168,9 +171,29 @@ header .header-form {
     flex-basis: 200px;
   }
 }
+header .logo {
+  flex: 1;
+  flex-basis: initial;
+  order: 2;
+}
+@media screen and (min-width: 992px) {
+  header .logo {
+    flex: initial;
+    order: initial;
+    flex-basis: 200px;
+  }
+}
+header .logo a {
+  font-size: 0;
+}
+header .logo img {
+  display: block;
+  width: auto;
+  height: 100%;
+}
 header .header-form {
   order: 3;
-  flex-basis: 80px;
+  flex-basis: 100px;
 }
 @media screen and (min-width: 992px) {
   header .header-form {
@@ -185,7 +208,7 @@ header .header-form .form-search {
   box-shadow: 0 0 6px #f7a5be;
 }
 header .header-form .form-search input {
-  padding: 5px;
+  padding: 8px 10px;
   border: none;
   outline: none;
   height: 100%;
@@ -230,8 +253,9 @@ header .menu-open {
   background-clip: text;
   filter: drop-shadow(0 0 5px #f7a5be);
   flex-basis: 80px;
-  text-align: left;
   font-size: 28px;
+  cursor: pointer;
+  padding-right: 20px;
 }
 @media screen and (min-width: 992px) {
   header .menu-open {
@@ -528,8 +552,13 @@ header .menu-open {
   -webkit-text-fill-color: transparent;
   background-clip: text;
   filter: drop-shadow(0 0 5px #f7a5be);
-  font-size: 18px;
-  font-weight: 900;
+  font-weight: bold;
+}
+@media screen and (min-width: 992px) {
+  .player-dashboard .player .time-start,
+  .player-dashboard .player .time-end {
+    font-size: 18px;
+  }
 }
 .player-dashboard .player .process {
   height: 6px;
@@ -662,7 +691,7 @@ main {
 .player-screen .screen-left .songs {
   position: absolute;
   width: 100%;
-  max-height: calc(100% - 50px);
+  max-height: calc(100% - 90px);
   padding-bottom: 10px;
   overflow: auto;
   display: grid;
@@ -896,6 +925,7 @@ main {
   }
 }
 .screen-right .playlist {
+  max-height: calc(100% - 90px);
   position: relative;
   overflow: auto;
 }
@@ -1041,9 +1071,14 @@ main {
   flex-direction: column;
 }
 .karaoke-screen .karaoke-content .song-current .name {
-  font-size: 32px;
+  font-size: 24px;
   font-weight: bold;
   color: black;
+}
+@media screen and (min-width: 992px) {
+  .karaoke-screen .karaoke-content .song-current .name {
+    font-size: 32px;
+  }
 }
 .karaoke-screen .karaoke-content .song-current .author {
   margin-top: 10px;
