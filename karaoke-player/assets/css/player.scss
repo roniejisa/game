@@ -614,7 +614,7 @@ header {
         }
 
         .process {
-            height: 6px;
+            height: 8px;
             display: block;
             background: $colorProcess;
             cursor: pointer;
@@ -623,6 +623,7 @@ header {
             left: 50%;
             transform: translateX(-50%);
             width: 100%;
+            z-index: 10000;
 
             &-main {
                 position: absolute;
@@ -632,16 +633,12 @@ header {
 
                 width: 0%;
                 background: $mainColor;
-                height: 6px;
-
-                &.show {
-                    height: 10px;
-                }
+                height: 8px;
             }
 
             &-icon {
-                height: 12px;
-                width: 12px;
+                height: 16px;
+                width: 16px;
                 position: absolute;
                 @include processIconGradient();
                 border-radius: 5px;
@@ -670,7 +667,7 @@ header {
                 user-select: none;
                 transition: .3s ease-out;
                 transition-property: visibility, opacity;
-
+                z-index: 999999;
                 &.show {
                     opacity: 1;
                     visibility: visible;

@@ -15,14 +15,8 @@ var offsetCurrent = 0;
 var percentCurrent = 0;
 var clientXIconProcess = 0;
 var widthMainProcess = 0;
-process.addEventListener(typeMouseDown, function (e) {
+process.addEventListener('mousedown', function (e) {
     isDrag = true;
-    var targetEl = e.target;
-    if (targetEl.classList.contains('process-icon')) {
-        // iconProcess
-        return false;
-    }
-
     widthMainProcess = e.offsetX;
     percentCurrent = toPercent(widthMainProcess);
     changeProcess(percentCurrent);
@@ -30,15 +24,47 @@ process.addEventListener(typeMouseDown, function (e) {
     clientXIconProcess = e.clientX;
 })
 
-// Di chuyển để hiên thị thẻ html
-process.addEventListener(typeMouseMove, function (e) {
+//Drag
+var isDrag = false;
+
+iconProcess.addEventListener('mousedown', function (e) {
     e.stopPropagation();
-    e.preventDefault();
+    clientXIconProcess = e.clientX;
+    widthMainProcess = mainProcess.clientWidth;
+    isDrag = true;
+})
+
+document.addEventListener('mousemove', function (e) {
+    if (isDrag) {
+        dragClientX = e.clientX
+        transform = Math.abs(dragClientX - clientXIconProcess);
+        var widthMainProcessCurrent = widthMainProcess + transform;
+        if (dragClientX < clientXIconProcess) {
+            widthMainProcessCurrent = widthMainProcess - transform;
+        }
+        percentCurrent = toPercent(widthMainProcessCurrent);
+        changeProcess(percentCurrent)
+        changeTimeStart(percentCurrent);
+    }
+})
+
+document.addEventListener('mouseup', function () {
+    if (isDrag) {
+        checkTimeLyric();
+        percentProcessUpdate();
+    }
+    isDrag = false;
+    timerProcess.classList.remove('show');
+})
+
+//Timer
+// Di chuyển để hiên thị thẻ html
+process.addEventListener('mousemove', function (e) {
     timerProcess.classList.add('show');
-    var left = !mobileAndTabletCheck() ? e.clientX : e.changedTouches[0].clientX;
+    var left = e.clientX;
     if (e.clientX < timerProcess.clientWidth) {
         left = timerProcess.clientWidth;
-    } else if (window.innerWidth < timerProcess.clientWidth + (!mobileAndTabletCheck() ? e.clientX : e.changedTouches[0].clientX)) {
+    } else if (window.innerWidth < timerProcess.clientWidth + e.clientX) {
         left = window.innerWidth - timerProcess.clientWidth;
     }
     timerProcess.style.left = left + 'px';
@@ -46,13 +72,76 @@ process.addEventListener(typeMouseMove, function (e) {
     if (e.target.classList.contains('process-icon')) {
         changeProcessTimer(percentCurrent);
     } else {
-        changeProcessTimer(toPercent(!mobileAndTabletCheck() ? e.offsetX : e.changedTouches[0].clientX));
+        changeProcessTimer(toPercent(e.offsetX));
     }
-}, { passive: false })
+})
 
 process.addEventListener('mouseleave', function (e) {
     timerProcess.classList.remove('show');
 })
+
+// Sự kiện mobile
+process.addEventListener('touchstart', function (e) {
+    isDrag = true;
+    widthMainProcess = e.changedTouches[0].clientX;
+    percentCurrent = toPercent(widthMainProcess);
+    changeProcess(percentCurrent);
+    // Tính khoảng cách của icon so với client
+    clientXIconProcess = e.changedTouches[0].clientX;
+})
+
+iconProcess.addEventListener('touchstart', function (e) {
+    e.stopPropagation();
+    clientXIconProcess = e.changedTouches[0].clientX;
+    widthMainProcess = mainProcess.clientWidth;
+    isDrag = true;
+})
+
+document.addEventListener('touchmove', function (e) {
+    e.preventDefault();
+    if (isDrag) {
+        dragClientX = e.changedTouches[0].clientX
+        transform = Math.abs(dragClientX - clientXIconProcess);
+        var widthMainProcessCurrent = widthMainProcess + transform;
+        if (dragClientX < clientXIconProcess) {
+            widthMainProcessCurrent = widthMainProcess - transform;
+        }
+        percentCurrent = toPercent(widthMainProcessCurrent);
+        changeProcess(percentCurrent)
+        changeTimeStart(percentCurrent);
+    }
+}, { passive: false })
+
+document.addEventListener('touchend', function (e) {
+    if (isDrag) {
+        checkTimeLyric();
+        percentProcessUpdate();
+    }
+    isDrag = false;
+    timerProcess.classList.remove('show');
+})
+
+// Thời gian
+
+process.addEventListener('touchmove', function (e) {
+    timerProcess.classList.add('show');
+    var left = e.changedTouches[0].clientX;
+    if (e.changedTouches[0].clientX < timerProcess.clientWidth) {
+        left = timerProcess.clientWidth;
+    } else if (window.innerWidth < timerProcess.clientWidth + e.changedTouches[0].clientX) {
+        left = window.innerWidth - timerProcess.clientWidth;
+    }
+    timerProcess.style.left = left + 'px';
+
+    if (e.target.classList.contains('process-icon')) {
+        changeProcessTimer(percentCurrent);
+    } else {
+        changeProcessTimer(toPercent(e.changedTouches[0].clientX));
+    }
+})
+// Hết sự kiện mobile
+
+
 
 function toPercent(width) {
     var percent = checkPercent(width / widthProcess * 100);
@@ -67,38 +156,6 @@ function percentToWidth() {
     var width = percentCurrent / 100 * widthProcess;
     return width;
 }
-//Drag
-var isDrag = false;
-
-iconProcess.addEventListener(typeMouseDown, function (e) {
-    clientXIconProcess = !mobileAndTabletCheck() ? e.clientX : e.changedTouches[0].clientX;
-    widthMainProcess = mainProcess.clientWidth;
-    isDrag = true;
-})
-
-document.addEventListener(typeMouseMove, function (e) {
-    if (isDrag) {
-        e.preventDefault();
-        dragClientX = !mobileAndTabletCheck() ? e.clientX : e.changedTouches[0].clientX
-        transform = Math.abs(dragClientX - clientXIconProcess);
-        var widthMainProcessCurrent = widthMainProcess + transform;
-        if (dragClientX < clientXIconProcess) {
-            widthMainProcessCurrent = widthMainProcess - transform;
-        }
-        percentCurrent = toPercent(widthMainProcessCurrent);
-        changeProcess(percentCurrent)
-        changeTimeStart(percentCurrent);
-    }
-}, { passive: false })
-
-document.addEventListener(typeMouseUp, function () {
-    if (isDrag) {
-        checkTimeLyric();
-        percentProcessUpdate();
-    }
-    isDrag = false;
-})
-
 // Xử lý process volume
 var rightEl = playerDashboard.querySelector('.right');
 var volume = playerDashboard.querySelector('.volume');
@@ -121,12 +178,10 @@ var volumeHightSmallIcon = '<i class="fa-solid fa-volume-low"></i>';
 var volumeHightOffIcon = '<i class="fa-solid fa-volume-off"></i>';
 var volumeHightXIcon = '<i class="fa-solid fa-volume-xmark"></i>';
 
-volumeProcess.addEventListener(typeMouseDown, function (e) {
+//Nhấn
+volumeProcess.addEventListener('mousedown', function (e) {
     isDragVolume = true;
     var targetEl = e.target;
-    if (targetEl.classList.contains('process-icon')) {
-        return false;
-    }
     if (targetEl.classList.contains('process-main')) {
         heightMainProcess = heightMainProcess - e.offsetY;
     } else {
@@ -140,6 +195,95 @@ volumeProcess.addEventListener(typeMouseDown, function (e) {
     clientYIconProcess = e.clientY;
     changeIconVolume();
 })
+
+// Drag
+var isDragVolume = false;
+iconVolumeProcess.addEventListener('mousedown', function (e) {
+    e.stopPropagation();
+    isDragVolume = true;
+    clientYIconProcess = e.clientY;
+    heightMainProcess = volumeProcessMain.clientHeight;
+})
+
+document.addEventListener('mousemove', function (e) {
+    if (isDragVolume) {
+        dragClientY = e.clientY;
+        transform = Math.abs(dragClientY - clientYIconProcess);
+        var heightMainProcessCurrent = heightMainProcess - transform;
+        if (dragClientY < clientYIconProcess) {
+            heightMainProcessCurrent = heightMainProcess + transform;
+        }
+        percentVolumeCurrent = toPercentHeight(heightMainProcessCurrent);
+        changeHeightProcess(percentVolumeCurrent)
+        percentVolumeUpdate();
+        changeIconVolume()
+        volumeBackground.classList.add('show')
+    }
+})
+
+document.addEventListener('mouseup', function () {
+    if (isDragVolume) {
+        heightMainProcess = percentVolumeCurrent === 100 ? heightProcess : heightMainProcess;
+        volumeBackground.classList.remove('show')
+    }
+    isDragVolume = false;
+})
+
+// Sụ kiện trên mobile
+volumeProcess.addEventListener('touchstart', function (e) {
+    isDragVolume = true;
+    var heightChange = Math.abs(clientYIconProcess - e.changedTouches[0].clientY);
+        currentHeight = heightMainProcess - heightChange;
+    if (clientYIconProcess < e.changedTouches[0].clientY) {
+        currentHeight = heightMainProcess + heightChange;
+    }
+    
+    percentVolumeCurrent = toPercentHeight(heightMainProcess);
+
+    changeHeightProcess(percentVolumeCurrent);
+
+    // Lưu lại khoảng cách giữa top và điểm click 
+    clientYIconProcess = e.changedTouches[0].clientY;
+    changeIconVolume();
+})
+
+iconVolumeProcess.addEventListener('touchstart', handleTouchStart)
+
+function handleTouchStart(e) {
+    e.stopPropagation();
+    isDragVolume = true;
+    clientYIconProcess = e.changedTouches[0].clientY;
+    heightMainProcess = volumeProcessMain.clientHeight;
+}
+
+document.addEventListener('touchmove', handleTouchMove, { passive: false })
+
+function handleTouchMove(e) {
+    e.preventDefault();
+    if (isDragVolume) {
+        dragClientY = e.changedTouches[0].clientY;
+        transform = Math.abs(dragClientY - clientYIconProcess);
+        var heightMainProcessCurrent = heightMainProcess - transform;
+        if (dragClientY < clientYIconProcess) {
+            heightMainProcessCurrent = heightMainProcess + transform;
+        }
+        percentVolumeCurrent = toPercentHeight(heightMainProcessCurrent);
+        changeHeightProcess(percentVolumeCurrent)
+        percentVolumeUpdate();
+        changeIconVolume()
+        volumeBackground.classList.add('show')
+    }
+}
+
+document.addEventListener('touchend', handleTouchEnd)
+
+function handleTouchEnd(e) {
+    heightMainProcess = volumeProcessMain.clientHeight;
+    volumeBackground.classList.remove('show')
+    isDragVolume = false;
+    clientYIconProcess = e.changedTouches[0].clientY;
+}
+
 
 function toPercentHeight(height) {
     var percent = checkPercent(height / heightProcess * 100);
@@ -169,39 +313,6 @@ function percentToHeight() {
     var height = percentVolumeCurrent / 100 * heightProcess;
     return height;
 }
-//Drag
-var isDragVolume = false;
-
-iconVolumeProcess.addEventListener(typeMouseDown, function (e) {
-    clientYIconProcess = !mobileAndTabletCheck() ? e.clientY : e.changedTouches[0].clientY;
-    heightMainProcess = volumeProcessMain.clientHeight;
-    isDragVolume = true;
-})
-
-document.addEventListener(typeMouseMove, function (e) {
-    if (isDragVolume) {
-        e.preventDefault();
-        dragClientY = !mobileAndTabletCheck() ? e.clientY : e.changedTouches[0].clientY;
-        transform = Math.abs(dragClientY - clientYIconProcess);
-        var heightMainProcessCurrent = heightMainProcess - transform;
-        if (dragClientY < clientYIconProcess) {
-            heightMainProcessCurrent = heightMainProcess + transform;
-        }
-        percentVolumeCurrent = toPercentHeight(heightMainProcessCurrent);
-        changeHeightProcess(percentVolumeCurrent)
-        percentVolumeUpdate();
-        changeIconVolume()
-        volumeBackground.classList.add('show')
-    }
-}, { passive: false })
-
-document.addEventListener(typeMouseUp, function () {
-    if (isDragVolume) {
-        heightMainProcess = percentVolumeCurrent === 100 ? heightProcess : heightMainProcess;
-        volumeBackground.classList.remove('show')
-    }
-    isDragVolume = false;
-})
 
 // Add Player 
 var timeStart = player.querySelector('.time-start');

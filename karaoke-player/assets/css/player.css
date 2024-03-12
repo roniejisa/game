@@ -548,7 +548,7 @@ header .menu-open {
   }
 }
 .player-dashboard .player .process {
-  height: 6px;
+  height: 8px;
   display: block;
   background: #fce9ef;
   cursor: pointer;
@@ -557,6 +557,7 @@ header .menu-open {
   left: 50%;
   transform: translateX(-50%);
   width: 100%;
+  z-index: 10000;
 }
 .player-dashboard .player .process-main {
   position: absolute;
@@ -565,14 +566,11 @@ header .menu-open {
   transform: translateY(-50%);
   width: 0%;
   background: #f7a5be;
-  height: 6px;
-}
-.player-dashboard .player .process-main.show {
-  height: 10px;
+  height: 8px;
 }
 .player-dashboard .player .process-icon {
-  height: 12px;
-  width: 12px;
+  height: 16px;
+  width: 16px;
   position: absolute;
   background: radial-gradient(#f7a5be, #000000);
   box-shadow: 2px 0 10px #000000;
@@ -601,6 +599,7 @@ header .menu-open {
   user-select: none;
   transition: 0.3s ease-out;
   transition-property: visibility, opacity;
+  z-index: 999999;
 }
 .player-dashboard .player .process-timer.show {
   opacity: 1;
