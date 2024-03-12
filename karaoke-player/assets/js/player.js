@@ -261,7 +261,6 @@ var iconPause = '<i class="fa-solid fa-pause"></i>'
 var iconKaraoke = '<i class="fa-solid fa-microphone"></i>';
 var iconNoKaraoke = '<i class="fa-solid fa-microphone-lines-slash"></i>';
 var animationFrame;
-var animationFrameForLyric;
 var isKaraoke = false;
 var isShowLyric = false;
 var isPlay = false;
@@ -325,20 +324,20 @@ function initAudio() {
 
         // CheckKaraoke
         if (audioKaraokeEl.webkitAudioDecodedByteCount) {
-            audioKaraokeEl.play();
+            audioKaraokeEl.pause();
         }
         changeIconKaraoke();
     })
 
     audioEl.addEventListener('pause', function () {
         cancelAnimationFrame(animationFrame)
-        cancelAnimationFrame(animationFrameForLyric)
         if (animationDisc) {
             animationDisc.pause();
         }
         animationLine(false)
+
         if (audioKaraokeEl.webkitAudioDecodedByteCount) {
-            audioKaraokeEl.pause();
+            audioKaraokeEl.currentTime = audioEl.currentTime;
         }
     })
 
@@ -363,10 +362,10 @@ function initAudio() {
     buttonPlayer.addEventListener('click', function () {
         if (isPlay) {
             isPlay = false;
-            audioEl.pause();
+            isKaraoke ? audioKaraokeEl.pause() : audioEl.pause();
         } else {
             isPlay = true;
-            audioEl.play();
+            isKaraoke ? audioKaraokeEl.play() : audioEl.play();
         }
         changeIconPlay();
     });
@@ -453,13 +452,13 @@ function initAudio() {
 
     buttonKaraoke.addEventListener('click', function () {
         isKaraoke = !isKaraoke;
-        changeIconKaraoke();
         if (isKaraoke) {
             changeTab();
         }
         if (isShowLyric === false) {
             lyricKaraoke.click();
         }
+        changeIconKaraoke();
     })
 
     buttonGetLyric.addEventListener('click', async function () {
@@ -478,7 +477,7 @@ function initAudio() {
 
 function initAudioKaraoke() {
     audioKaraokeEl.addEventListener('loadeddata', function () {
-        if (isPlay) {
+        if (isKaraoke && isPlay && isShowLyric) {
             audioKaraokeEl.play();
         }
         changeIconKaraoke();
@@ -487,6 +486,12 @@ function initAudioKaraoke() {
     audioKaraokeEl.onerror = function () {
         buttonKaraoke.setAttribute('hidden', '');
     };
+
+    audioKaraokeEl.addEventListener('pause', function () {
+        audioEl.currentTime = audioKaraokeEl.currentTime;
+    })
+
+    audioKaraokeEl.addEventListener('timeupdate', timeUpdateHandle)
 }
 // function animation 
 
@@ -524,7 +529,7 @@ function animationLine(checkPlay = true) {
 // function after update process
 function timeUpdateHandle() {
     if (!isDrag) {
-        timeStart.innerText = toTime(audioEl.currentTime);
+        timeStart.innerText = toTime(isKaraoke ? audioKaraokeEl.currentTime : audioEl.currentTime);
         changeProcess(secondTimeSongToPercent())
     }
 
@@ -638,8 +643,19 @@ function changeIconKaraoke() {
      * mute audio khi karaoke = true
      * 
      */
-    audioKaraokeEl.muted = (isKaraoke === false) || (isShowLyric === false);
-    audioEl.muted = (isKaraoke === true);
+    if (isKaraoke && isShowLyric && isPlay) {
+        audioEl.pause();
+        audioKaraokeEl.play();
+    } else {
+        audioKaraokeEl.pause();
+        if (isPlay) {
+            audioEl.play();
+        } else {
+            audioEl.pause();
+        }
+    }
+    // audioKaraokeEl.muted = (isKaraoke === false) || (isShowLyric === false);
+    // audioEl.muted = (isKaraoke === true);
     if (isKaraoke) {
         buttonKaraoke.classList.add('active')
     } else {
@@ -899,7 +915,7 @@ function showLyricKaraoke() {
      * 
      */
     var lyrics = playlists[songIndexCurrent].lyrics;
-    var milliseconds = audioEl.currentTime * 1000;
+    var milliseconds = (isKaraoke ? audioKaraokeEl.currentTime : audioEl.currentTime) * 1000;
     var lyricIndex = (milliseconds <= 1000 || !currentIndexLyric || !timeStartLyricNext || milliseconds >= timeEndLyricCurrent) ? indexLyricZingMP3(lyrics) : currentIndexLyric;
 
     if (lyricIndex !== -1) {
@@ -923,7 +939,7 @@ function showLyricKaraoke() {
 }
 
 function indexLyricZingMP3(lyrics) {
-    var milliseconds = audioEl.currentTime * 1000;
+    var milliseconds = (isKaraoke ? audioKaraokeEl.currentTime : audioEl.currentTime) * 1000;
     return lyrics.findIndex(function (current) {
         var words = current.words;
         if (milliseconds <= 1000 && words[0].startTime < 1000) {
@@ -1020,7 +1036,7 @@ function changeWidthLyricCurrent() {
     if (!elementLyricCurrent) {
         return false;
     }
-    const milliseconds = audioEl.currentTime * 1000;
+    const milliseconds = (isKaraoke ? audioKaraokeEl.currentTime : audioEl.currentTime) * 1000;
     var indexElement = elementLyricCurrent.elements.findIndex(function (element) {
         if (milliseconds >= element.startTime && milliseconds <= element.endTime) {
             return true;
