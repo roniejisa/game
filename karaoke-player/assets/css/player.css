@@ -557,6 +557,7 @@ header .menu-open {
   position: relative;
   width: calc(100% - 16px);
   height: 100%;
+  z-index: 20000;
 }
 .player-dashboard .player .process {
   height: 8px;

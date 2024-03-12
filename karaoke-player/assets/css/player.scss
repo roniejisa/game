@@ -620,6 +620,7 @@ header {
             position: relative;
             width: calc(100% - 16px);
             height: 100%;
+            z-index: 20000;
         }
         .process {
             height: 8px;

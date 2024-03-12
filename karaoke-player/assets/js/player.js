@@ -82,65 +82,65 @@ process.addEventListener('mouseleave', function (e) {
 })
 
 // Sự kiện mobile
-// process.addEventListener('touchstart', function (e) {
-//     isDrag = true;
-//     widthMainProcess = e.changedTouches[0].clientX;
-//     percentCurrent = toPercent(widthMainProcess);
-//     changeProcess(percentCurrent);
-//     // Tính khoảng cách của icon so với client
-//     clientXIconProcess = e.changedTouches[0].clientX;
-// })
+process.addEventListener('touchstart', function (e) {
+    isDrag = true;
+    widthMainProcess = e.changedTouches[0].clientX;
+    percentCurrent = toPercent(widthMainProcess);
+    changeProcess(percentCurrent);
+    // Tính khoảng cách của icon so với client
+    clientXIconProcess = e.changedTouches[0].clientX;
+})
 
-// iconProcess.addEventListener('touchstart', function (e) {
-//     e.stopPropagation();
-//     clientXIconProcess = e.changedTouches[0].clientX;
-//     widthMainProcess = mainProcess.clientWidth;
-//     isDrag = true;
-// })
+iconProcess.addEventListener('touchstart', function (e) {
+    e.stopPropagation();
+    clientXIconProcess = e.changedTouches[0].clientX;
+    widthMainProcess = mainProcess.clientWidth;
+    isDrag = true;
+})
 
-// document.addEventListener('touchmove', function (e) {
-//     e.preventDefault();
-//     if (isDrag) {
-//         dragClientX = e.changedTouches[0].clientX
-//         transform = Math.abs(dragClientX - clientXIconProcess);
-//         var widthMainProcessCurrent = widthMainProcess + transform;
-//         if (dragClientX < clientXIconProcess) {
-//             widthMainProcessCurrent = widthMainProcess - transform;
-//         }
-//         percentCurrent = toPercent(widthMainProcessCurrent);
-//         changeProcess(percentCurrent)
-//         changeTimeStart(percentCurrent);
-//     }
-// },{passive:false})
+document.addEventListener('touchmove', function (e) {
+    e.preventDefault();
+    if (isDrag) {
+        dragClientX = e.changedTouches[0].clientX
+        transform = Math.abs(dragClientX - clientXIconProcess);
+        var widthMainProcessCurrent = widthMainProcess + transform;
+        if (dragClientX < clientXIconProcess) {
+            widthMainProcessCurrent = widthMainProcess - transform;
+        }
+        percentCurrent = toPercent(widthMainProcessCurrent);
+        changeProcess(percentCurrent)
+        changeTimeStart(percentCurrent);
+    }
+},{passive:false})
 
-// document.addEventListener('touchend', function (e) {
-//     if (isDrag) {
-//         percentCurrent = toPercent(mainProcess.clientWidth);
-//         checkTimeLyric();
-//         percentProcessUpdate();
-//     }
-//     isDrag = false;
-//     timerProcess.classList.remove('show');
-// })
+document.addEventListener('touchend', function (e) {
+    if (isDrag) {
+        percentCurrent = toPercent(mainProcess.clientWidth);
+        checkTimeLyric();
+        percentProcessUpdate();
+    }
+    isDrag = false;
+    timerProcess.classList.remove('show');
+})
 
 // Thời gian
 
-// process.addEventListener('touchmove', function (e) {
-//     timerProcess.classList.add('show');
-//     var left = e.changedTouches[0].clientX;
-//     if (e.changedTouches[0].clientX < timerProcess.clientWidth) {
-//         left = timerProcess.clientWidth;
-//     } else if (window.innerWidth < timerProcess.clientWidth + e.changedTouches[0].clientX) {
-//         left = window.innerWidth - timerProcess.clientWidth;
-//     }
-//     timerProcess.style.left = left + 'px';
+process.addEventListener('touchmove', function (e) {
+    timerProcess.classList.add('show');
+    var left = e.changedTouches[0].clientX;
+    if (e.changedTouches[0].clientX < timerProcess.clientWidth) {
+        left = timerProcess.clientWidth;
+    } else if (window.innerWidth < timerProcess.clientWidth + e.changedTouches[0].clientX) {
+        left = window.innerWidth - timerProcess.clientWidth;
+    }
+    timerProcess.style.left = left + 'px';
 
-//     if (e.target.classList.contains('process-icon')) {
-//         changeProcessTimer(percentCurrent);
-//     } else {
-//         changeProcessTimer(toPercent(e.changedTouches[0].clientX));
-//     }
-// })
+    if (e.target.classList.contains('process-icon')) {
+        changeProcessTimer(percentCurrent);
+    } else {
+        changeProcessTimer(toPercent(e.changedTouches[0].clientX));
+    }
+})
 // Hết sự kiện mobile
 
 
@@ -233,59 +233,59 @@ document.addEventListener('mouseup', function () {
 })
 
 // Sụ kiện trên mobile
-// volumeProcess.addEventListener('touchstart', function (e) {
-//     isDragVolume = true;
-//     var heightChange = Math.abs(clientYIconProcess - e.changedTouches[0].clientY);
-//     currentHeight = heightMainProcess - heightChange;
-//     if (clientYIconProcess < e.changedTouches[0].clientY) {
-//         currentHeight = heightMainProcess + heightChange;
-//     }
+volumeProcess.addEventListener('touchstart', function (e) {
+    isDragVolume = true;
+    var heightChange = Math.abs(clientYIconProcess - e.changedTouches[0].clientY);
+    currentHeight = heightMainProcess - heightChange;
+    if (clientYIconProcess < e.changedTouches[0].clientY) {
+        currentHeight = heightMainProcess + heightChange;
+    }
 
-//     percentVolumeCurrent = toPercentHeight(heightMainProcess);
+    percentVolumeCurrent = toPercentHeight(heightMainProcess);
 
-//     changeHeightProcess(percentVolumeCurrent);
+    changeHeightProcess(percentVolumeCurrent);
 
-//     // Lưu lại khoảng cách giữa top và điểm click 
-//     clientYIconProcess = e.changedTouches[0].clientY;
-//     changeIconVolume();
-// })
+    // Lưu lại khoảng cách giữa top và điểm click 
+    clientYIconProcess = e.changedTouches[0].clientY;
+    changeIconVolume();
+})
 
-// iconVolumeProcess.addEventListener('touchstart', handleTouchStart)
+iconVolumeProcess.addEventListener('touchstart', handleTouchStart)
 
-// function handleTouchStart(e) {
-//     e.stopPropagation();
-//     isDragVolume = true;
-//     clientYIconProcess = e.changedTouches[0].clientY;
-//     heightMainProcess = volumeProcessMain.clientHeight;
-// }
+function handleTouchStart(e) {
+    e.stopPropagation();
+    isDragVolume = true;
+    clientYIconProcess = e.changedTouches[0].clientY;
+    heightMainProcess = volumeProcessMain.clientHeight;
+}
 
-// document.addEventListener('touchmove', handleTouchMove, { passive: false })
+document.addEventListener('touchmove', handleTouchMove, { passive: false })
 
-// function handleTouchMove(e) {
-//     e.preventDefault();
-//     if (isDragVolume) {
-//         dragClientY = e.changedTouches[0].clientY;
-//         transform = Math.abs(dragClientY - clientYIconProcess);
-//         var heightMainProcessCurrent = heightMainProcess - transform;
-//         if (dragClientY < clientYIconProcess) {
-//             heightMainProcessCurrent = heightMainProcess + transform;
-//         }
-//         percentVolumeCurrent = toPercentHeight(heightMainProcessCurrent);
-//         changeHeightProcess(percentVolumeCurrent)
-//         percentVolumeUpdate();
-//         changeIconVolume()
-//         volumeBackground.classList.add('show')
-//     }
-// }
+function handleTouchMove(e) {
+    e.preventDefault();
+    if (isDragVolume) {
+        dragClientY = e.changedTouches[0].clientY;
+        transform = Math.abs(dragClientY - clientYIconProcess);
+        var heightMainProcessCurrent = heightMainProcess - transform;
+        if (dragClientY < clientYIconProcess) {
+            heightMainProcessCurrent = heightMainProcess + transform;
+        }
+        percentVolumeCurrent = toPercentHeight(heightMainProcessCurrent);
+        changeHeightProcess(percentVolumeCurrent)
+        percentVolumeUpdate();
+        changeIconVolume()
+        volumeBackground.classList.add('show')
+    }
+}
 
-// document.addEventListener('touchend', handleTouchEnd)
+document.addEventListener('touchend', handleTouchEnd)
 
-// function handleTouchEnd(e) {
-//     heightMainProcess = volumeProcessMain.clientHeight;
-//     volumeBackground.classList.remove('show')
-//     isDragVolume = false;
-//     clientYIconProcess = e.changedTouches[0].clientY;
-// }
+function handleTouchEnd(e) {
+    heightMainProcess = volumeProcessMain.clientHeight;
+    volumeBackground.classList.remove('show')
+    isDragVolume = false;
+    clientYIconProcess = e.changedTouches[0].clientY;
+}
 
 
 function toPercentHeight(height) {
