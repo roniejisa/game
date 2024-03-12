@@ -11,7 +11,10 @@ var footer = document.querySelector('footer');
 var openMenuEl = header.querySelector('.menu-open')
 var closeMenuEl = header.querySelector('.menu-close');
 var tabControl = header.querySelector('.tab-control');
-main.style.height = `calc(100vh - ${header.clientHeight}px - ${footer.clientHeight}px)`;
+
+
+var spanOverlay = header.querySelector('.overlay');
+
 buttonEls.forEach((buttonEl, index) => {
     buttonEl.addEventListener('click', function (e) {
         const buttonSelected = tabEl.querySelector('.selected');
@@ -21,8 +24,7 @@ buttonEls.forEach((buttonEl, index) => {
         }
 
         if (changeTab) {
-            var percent = -150 + (index * 100);
-            overlay.style.transform = `translateX(${percent}%) translateY(-50%)`;
+            overlay.style.left = 6 + spanOverlay.clientWidth * index + 'px'
             buttonSelected.classList.remove('selected');
             buttonEl.classList.add('selected');
             var tabContentShow = document.querySelector('[data-tab-content].show');
@@ -270,7 +272,23 @@ function onOffLoading(element, isLoading) {
     }
 }
 
+openMenuEl.addEventListener('click', function () {
+    if (tabControl.classList.contains('show')) {
+        tabControl.classList.remove('show')
+    } else {
+        tabControl.classList.add('show')
+    }
+})
+
+function setSizeAll() {
+    widthProcess = process.clientWidth; 
+    main.style.height = `calc(100vh - ${header.clientHeight}px - ${footer.clientHeight}px)`;
+    spanOverlay.style.width = buttonEls[0].clientWidth + "px";
+    spanOverlay.style.left = 6 + buttonEls[0].clientWidth + "px";
+}
+
 window.addEventListener('DOMContentLoaded', async function () {
+    setSizeAll();
     playlistHome = getLocalStorage(KEY_HOME);
     while (!playlistHome.length) {
         const response = await loadSongHomeStart();
@@ -287,12 +305,6 @@ window.addEventListener('DOMContentLoaded', async function () {
     await renderSongHome();
     onOffLoading(loadingHome, false);
     chooseSongHome();
+
 })
 
-openMenuEl.addEventListener('click', function () {
-    if (tabControl.classList.contains('show')) {
-        tabControl.classList.remove('show')
-    } else {
-        tabControl.classList.add('show')
-    }
-})

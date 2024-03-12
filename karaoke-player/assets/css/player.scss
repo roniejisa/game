@@ -44,7 +44,8 @@ body {
     font-family: Montserrat, sans-serif;
     display: flex;
     flex-direction: column;
-    background: black
+    background: black;
+    color: black;
 }
 
 //Header
@@ -100,7 +101,7 @@ header {
         top: 55px;
 
         &.show {
-            transform: translateY(0%);
+            transform: translateY(10px);
             opacity: 1;
             visibility: visible;
             pointer-events: all;
@@ -177,20 +178,14 @@ header {
             .overlay {
                 position: absolute;
                 top: 50%;
-                left: 50%;
-                transform: translateX(-50%) translateY(-50%);
-                min-width: 110px;
-
-                @include screen(992px) {
-                    min-width: 160px;
-                }
-
+                transform: translateY(-50%);
                 border-radius: 25px;
+                left: 0;
                 z-index: 1;
                 border: 1px solid;
                 border-color: $mainColor $colorText $mainColor $colorText;
                 height: calc(100% - 10px);
-                transition: transform .4s ease;
+                transition: left .4s ease;
                 z-index: 1;
                 animation: filterRotate 4s ease-in-out infinite alternate;
 
@@ -198,11 +193,10 @@ header {
                     position: absolute;
                     background: #000000eb;
                     border-radius: 25px;
-                    width: calc(100%);
-                    height: calc(100%);
+                    width: 100%;
+                    height: 100%;
                     top: 50%;
-                    left: 50%;
-                    transform: translateX(-50%) translateY(-50%);
+                    transform: translateY(-50%);
                     z-index: 2;
                 }
             }
