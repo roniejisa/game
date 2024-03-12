@@ -75,8 +75,6 @@ header {
         padding: 18px 20px;
     }
 
-
-
     .tab-control {
         position: fixed;
         z-index: 10000;
@@ -204,8 +202,6 @@ header {
         }
 
     }
-
-    &:has(.tab-control.show) {}
 
     .header-container {
         display: flex;
