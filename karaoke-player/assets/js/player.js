@@ -99,6 +99,7 @@ iconProcess.addEventListener('touchstart', function (e) {
 })
 
 document.addEventListener('touchmove', function (e) {
+    e.preventDefault();
     if (isDrag) {
         dragClientX = e.changedTouches[0].clientX
         transform = Math.abs(dragClientX - clientXIconProcess);
@@ -110,10 +111,11 @@ document.addEventListener('touchmove', function (e) {
         changeProcess(percentCurrent)
         changeTimeStart(percentCurrent);
     }
-})
+},{passive:false})
 
 document.addEventListener('touchend', function (e) {
     if (isDrag) {
+        percentCurrent = toPercent(mainProcess.clientWidth);
         checkTimeLyric();
         percentProcessUpdate();
     }
@@ -233,11 +235,11 @@ document.addEventListener('mouseup', function () {
 volumeProcess.addEventListener('touchstart', function (e) {
     isDragVolume = true;
     var heightChange = Math.abs(clientYIconProcess - e.changedTouches[0].clientY);
-        currentHeight = heightMainProcess - heightChange;
+    currentHeight = heightMainProcess - heightChange;
     if (clientYIconProcess < e.changedTouches[0].clientY) {
         currentHeight = heightMainProcess + heightChange;
     }
-    
+
     percentVolumeCurrent = toPercentHeight(heightMainProcess);
 
     changeHeightProcess(percentVolumeCurrent);
@@ -259,6 +261,7 @@ function handleTouchStart(e) {
 document.addEventListener('touchmove', handleTouchMove, { passive: false })
 
 function handleTouchMove(e) {
+    e.preventDefault();
     if (isDragVolume) {
         dragClientY = e.changedTouches[0].clientY;
         transform = Math.abs(dragClientY - clientYIconProcess);
