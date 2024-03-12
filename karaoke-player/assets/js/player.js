@@ -179,8 +179,8 @@ function checkPercent(percent) {
     return percent
 }
 function percentToHeight() {
-    var width = percentVolumeCurrent / 100 * widthProcess;
-    return width;
+    var height = percentVolumeCurrent / 100 * heightProcess;
+    return height;
 }
 //Drag
 var isDragVolume = false;
@@ -194,7 +194,7 @@ iconVolumeProcess.addEventListener(typeMouseDown, function (e) {
 document.addEventListener(typeMouseMove, function (e) {
     if (isDragVolume) {
         e.preventDefault()
-        dragClientY = !mobileAndTabletCheck() ? e.offsetY : e.changedTouches[0].clientY;
+        dragClientY = !mobileAndTabletCheck() ? e.clientY : e.changedTouches[0].clientY;
         transform = Math.abs(dragClientY - clientYIconProcess);
         var heightMainProcessCurrent = heightMainProcess - transform;
         if (dragClientY < clientYIconProcess) {
