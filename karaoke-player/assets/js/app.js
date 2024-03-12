@@ -292,35 +292,35 @@ function setSizeAll() {
     spanOverlay.style.left = 6 + buttonEls[0].clientWidth + "px";
     heightMainProcess = volumeProcess.clientHeight;
     setSizeSongEl();
-    setSizePlaylistEl()
+    setSizePlaylistEl();
 
 }
 
 function setSizeSongEl(hasTab = false) {
-    var tabHeight = hasTab ? 50  : 0;
-
+    var tabHeight = hasTab ? 50 : 0;
+    var heightMarginHeading = 20;
     if (mobileAndTabletCheck()) {
-        songEl.style.maxHeight = `calc(100vh - ${header.clientHeight}px - ${footer.clientHeight}px - ${footerLeft.clientHeight}px - ${tabHeight}px - ${headingSong.clientHeight}px - 20px)`;
+        songEl.style.maxHeight = `calc(${window.innerHeight}px - ${header.clientHeight}px - ${footer.clientHeight}px - ${headingSong.clientHeight}px - ${heightMarginHeading}px - ${tabHeight}px - ${footerLeft.clientHeight}px)`;
     } else {
-        songEl.style.maxHeight = `calc(100vh - ${header.clientHeight}px - ${footerLeft.clientHeight}px - ${headingSong.clientHeight}px - 20px)`;
+        songEl.style.maxHeight = `calc(${window.innerHeight}px - ${header.clientHeight}px - ${footer.clientHeight}px - ${headingSong.clientHeight}px - ${heightMarginHeading}px)`;
     }
 }
 
 function setSizeMain(hasTab = false) {
-    var tabHeight = hasTab ? 50  : 0;
+    var tabHeight = hasTab ? 50 : 0;
     if (mobileAndTabletCheck()) {
-        main.style.height = `calc(100vh - ${header.clientHeight}px - ${footer.clientHeight}px - ${footerLeft.clientHeight}px - ${tabHeight}px)`;
+        main.style.height = `calc(${window.innerHeight}px - ${header.clientHeight}px - ${footer.clientHeight}px - ${footerLeft.clientHeight}px - ${tabHeight}px)`;
     } else {
-        main.style.height = `calc(100vh - ${header.clientHeight}px - ${footer.clientHeight}px)`;
+        main.style.height = `calc(${window.innerHeight}px - ${header.clientHeight}px - ${footer.clientHeight}px)`;
     }
 }
 
 function setSizePlaylistEl(hasTab = false) {
-    var tabHeight = hasTab ? 50  : 0;
+    var tabHeight = hasTab ? 50 : 0;
     if (mobileAndTabletCheck()) {
-        playlistEl.style.maxHeight = `calc(100vh - ${header.clientHeight}px - ${footer.clientHeight}px - ${footerLeft.clientHeight}px - ${tabHeight}px)`;
+        playlistEl.style.maxHeight = `calc(${window.innerHeight}px - ${header.clientHeight}px - ${footer.clientHeight}px - ${footerLeft.clientHeight}px - ${tabHeight}px)`;
     } else {
-        playlistEl.style.maxHeight = `calc(100vh - ${header.clientHeight}px - ${footer.clientHeight}px - ${footerLeft.clientHeight}px)`;
+        playlistEl.style.maxHeight = `calc(${window.innerHeight}px - ${header.clientHeight}px - ${footer.clientHeight}px)`;
     }
 }
 
