@@ -151,6 +151,7 @@ function toPercent(width) {
 }
 
 function changeProcess(percent) {
+    percentCurrent = percent;
     mainProcess.style.width = percent + '%';
 }
 
@@ -556,9 +557,9 @@ function initAudio() {
         isKaraoke = !isKaraoke;
         if (isKaraoke) {
             changeTab();
-            audioKaraokeEl.currentTime = audioEl.currentTime
+            audioKaraokeEl.currentTime = getTimeSecondHasPercent(percentCurrent)
         } else {
-            audioEl.currentTime = audioKaraokeEl.currentTime;
+            audioEl.currentTime = getTimeSecondHasPercent(percentCurrent);
         }
         if (isShowLyric === false) {
             lyricKaraoke.click();
