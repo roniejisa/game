@@ -255,7 +255,6 @@ var authorCurrent = infoCurrent.querySelector('.author');
 //End
 var audioEl = new Audio();
 var audioKaraokeEl = new Audio();
-var audioTemp = new Audio();
 
 var iconPlay = '<i class="fa-solid fa-play"></i>'
 var iconPause = '<i class="fa-solid fa-pause"></i>'
@@ -454,11 +453,8 @@ function initAudio() {
 
     buttonKaraoke.addEventListener('click', function () {
         isKaraoke = !isKaraoke;
-        // changeIconKaraoke();
+        changeIconKaraoke();
         if (isKaraoke) {
-            audioTemp = audioEl;
-            audioEl = audioKaraokeEl;
-            audioKaraokeEl = audioTemp;
             changeTab();
         }
         if (isShowLyric === false) {
@@ -1229,7 +1225,7 @@ document.addEventListener('keydown', function (e) {
 window.addEventListener('resize', function () {
     widthProcess = process.clientWidth;
     main.style.height = `calc(100vh - ${header.clientHeight}px - ${footer.clientHeight}px)`;
-    // window.location.reload();
+    // window.location.reload();    
 })
 
 window.addEventListener('DOMContentLoaded', async function () {
