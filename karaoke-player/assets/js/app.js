@@ -287,12 +287,12 @@ openMenuEl.addEventListener('click', function () {
 
 function setSizeAll() {
     widthProcess = process.clientWidth;
-    setSizeMain();
+    setSizeMain(tabControl.classList.contains('show'));
     spanOverlay.style.width = buttonEls[0].clientWidth + "px";
     spanOverlay.style.left = 6 + buttonEls[0].clientWidth + "px";
     heightMainProcess = volumeProcess.clientHeight;
-    setSizeSongEl();
-    setSizePlaylistEl();
+    setSizeSongEl(tabControl.classList.contains('show'));
+    setSizePlaylistEl(tabControl.classList.contains('show'));
 
 }
 

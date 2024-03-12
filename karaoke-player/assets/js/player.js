@@ -1285,9 +1285,7 @@ document.addEventListener('keydown', function (e) {
  */
 
 window.addEventListener('resize', function () {
-    widthProcess = process.clientWidth;
-    // main.style.height = `calc(100vh - ${header.clientHeight}px - ${footer.clientHeight}px)`;
-    // window.location.reload();    
+    setSizeAll();
 })
 
 window.addEventListener('DOMContentLoaded', async function () {
