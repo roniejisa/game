@@ -22,7 +22,7 @@ body:has(.tab-control.show) .main {
 }
 body:has(.tab-control.show) .player-screen .screen-left .search,
 body:has(.tab-control.show) .player-screen .screen-left .songs {
-  max-height: calc(100% - 130px);
+  max-height: calc(100% - 100px);
 }
 
 header {
@@ -680,7 +680,7 @@ main {
 .player-screen .screen-left .songs {
   position: absolute;
   width: 100%;
-  max-height: calc(100% - 90px);
+  max-height: calc(100% - 50px);
   padding-bottom: 10px;
   overflow: auto;
   display: grid;
@@ -708,12 +708,6 @@ main {
 .player-screen .screen-left .search::-webkit-scrollbar-track,
 .player-screen .screen-left .songs::-webkit-scrollbar-track {
   background: transparent;
-}
-@media screen and (min-width: 992px) {
-  .player-screen .screen-left .search,
-  .player-screen .screen-left .songs {
-    max-height: calc(100% - 50px);
-  }
 }
 @media screen and (min-width: 992px) {
   .player-screen .screen-left .search,
@@ -1185,6 +1179,13 @@ footer {
   bottom: 0;
   left: 0;
   width: 100%;
+}
+@media screen and (min-width: 992px) {
+  footer {
+    position: initial;
+    bottom: initial;
+    left: initial;
+  }
 }
 
 @keyframes filterRotate {

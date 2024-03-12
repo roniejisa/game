@@ -62,7 +62,7 @@ body:has(.tab-control.show) {
 
             .search,
             .songs {
-                max-height: calc(100% - 130px);
+                max-height: calc(100% - 100px);
             }
         }
     }
@@ -499,7 +499,7 @@ header {
 
                     &.show,
                     &:focus,
-                    &:active,  
+                    &:active,
                     &:hover {
                         opacity: 1;
                         visibility: visible;
@@ -782,10 +782,7 @@ main {
 
             position: absolute;
             width: 100%;
-            max-height: calc(100% - 90px);
-            @include screen(992px){
-                max-height: calc(100% - 50px);
-            }
+            max-height: calc(100% - 50px);
             padding-bottom: 10px;
             overflow: auto;
             display: grid;
@@ -1008,9 +1005,11 @@ main {
 
     .playlist {
         max-height: calc(100% - 90px);
-        @include screen(992px){
+
+        @include screen(992px) {
             max-height: 100%;
         }
+
         position: relative;
         overflow: auto;
 
@@ -1318,6 +1317,12 @@ footer {
     bottom: 0;
     left: 0;
     width: 100%;
+
+    @include screen(992px) {
+        position: initial;
+        bottom: initial;
+        left: initial;
+    }
 }
 
 @keyframes filterRotate {

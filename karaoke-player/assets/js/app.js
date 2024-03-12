@@ -8,6 +8,7 @@ var overlay = tabEl.querySelector('.overlay');
 var main = document.querySelector('main');
 var header = document.querySelector('header');
 var footer = document.querySelector('footer');
+var footerLeft = footer.querySelector('.left');
 var openMenuEl = header.querySelector('.menu-open')
 var closeMenuEl = header.querySelector('.menu-close');
 var tabControl = header.querySelector('.tab-control');
@@ -280,7 +281,11 @@ openMenuEl.addEventListener('click', function () {
 
 function setSizeAll() {
     widthProcess = process.clientWidth;
-    main.style.height = `calc(100vh - ${header.clientHeight}px - ${footer.clientHeight}px)`;
+    if(mobileAndTabletCheck()){
+        main.style.height = `calc(100vh - ${header.clientHeight}px - ${footer.clientHeight}px - ${footerLeft.clientHeight}px)`;
+    }else{
+        main.style.height = `calc(100vh - ${header.clientHeight}px - ${footer.clientHeight}px)`;
+    }
     spanOverlay.style.width = buttonEls[0].clientWidth + "px";
     spanOverlay.style.left = 6 + buttonEls[0].clientWidth + "px";
     heightMainProcess = volumeProcess.clientHeight
