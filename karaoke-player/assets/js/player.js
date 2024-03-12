@@ -69,7 +69,7 @@ process.addEventListener('mousemove', function (e) {
         left = window.innerWidth - timerProcess.clientWidth;
     }
     timerProcess.style.left = left + 'px';
-    percentCurrent = toPercent(left);
+
     if (e.target.classList.contains('process-icon')) {
         changeProcessTimer(percentCurrent);
     } else {
@@ -114,10 +114,8 @@ document.addEventListener('touchmove', function (e) {
 }, { passive: false })
 
 document.addEventListener('touchend', function (e) {
-    if (isDrag) {
-        checkTimeLyric();
-        percentProcessUpdate();
-    }
+    checkTimeLyric();
+    percentProcessUpdate();
     isDrag = false;
     timerProcess.classList.remove('show');
 })
@@ -133,7 +131,7 @@ process.addEventListener('touchmove', function (e) {
         left = window.innerWidth - timerProcess.clientWidth;
     }
     timerProcess.style.left = left + 'px';
-    percentCurrent = toPercent(left);
+
     if (e.target.classList.contains('process-icon')) {
         changeProcessTimer(percentCurrent);
     } else {
