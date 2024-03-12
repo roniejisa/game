@@ -220,12 +220,13 @@ header {
 
         a {
             font-size: 0;
+            display: flex;
+            justify-content: center;
         }
 
         img {
-            display: block;
-            width: auto;
-            height: 100%;
+            max-width: 200px;
+            height: auto;
         }
     }
 
