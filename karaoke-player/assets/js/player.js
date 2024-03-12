@@ -79,8 +79,8 @@ iconProcess.addEventListener(typeMouseDown, function (e) {
 })
 
 document.addEventListener(typeMouseMove, function (e) {
-    e.preventDefault();
     if (isDrag) {
+        e.preventDefault();
         dragClientX = !mobileAndTabletCheck() ? e.clientX : e.changedTouches[0].clientX
         transform = Math.abs(dragClientX - clientXIconProcess);
         var widthMainProcessCurrent = widthMainProcess + transform;
