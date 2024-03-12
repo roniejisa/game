@@ -184,7 +184,7 @@ function checkPercent(percent) {
     if (percent < 0) {
         percent = 0;
     }
-    if(isNaN(percent)){
+    if (isNaN(percent)) {
         percent = 0;
         alert("Chưa tải được thời gian 😒");
     }
@@ -811,14 +811,21 @@ function loadSongStart() {
                 } else {
                     endTime = (lyric.endTimeMs != 0 && lyric.endTimeMs) ? lyric.endTimeMs : songCurrent.lyrics[index + 1].startTimeMs
                 }
-                var words = [
-                    {
-                        data: lyric.words,
-                        startTime: lyric.startTimeMs,
-                        endTime: endTime - (Math.floor(Math.random() * 1000 + 500))
-                    }
-                ];
-                newArray.push({ words });
+                var arrWords = lyric.words.split(' ');
+
+                endTime -= (Math.floor(Math.random() * 1000 + 500))
+                var words = [];
+                var arrWords = lyric.words.split(' ');
+                var totalTime = endTime - +lyric.startTimeMs;
+                var oneTime = totalTime / arrWords.length;
+                    
+                for (var i = 0; i < arrWords.length; i++) {
+                    words.push({
+                        data: arrWords[i],
+                        startTime: i == 0 ? +lyric.startTimeMs : +lyric.startTimeMs + (oneTime * i),
+                        endTime: +lyric.startTimeMs + (oneTime * (i + 1))
+                    })
+                }
                 return newArray;
             }, [])
         }
@@ -1227,7 +1234,7 @@ document.addEventListener('keydown', function (e) {
  * 
  */
 
-window.addEventListener('resize', function(){
+window.addEventListener('resize', function () {
     window.location.reload();
 })
 
