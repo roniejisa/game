@@ -404,16 +404,11 @@ header .menu-open {
   height: 100px;
   padding: 10px;
   width: 50px;
+  opacity: 0;
+  pointer-events: none;
+  visibility: hidden;
   transition: 0.3s ease-out;
   transition-property: opacity, visibility;
-}
-@media screen and (min-width: 992px) {
-  .player-dashboard .toolbar .right .volume .volume-background {
-    display: block;
-    opacity: 0;
-    pointer-events: none;
-    visibility: hidden;
-  }
 }
 .player-dashboard .toolbar .right .volume .volume-background::before {
   content: "";
@@ -433,7 +428,7 @@ header .menu-open {
   position: absolute;
   background: transparent;
 }
-.player-dashboard .toolbar .right .volume .volume-background.show, .player-dashboard .toolbar .right .volume .volume-background:hover {
+.player-dashboard .toolbar .right .volume .volume-background.show, .player-dashboard .toolbar .right .volume .volume-background:focus, .player-dashboard .toolbar .right .volume .volume-background:active, .player-dashboard .toolbar .right .volume .volume-background:hover {
   opacity: 1;
   visibility: visible;
   pointer-events: all;

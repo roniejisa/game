@@ -472,17 +472,13 @@ header {
                     height: 100px;
                     padding: 10px;
                     width: 50px;
-
-                    @include screen(992px) {
-                        display: block;
-                        opacity: 0;
-                        pointer-events: none;
-                        visibility: hidden;
-                    }
+                    opacity: 0;
+                    pointer-events: none;
+                    visibility: hidden;
 
                     transition: .3s ease-out;
                     transition-property: opacity,
-                    visibility;
+                        visibility;
 
                     &::before {
                         content: '';
@@ -505,6 +501,8 @@ header {
                     }
 
                     &.show,
+                    &:focus,
+                    &:active,  
                     &:hover {
                         opacity: 1;
                         visibility: visible;
