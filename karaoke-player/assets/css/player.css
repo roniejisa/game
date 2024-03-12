@@ -271,6 +271,12 @@ header .menu-open {
   flex-wrap: wrap;
   width: 100%;
   justify-content: center;
+  z-index: 1;
+}
+@media screen and (min-width: 992px) {
+  .player-dashboard .toolbar {
+    z-index: 10001;
+  }
 }
 .player-dashboard .toolbar .left,
 .player-dashboard .toolbar .right {
@@ -547,6 +553,11 @@ header .menu-open {
     font-size: 18px;
   }
 }
+.player-dashboard .player .process-inner {
+  position: relative;
+  width: calc(100% - 16px);
+  height: 100%;
+}
 .player-dashboard .player .process {
   height: 8px;
   display: block;
@@ -577,7 +588,7 @@ header .menu-open {
   border-radius: 5px;
   top: 50%;
   right: 0;
-  transform: translateY(-50%);
+  transform: translateX(100%) translateY(-50%);
 }
 .player-dashboard .player .process-timer {
   position: absolute;

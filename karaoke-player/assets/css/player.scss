@@ -325,6 +325,11 @@ header {
         flex-wrap: wrap;
         width: 100%;
         justify-content: center;
+        z-index: 1;
+
+        @include screen(992px) {
+            z-index: 10001;
+        }
 
         .left,
         .right {
@@ -461,7 +466,6 @@ header {
                     opacity: 0;
                     pointer-events: none;
                     visibility: hidden;
-
                     transition: .3s ease-out;
                     transition-property: opacity,
                         visibility;
@@ -612,7 +616,11 @@ header {
                 font-size: 18px;
             }
         }
-
+        .process-inner{
+            position: relative;
+            width: calc(100% - 16px);
+            height: 100%;
+        }
         .process {
             height: 8px;
             display: block;
@@ -644,7 +652,7 @@ header {
                 border-radius: 5px;
                 top: 50%;
                 right: 0;
-                transform: translateY(-50%);
+                transform: translateX(100%) translateY(-50%);
             }
 
             &-timer {
@@ -668,6 +676,7 @@ header {
                 transition: .3s ease-out;
                 transition-property: visibility, opacity;
                 z-index: 999999;
+
                 &.show {
                     opacity: 1;
                     visibility: visible;

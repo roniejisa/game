@@ -5,7 +5,8 @@ var playerDashboard = document.querySelector('.player-dashboard');
 var player = playerDashboard.querySelector('.player')
 
 // Xử lý process player
-var process = player.querySelector('.process');
+var processRoot = player.querySelector('.process');
+var process = processRoot.querySelector('.process-inner');
 var mainProcess = player.querySelector('.process-main');
 var iconProcess = player.querySelector('.process-icon');
 var timerProcess = player.querySelector('.process-timer');
