@@ -69,7 +69,7 @@ process.addEventListener('mousemove', function (e) {
         left = window.innerWidth - timerProcess.clientWidth;
     }
     timerProcess.style.left = left + 'px';
-
+    percentCurrent = toPercent(left);
     if (e.target.classList.contains('process-icon')) {
         changeProcessTimer(percentCurrent);
     } else {
@@ -133,7 +133,7 @@ process.addEventListener('touchmove', function (e) {
         left = window.innerWidth - timerProcess.clientWidth;
     }
     timerProcess.style.left = left + 'px';
-
+    percentCurrent = toPercent(left);
     if (e.target.classList.contains('process-icon')) {
         changeProcessTimer(percentCurrent);
     } else {
@@ -234,11 +234,11 @@ document.addEventListener('mouseup', function () {
 volumeProcess.addEventListener('touchstart', function (e) {
     isDragVolume = true;
     var heightChange = Math.abs(clientYIconProcess - e.changedTouches[0].clientY);
-        currentHeight = heightMainProcess - heightChange;
+    currentHeight = heightMainProcess - heightChange;
     if (clientYIconProcess < e.changedTouches[0].clientY) {
         currentHeight = heightMainProcess + heightChange;
     }
-    
+
     percentVolumeCurrent = toPercentHeight(heightMainProcess);
 
     changeHeightProcess(percentVolumeCurrent);
