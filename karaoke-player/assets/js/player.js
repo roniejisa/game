@@ -293,7 +293,9 @@ function initAudio() {
     playLines = document.querySelectorAll('.play-line');
 
     audioEl.addEventListener('loadedmetadata', function (e) {
-        updateTimer();
+        if (!isKaraoke) {
+            updateTimer();
+        }
         if (isPlay && isShowLyric) {
             animationFrame = requestAnimationFrame(timeUpdateHandle)
         } else {
@@ -335,7 +337,6 @@ function initAudio() {
             animationDisc.pause();
         }
         animationLine(false)
-
         if (audioKaraokeEl.webkitAudioDecodedByteCount) {
             audioKaraokeEl.currentTime = audioEl.currentTime;
         }
@@ -477,6 +478,9 @@ function initAudio() {
 
 function initAudioKaraoke() {
     audioKaraokeEl.addEventListener('loadeddata', function () {
+        if (isKaraoke) {
+            updateTimer();
+        }
         if (isKaraoke && isPlay && isShowLyric) {
             audioKaraokeEl.play();
         }
@@ -529,7 +533,7 @@ function animationLine(checkPlay = true) {
 // function after update process
 function timeUpdateHandle() {
     if (!isDrag) {
-        timeStart.innerText = toTime(isKaraoke ? audioKaraokeEl.currentTime : audioEl.currentTime);
+        timeStart.innerText = toTime(getTimeCurrent());
         changeProcess(secondTimeSongToPercent())
     }
 
@@ -698,21 +702,37 @@ function changeShuffle() {
 }
 
 //Utils 
+function getTimeCurrent() {
+    return (isKaraoke ? audioKaraokeEl.currentTime : audioEl.currentTime);
+}
+
+function getAudioDuration() {
+    return (isKaraoke ? audioKaraokeEl.duration : audioEl.duration);
+}
+
 function getSizeVolume(percent) {
     return (1 / 100 * percent).toFixed(4);
 }
 function secondTimeSongToPercent() {
-    return audioEl.currentTime / audioEl.duration * 100;
+    if (isKaraoke) {
+        return audioKaraokeEl.currentTime / audioKaraokeEl.duration * 100
+    } else {
+        return audioEl.currentTime / audioEl.duration * 100
+    }
 }
 function getTimeSong(percent) {
     return toTime(getTimeSecondHasPercent(percent));
 }
 function getTimeSecondHasPercent(percent) {
-    return audioEl.duration / 100 * percent;
+    if (isKaraoke) {
+        return audioKaraokeEl.duration / 100 * percent;
+    } else {
+        return audioEl.duration / 100 * percent;
+    }
 }
 function updateTimer() {
     changeProcess(0);
-    timeEnd.innerText = toTime(audioEl.duration);
+    timeEnd.innerText = toTime(getAudioDuration());
 }
 
 function toTime(seconds) {
@@ -915,7 +935,7 @@ function showLyricKaraoke() {
      * 
      */
     var lyrics = playlists[songIndexCurrent].lyrics;
-    var milliseconds = (isKaraoke ? audioKaraokeEl.currentTime : audioEl.currentTime) * 1000;
+    var milliseconds = getTimeCurrent() * 1000;
     var lyricIndex = (milliseconds <= 1000 || !currentIndexLyric || !timeStartLyricNext || milliseconds >= timeEndLyricCurrent) ? indexLyricZingMP3(lyrics) : currentIndexLyric;
 
     if (lyricIndex !== -1) {
@@ -939,7 +959,7 @@ function showLyricKaraoke() {
 }
 
 function indexLyricZingMP3(lyrics) {
-    var milliseconds = (isKaraoke ? audioKaraokeEl.currentTime : audioEl.currentTime) * 1000;
+    var milliseconds = getTimeCurrent() * 1000;
     return lyrics.findIndex(function (current) {
         var words = current.words;
         if (milliseconds <= 1000 && words[0].startTime < 1000) {
@@ -1036,7 +1056,7 @@ function changeWidthLyricCurrent() {
     if (!elementLyricCurrent) {
         return false;
     }
-    const milliseconds = (isKaraoke ? audioKaraokeEl.currentTime : audioEl.currentTime) * 1000;
+    const milliseconds = getTimeCurrent() * 1000;
     var indexElement = elementLyricCurrent.elements.findIndex(function (element) {
         if (milliseconds >= element.startTime && milliseconds <= element.endTime) {
             return true;
@@ -1165,10 +1185,18 @@ document.addEventListener('keydown', function (e) {
         return false;
     }
     if (e.which === 37) {
-        audioEl.currentTime -= 1;
+        if (isKaraoke) {
+            audioKaraokeEl.currentTime -= 1;
+        } else {
+            audioEl.currentTime -= 1;
+        }
     }
     if (e.which === 39) {
-        audioEl.currentTime += 1;
+        if (isKaraoke) {
+            audioKaraokeEl.currentTime += 1;
+        } else {
+            audioEl.currentTime += 1;
+        }
     };
 
     if (e.which === 38) {

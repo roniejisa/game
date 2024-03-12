@@ -50,21 +50,8 @@ body {
 
 //Header
 body:has(.tab-control.show) {
-
-    .screen-right,
-    .screen-left,
-    .main {
+    main {
         top: 50px;
-    }
-
-    .player-screen {
-        .screen-left {
-
-            .search,
-            .songs {
-                max-height: calc(100% - 100px);
-            }
-        }
     }
 }
 
@@ -782,7 +769,6 @@ main {
 
             position: absolute;
             width: 100%;
-            max-height: calc(100% - 50px);
             padding-bottom: 10px;
             overflow: auto;
             display: grid;
@@ -1004,12 +990,6 @@ main {
     }
 
     .playlist {
-        max-height: calc(100% - 90px);
-
-        @include screen(992px) {
-            max-height: 100%;
-        }
-
         position: relative;
         overflow: auto;
 
@@ -1312,13 +1292,13 @@ main {
 }
 
 footer {
-    padding-top: 20px;
     position: fixed;
     bottom: 0;
     left: 0;
     width: 100%;
 
     @include screen(992px) {
+        padding-top: 20px;
         position: initial;
         bottom: initial;
         left: initial;

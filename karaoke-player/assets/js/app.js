@@ -273,22 +273,55 @@ function onOffLoading(element, isLoading) {
 
 openMenuEl.addEventListener('click', function () {
     if (tabControl.classList.contains('show')) {
-        tabControl.classList.remove('show')
+        tabControl.classList.remove('show');
+        setSizeMain();
+        setSizeSongEl();
+        setSizePlaylistEl();
     } else {
-        tabControl.classList.add('show')
+        tabControl.classList.add('show');
+        setSizeMain(true);
+        setSizeSongEl(true);
+        setSizePlaylistEl(true);
     }
 })
 
 function setSizeAll() {
     widthProcess = process.clientWidth;
-    if(mobileAndTabletCheck()){
-        main.style.height = `calc(100vh - ${header.clientHeight}px - ${footer.clientHeight}px - ${footerLeft.clientHeight}px)`;
-    }else{
-        main.style.height = `calc(100vh - ${header.clientHeight}px - ${footer.clientHeight}px)`;
-    }
+    setSizeMain();
     spanOverlay.style.width = buttonEls[0].clientWidth + "px";
     spanOverlay.style.left = 6 + buttonEls[0].clientWidth + "px";
-    heightMainProcess = volumeProcess.clientHeight
+    heightMainProcess = volumeProcess.clientHeight;
+    setSizeSongEl();
+    setSizePlaylistEl()
+
+}
+
+function setSizeSongEl(hasTab = false) {
+    var tabHeight = hasTab ? 50  : 0;
+
+    if (mobileAndTabletCheck()) {
+        songEl.style.maxHeight = `calc(100vh - ${header.clientHeight}px - ${footer.clientHeight}px - ${footerLeft.clientHeight}px - ${tabHeight}px - ${headingSong.clientHeight}px - 20px)`;
+    } else {
+        songEl.style.maxHeight = `calc(100vh - ${header.clientHeight}px - ${footerLeft.clientHeight}px - ${headingSong.clientHeight}px - 20px)`;
+    }
+}
+
+function setSizeMain(hasTab = false) {
+    var tabHeight = hasTab ? 50  : 0;
+    if (mobileAndTabletCheck()) {
+        main.style.height = `calc(100vh - ${header.clientHeight}px - ${footer.clientHeight}px - ${footerLeft.clientHeight}px - ${tabHeight}px)`;
+    } else {
+        main.style.height = `calc(100vh - ${header.clientHeight}px - ${footer.clientHeight}px)`;
+    }
+}
+
+function setSizePlaylistEl(hasTab = false) {
+    var tabHeight = hasTab ? 50  : 0;
+    if (mobileAndTabletCheck()) {
+        playlistEl.style.maxHeight = `calc(100vh - ${header.clientHeight}px - ${footer.clientHeight}px - ${footerLeft.clientHeight}px - ${tabHeight}px)`;
+    } else {
+        playlistEl.style.maxHeight = `calc(100vh - ${header.clientHeight}px - ${footer.clientHeight}px - ${footerLeft.clientHeight}px)`;
+    }
 }
 
 window.addEventListener('DOMContentLoaded', async function () {
