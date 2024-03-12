@@ -328,6 +328,8 @@ header {
 
         .left,
         .right {
+            z-index: 9999;
+
             @include screen(1024px) {
                 flex-basis: 25%;
             }
@@ -337,7 +339,6 @@ header {
             //style mobile
             position: absolute;
             top: -105px;
-            z-index: 10;
             left: -1vw;
             width: 70%;
             padding-top: 10px;

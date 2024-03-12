@@ -272,6 +272,10 @@ header .menu-open {
   width: 100%;
   justify-content: center;
 }
+.player-dashboard .toolbar .left,
+.player-dashboard .toolbar .right {
+  z-index: 9999;
+}
 @media screen and (min-width: 1024px) {
   .player-dashboard .toolbar .left,
   .player-dashboard .toolbar .right {
@@ -281,7 +285,6 @@ header .menu-open {
 .player-dashboard .toolbar .left {
   position: absolute;
   top: -105px;
-  z-index: 10;
   left: -1vw;
   width: 70%;
   padding-top: 10px;
