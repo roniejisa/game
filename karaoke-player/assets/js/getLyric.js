@@ -151,101 +151,6 @@ var putils = {
         }
         return check;
     },
-    support: {
-        touch:
-            (window.Modernizr && Modernizr.touch === true) ||
-            (function () {
-                return !!(
-                    "ontouchstart" in window ||
-                    (window.DocumentTouch && document instanceof DocumentTouch)
-                );
-            })(),
-        transforms3d:
-            (window.Modernizr && Modernizr.csstransforms3d === true) ||
-            (function () {
-                var div = document.createElement("div").style;
-                return (
-                    "webkitPerspective" in div ||
-                    "MozPerspective" in div ||
-                    "OPerspective" in div ||
-                    "MsPerspective" in div ||
-                    "perspective" in div
-                );
-            })(),
-        transforms:
-            (window.Modernizr && Modernizr.csstransforms === true) ||
-            (function () {
-                var div = document.createElement("div").style;
-                return (
-                    "transform" in div ||
-                    "WebkitTransform" in div ||
-                    "MozTransform" in div ||
-                    "msTransform" in div ||
-                    "MsTransform" in div ||
-                    "OTransform" in div
-                );
-            })(),
-        transitions:
-            (window.Modernizr && Modernizr.csstransitions === true) ||
-            (function () {
-                var div = document.createElement("div").style;
-                return (
-                    "transition" in div ||
-                    "WebkitTransition" in div ||
-                    "MozTransition" in div ||
-                    "msTransition" in div ||
-                    "MsTransition" in div ||
-                    "OTransition" in div
-                );
-            })(),
-        tagVideo: function () {
-            var test_video = document.createElement("video");
-            var test = test_video.play ? true : false;
-            if (
-                window.navigator.platform.toLowerCase().indexOf("linux") != -1 &&
-                putils.isFirefox()
-            ) {
-                test = false;
-            }
-            return test;
-        },
-        tagAudio: function () {
-            var test_video = document.createElement("audio");
-            var test = test_video.play ? true : false;
-            if (test) {
-                var a = document.createElement("audio");
-                return !!(
-                    a.canPlayType && a.canPlayType("audio/mpeg;").replace(/no/, "")
-                );
-            } else {
-                return false;
-            }
-            //            if (window.navigator.platform.toLowerCase().indexOf("linux") != -1 && putils.isFirefox()) {
-            //                test = false;
-            //            }
-        },
-    },
-    browser: {
-        ie8: (function () {
-            var rv = -1; // Return value assumes failure.
-            if (navigator.appName == "Microsoft Internet Explorer") {
-                var ua = navigator.userAgent;
-                var re = new RegExp("MSIE ([0-9]{1,}[.0-9]{0,})");
-                if (re.exec(ua) != null) rv = parseFloat(RegExp.$1);
-            }
-            return rv != -1 && rv < 9;
-        })(),
-        ie10: window.navigator.msPointerEnabled,
-        ie11: window.navigator.pointerEnabled,
-        isIE: function () {
-            return (
-                navigator.userAgent.toLowerCase().indexOf("msie") != -1 ||
-                navigator.userAgent.toLowerCase().indexOf(".net") != -1 ||
-                putils.isWP8() ||
-                putils.isWP7()
-            );
-        },
-    },
     mouseStart: function () {
         if (this.browser.ie10) return "MSPointerDown";
         if (this.browser.ie11) return "pointerdown";
@@ -269,15 +174,8 @@ var putils = {
             desktopEvents = ["pointerdown", "pointermove", "pointerup"];
         return this.support.touch ? "touchmove" : desktopEvents[1];
     },
-    setCookie: function (cname, cvalue, exdays) {
-        var d = new Date();
-        d.setTime(d.getTime() + exdays * 24 * 60 * 60 * 1000);
-        var expires = "expires=" + d.toUTCString();
-        document.cookie = cname + "=" + cvalue + "; " + expires;
-    },
     getCookie: function (cname) {
         var name = cname + "=";
-        var ca = document.cookie.split(";");
         for (var i = 0; i < ca.length; i++) {
             var c = ca[i];
             while (c.charAt(0) == " ") c = c.substring(1);
@@ -287,7 +185,7 @@ var putils = {
     },
     parseXml: function (xmlStr) {
         try {
-            return new window.DOMParser().parseFromString(xmlStr, "text/xml");
+            // return new window.DOMParser().parseFromString(xmlStr, "text/xml");
         } catch (e) {
             console.log(e);
         }
@@ -1818,7 +1716,7 @@ var getLyricNCT = async function (linkLRC) {
 };
 
 function toLyricZingMP3(arr) {
-    return arr.map(function (item) {
+    var lyrics = arr.map(function (item) {
         return {
             words: [
                 {
@@ -1829,6 +1727,33 @@ function toLyricZingMP3(arr) {
             ]
         };
     });
+
+    return lyrics.reduce(function (newArray, lyric, index) {
+        var endTime = 0;
+        if (lyrics[index + 1] && lyric.words[lyric.words.length - 1].data.trim() === '') {
+            endTime = +lyric.words[lyric.words.length - 1].startTime + 500;
+        } else {
+            endTime = (lyric.words[0].endTime != 0 && lyric.words[0].endTime) ? lyric.words[0].endTime : lyrics[0].startTime
+        }
+
+        endTime -= (Math.floor(Math.random() * 1000 + 500))
+        var words = [];
+        var arrWords = lyric.words[0].data.split(' ');
+        var totalTime = endTime - +lyric.words[0].startTime;
+        var oneTime = totalTime / arrWords.length;
+
+        for (var i = 0; i < arrWords.length; i++) {
+            words.push({
+                data: arrWords[i],
+                startTime: i == 0 ? +lyric.words[0].startTime : +lyric.words[0].startTime + (oneTime * i),
+                endTime: +lyric.words[0].startTime + (oneTime * (i + 1))
+            })
+        }
+        newArray.push({
+            words
+        });
+        return newArray;
+    }, []);
 }
 //Cách lấy nhạc 320kb trên nhạc của tui
 // Vào request tìm link: https://www.nhaccuatui.com/flash/xml?html5=true
@@ -1851,8 +1776,3 @@ async function getLyricOfSpotify(trackId, authToken = 'Bearer BQBR-sctHC436smsc4
     var data = await response.json();
     return data;
 }
-
-// URL tìm track
-/**
- * https://spclient.wg.spotify.com/metadata/4/track/
- */

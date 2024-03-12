@@ -482,6 +482,7 @@ function initAudio() {
             if (data) {
                 playlists[songIndexCurrent]['lyrics'] = data;
                 karaokeContentEl.querySelector('.no-lyrics') && karaokeContentEl.querySelector('.no-lyrics').remove();
+                setLocalStorage(KEY_PLAYLIST_MAIN, playlists)
             }
         }
     })
@@ -808,6 +809,7 @@ function loadSongStart() {
     }
     // Thay đổi dữ liệu cho lyrics đồng bộ
     if (songCurrent.lyrics) {
+        // Dữ liệu cũ nên vẫn cần để lại phần chuyển lyric
         if (!Array.isArray(songCurrent.lyrics[0].words)) {
             songCurrent.lyrics = songCurrent.lyrics.reduce(function (newArray, lyric, index) {
                 var endTime = 0;
@@ -836,7 +838,6 @@ function loadSongStart() {
                 });
                 return newArray;
             }, [])
-            console.log(songCurrent.lyrics);
         }
         addOrRemoveIconStartKaraoke(false)
     }
