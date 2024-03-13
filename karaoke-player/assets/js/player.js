@@ -37,6 +37,7 @@ iconProcess.addEventListener('mousedown', function (e) {
 
 document.addEventListener('mousemove', function (e) {
     if (isDrag) {
+        // debuggerEl.innerText = 3
         dragClientX = e.clientX
         transform = Math.abs(dragClientX - clientXIconProcess);
         var widthMainProcessCurrent = widthMainProcess + transform;
@@ -83,7 +84,6 @@ process.addEventListener('mouseleave', function (e) {
 
 // Sự kiện mobile
 process.addEventListener('touchstart', function (e) {
-    isDrag = true;
     widthMainProcess = e.changedTouches[0].clientX;
     percentCurrent = toPercent(widthMainProcess);
     changeProcess(percentCurrent);
@@ -92,6 +92,7 @@ process.addEventListener('touchstart', function (e) {
 })
 
 iconProcess.addEventListener('touchstart', function (e) {
+    // debuggerEl.innerText = 2
     e.stopPropagation();
     clientXIconProcess = e.changedTouches[0].clientX;
     widthMainProcess = mainProcess.clientWidth;
@@ -99,8 +100,8 @@ iconProcess.addEventListener('touchstart', function (e) {
 })
 
 document.addEventListener('touchmove', function (e) {
-    e.preventDefault();
     if (isDrag) {
+        // debuggerEl.innerText = 3
         dragClientX = e.changedTouches[0].clientX
         transform = Math.abs(dragClientX - clientXIconProcess);
         var widthMainProcessCurrent = widthMainProcess + transform;
@@ -111,11 +112,10 @@ document.addEventListener('touchmove', function (e) {
         changeProcess(percentCurrent)
         changeTimeStart(percentCurrent);
     }
-},{passive:false})
+})
 
 document.addEventListener('touchend', function (e) {
     if (isDrag) {
-        percentCurrent = toPercent(mainProcess.clientWidth);
         checkTimeLyric();
         percentProcessUpdate();
     }
@@ -151,7 +151,6 @@ function toPercent(width) {
 }
 
 function changeProcess(percent) {
-    percentCurrent = percent;
     mainProcess.style.width = percent + '%';
 }
 
@@ -181,6 +180,7 @@ var volumeHightSmallIcon = '<i class="fa-solid fa-volume-low"></i>';
 var volumeHightOffIcon = '<i class="fa-solid fa-volume-off"></i>';
 var volumeHightXIcon = '<i class="fa-solid fa-volume-xmark"></i>';
 
+var debuggerEl = document.querySelector('.debugger');
 //Nhấn
 volumeProcess.addEventListener('mousedown', function (e) {
     isDragVolume = true;
@@ -259,10 +259,9 @@ function handleTouchStart(e) {
     heightMainProcess = volumeProcessMain.clientHeight;
 }
 
-document.addEventListener('touchmove', handleTouchMove, { passive: false })
+document.addEventListener('touchmove', handleTouchMove)
 
 function handleTouchMove(e) {
-    e.preventDefault();
     if (isDragVolume) {
         dragClientY = e.changedTouches[0].clientY;
         transform = Math.abs(dragClientY - clientYIconProcess);
@@ -394,54 +393,46 @@ var animationPlayLine = {};
 function initAudio() {
     playLines = document.querySelectorAll('.play-line');
 
-    audioEl.addEventListener('loadedmetadata', function (e) {
-        if (!isKaraoke) {
-            updateTimer();
-        }
+    audioEl.addEventListener('loadeddata', function (e) {
+        updateTimer();
         if (isPlay && isShowLyric) {
             animationFrame = requestAnimationFrame(timeUpdateHandle)
-        } else {
-            cancelAnimationFrame(animationFrame);
         }
+        audioEl.addEventListener('change', function () {
+
+        })
+
+        audioEl.addEventListener('play', function () {
+            // Xử lý animation ở chỗ này!
+            // debuggerEl.innerText = audioEl.currentTime;
+            if (animationDisc) {
+                animationDisc.play();
+            } else {
+                animationDisc = disc.animate([{
+                    transform: "rotate(0deg)",
+                    transform: "rotate(360deg)",
+                }], {
+                    duration: 5000,
+                    easing: "linear",
+                    iterations: Infinity,
+                })
+            }
+            animationLine(true)
+
+            // CheckKaraoke
+            if (checkHasAudioKaraoke()) {
+                audioKaraokeEl.pause();
+            }
+            changeIconKaraoke();
+        })
+
     })
-
-    audioEl.addEventListener('change', function () {
-
-    })
-
-    audioEl.addEventListener('play', function () {
-        // Xử lý animation ở chỗ này!
-
-        if (animationDisc) {
-            animationDisc.play();
-        } else {
-            animationDisc = disc.animate([{
-                transform: "rotate(0deg)",
-                transform: "rotate(360deg)",
-            }], {
-                duration: 5000,
-                easing: "linear",
-                iterations: Infinity,
-            })
-        }
-        animationLine(true)
-
-        // CheckKaraoke
-        if (audioKaraokeEl.webkitAudioDecodedByteCount) {
-            audioKaraokeEl.pause();
-        }
-        changeIconKaraoke();
-    })
-
     audioEl.addEventListener('pause', function () {
         cancelAnimationFrame(animationFrame)
         if (animationDisc) {
             animationDisc.pause();
         }
         animationLine(false)
-        if (audioKaraokeEl.webkitAudioDecodedByteCount) {
-            audioKaraokeEl.currentTime = audioEl.currentTime;
-        }
     })
 
 
@@ -555,11 +546,9 @@ function initAudio() {
 
     buttonKaraoke.addEventListener('click', function () {
         isKaraoke = !isKaraoke;
+        checkDataLyric();
         if (isKaraoke) {
             changeTab();
-            audioKaraokeEl.currentTime = getTimeSecondHasPercent(percentCurrent)
-        } else {
-            audioEl.currentTime = getTimeSecondHasPercent(percentCurrent);
         }
         if (isShowLyric === false) {
             lyricKaraoke.click();
@@ -583,21 +572,13 @@ function initAudio() {
 
 function initAudioKaraoke() {
     audioKaraokeEl.addEventListener('loadeddata', function () {
-        if (isKaraoke) {
-            updateTimer();
-        }
-        if (isKaraoke && isPlay && isShowLyric) {
-            audioKaraokeEl.play();
-        }
-        changeIconKaraoke();
+        updateTimer(percentCurrent);
+
     })
 
-    audioKaraokeEl.onerror = function () {
-        buttonKaraoke.setAttribute('hidden', '');
-    };
-
     audioKaraokeEl.addEventListener('pause', function () {
-        audioEl.currentTime = audioKaraokeEl.currentTime;
+        cancelAnimationFrame(animationFrame);
+        audioEl.currentTime = getTimeSecondHasPercent(percentCurrent);
     })
 
     audioKaraokeEl.addEventListener('timeupdate', timeUpdateHandle)
@@ -637,9 +618,10 @@ function animationLine(checkPlay = true) {
 }
 // function after update process
 function timeUpdateHandle() {
+
     if (!isDrag) {
         timeStart.innerText = toTime(getTimeCurrent());
-        changeProcess(secondTimeSongToPercent())
+        changeProcess(percentCurrent)
     }
 
     if (isPlay && isShowLyric) {
@@ -658,9 +640,14 @@ function percentProcessUpdate() {
     percentCurrent = checkPercent(percentCurrent);
     var timeCurrent = getTimeSecondHasPercent(percentCurrent);
     audioEl.currentTime = timeCurrent;
-    if (audioKaraokeEl.webkitAudioDecodedByteCount) {
+    if (checkHasAudioKaraoke()) {
         audioKaraokeEl.currentTime = timeCurrent;
     }
+    // debuggerEl.innerText = `${audioKaraokeEl.currentTime} - ${audioEl.currentTime}`
+}
+
+function checkHasAudioKaraoke() {
+    return !isNaN(audioKaraokeEl.duration)
 }
 
 function changeTimeStart(percent) {
@@ -698,7 +685,7 @@ function checkLoopIfEnded(isNext = true, checkLoop = false) {
         isPlay = true;
     } else {
         audioEl.currentTime = 0;
-        if (audioKaraokeEl.webkitAudioDecodedByteCount) {
+        if (checkHasAudioKaraoke()) {
             audioKaraokeEl.currentTime = 0;
         }
         changeProcess(secondTimeSongToPercent(audioEl.currentTime));
@@ -722,7 +709,7 @@ function checkLoopIfEnded(isNext = true, checkLoop = false) {
     } else if ((!isLoop || checkLoop) && !isShuffle && songIndexCurrent === playlists.length - 1 && isNext) {
         songIndexCurrent = 0;
         audioEl.currentTime = 0;
-        if (audioKaraokeEl.webkitAudioDecodedByteCount) {
+        if (checkHasAudioKaraoke()) {
             audioKaraokeEl.currentTime = 0;
         }
     } else if ((!isLoop || checkLoop) && isNext) {
@@ -756,7 +743,10 @@ function changeIconKaraoke() {
         audioEl.pause();
         audioKaraokeEl.play();
     } else {
-        audioKaraokeEl.pause();
+        if (!audioKaraokeEl.paused) {
+            audioKaraokeEl.pause();
+        }
+
         if (isPlay) {
             audioEl.play();
         } else {
@@ -808,18 +798,26 @@ function changeShuffle() {
 
 //Utils 
 function getTimeCurrent() {
-    return (isKaraoke ? audioKaraokeEl.currentTime : audioEl.currentTime);
+    if (checkHasAudioKaraoke() && isKaraoke) {
+        return audioKaraokeEl.currentTime;
+    } else {
+        return audioEl.currentTime;
+    }
 }
 
 function getAudioDuration() {
-    return (isKaraoke ? audioKaraokeEl.duration : audioEl.duration);
+    if (checkHasAudioKaraoke() && isKaraoke) {
+        return audioKaraokeEl.duration;
+    } else {
+        return audioEl.duration;
+    }
 }
 
 function getSizeVolume(percent) {
     return (1 / 100 * percent).toFixed(4);
 }
 function secondTimeSongToPercent() {
-    if (isKaraoke) {
+    if (isKaraoke && checkHasAudioKaraoke()) {
         return audioKaraokeEl.currentTime / audioKaraokeEl.duration * 100
     } else {
         return audioEl.currentTime / audioEl.duration * 100
@@ -835,8 +833,9 @@ function getTimeSecondHasPercent(percent) {
         return audioEl.duration / 100 * percent;
     }
 }
-function updateTimer() {
-    changeProcess(0);
+function updateTimer(percent = 0) {
+    percentCurrent = percent;
+    changeProcess(percentCurrent)
     timeEnd.innerText = toTime(getAudioDuration());
 }
 
@@ -1220,6 +1219,7 @@ function setDataLyricZingMP3(element) {
 }
 
 function checkDataLyric() {
+
     if (elementLyric) {
         setDataLyricZingMP3(elementLyric);
         elementLyric = null;
@@ -1232,7 +1232,7 @@ function checkDataLyric() {
         setDataLyricZingMP3(elementLyricCurrent)
         elementLyricCurrent = null;
     }
-
+    currentIndexLyric = null;
 }
 
 function checkTimeLyric() {
