@@ -1,5 +1,6 @@
 
 var KEY_PLAYLIST_MAIN = 'PLAYLIST_MAIN';
+var KEY_TIME_LAST_UPDATE = 'TIME_LAST_UPDATE';
 var playerDashboard = document.querySelector('.player-dashboard');
 
 var player = playerDashboard.querySelector('.player')
@@ -621,8 +622,8 @@ function timeUpdateHandle() {
 
     if (!isDrag) {
         timeStart.innerText = toTime(getTimeCurrent());
-        percentCurrent = getTimeCurrent() / getAudioDuration() * 100;
-        changeProcess(percentCurrent)
+        percentCurrent = getPercentCurrent();
+        changeProcess(percentCurrent);
     }
 
     if (isPlay && isShowLyric) {
@@ -812,6 +813,10 @@ function getAudioDuration() {
     } else {
         return audioEl.duration;
     }
+}
+
+function getPercentCurrent() {
+    return getTimeCurrent() / getAudioDuration() * 100
 }
 
 function getSizeVolume(percent) {
@@ -1377,11 +1382,18 @@ window.addEventListener('resize', function () {
 })
 
 window.addEventListener('DOMContentLoaded', async function () {
-    playlists = getLocalStorage(KEY_PLAYLIST_MAIN)
+    const timeLastUpdate = getLocalStorage(KEY_TIME_LAST_UPDATE);
+
+    if (timeLastUpdate + 60000 >= new Date().getTime()) {
+        playlists = getLocalStorage(KEY_PLAYLIST_MAIN)
+    } else {
+        playlists = [];
+    }
     if (playlists.length === 0) {
         const response = await fetch('./assets/data/songs.json')
         playlists = await response.json();
         setLocalStorage(KEY_PLAYLIST_MAIN, playlists);
+        setLocalStorage(KEY_TIME_LAST_UPDATE, new Date().getTime());
     }
     loadSongInList();
     //Add Url One

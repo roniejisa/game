@@ -326,7 +326,12 @@ function setSizePlaylistEl(hasTab = false) {
 
 window.addEventListener('DOMContentLoaded', async function () {
     setSizeAll();
-    playlistHome = getLocalStorage(KEY_HOME);
+    const timeLastUpdate = getLocalStorage(KEY_TIME_LAST_UPDATE);
+    if (timeLastUpdate + 60000 >= new Date().getTime()) {
+        playlistHome = getLocalStorage(KEY_HOME);
+    } else {
+        playlistHome = [];
+    }
     while (!playlistHome.length) {
         const response = await loadSongHomeStart();
         if (response.status === 200) {
