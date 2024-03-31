@@ -621,6 +621,7 @@ function timeUpdateHandle() {
 
     if (!isDrag) {
         timeStart.innerText = toTime(getTimeCurrent());
+        percentCurrent = getTimeCurrent() / getAudioDuration() * 100;
         changeProcess(percentCurrent)
     }
 
