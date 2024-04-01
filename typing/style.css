@@ -1,0 +1,12 @@
+body {
+    background: black;
+}
+
+[text-typing] {
+    font-family: 'Times New Roman', Times, sans-serif;
+    color: #1fe81f;
+    position: relative;
+    display: inline;
+    font-size: 18px;
+    letter-spacing: 1px;
+}
